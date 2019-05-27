@@ -6,7 +6,11 @@ pipeline {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'cd cinema && go build main.go'
+                sh 'cd hallAdministration && go build main.go'
+                sh 'cd movieAdministration && go build main.go'
+                sh 'cd showAdministration && go build main.go'
+                sh 'cd reservationAdministration && go build main.go'
+                sh 'cd userAdministration && go build main.go'
             }
         }
         stage('Test') {
@@ -14,7 +18,7 @@ pipeline {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'echo run tests...'
+                sh 'TODO echo run tests...'
             }
         }
         stage('Lint') {
@@ -28,7 +32,11 @@ pipeline {
         stage('Build Docker Image') {
             agent any
             steps {
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s cinema -f cinema.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s hallAdministration -f hallAdministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s movieAdministration -f movieAdministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s showAdministration -f showAdministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s reservationAdministration -f reservationAdministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s userAdministration -f userAdministration.dockerfile"
             }
         }
     }
