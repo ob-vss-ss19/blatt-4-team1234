@@ -1,4 +1,4 @@
-package hallAdministration
+package halladministration
 
 func main() {
 	println("hallAdministration")

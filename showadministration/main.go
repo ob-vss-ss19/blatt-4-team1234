@@ -1,4 +1,4 @@
-package main
+package showadministration
 
 func main() {
 	println("showAdministration")

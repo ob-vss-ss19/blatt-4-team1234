@@ -1,4 +1,4 @@
-package main
+package useradministration
 
 func main() {
 	println("userAdministration")

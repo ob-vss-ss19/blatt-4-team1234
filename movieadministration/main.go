@@ -1,4 +1,4 @@
-package main
+package movieadministration
 
 func main() {
 	println("movieAdministration")
