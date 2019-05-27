@@ -18,7 +18,7 @@ pipeline {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'TODO echo run tests...'
+                sh 'echo run tests...TODO'
             }
         }
         stage('Lint') {
