@@ -6,11 +6,11 @@ pipeline {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'cd hallAdministration && go build main.go'
-                sh 'cd movieAdministration && go build main.go'
-                sh 'cd showAdministration && go build main.go'
-                sh 'cd reservationAdministration && go build main.go'
-                sh 'cd userAdministration && go build main.go'
+                sh 'cd halladministration && go build main.go'
+                sh 'cd movieadministration && go build main.go'
+                sh 'cd showadministration && go build main.go'
+                sh 'cd reservationadministration && go build main.go'
+                sh 'cd useradministration && go build main.go'
             }
         }
         stage('Test') {
@@ -32,11 +32,11 @@ pipeline {
         stage('Build Docker Image') {
             agent any
             steps {
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s hallAdministration -f hallAdministration.dockerfile"
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s movieAdministration -f movieAdministration.dockerfile"
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s showAdministration -f showAdministration.dockerfile"
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s reservationAdministration -f reservationAdministration.dockerfile"
-                sh "docker-build-and-push -b ${BRANCH_NAME} -s userAdministration -f userAdministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s halladministration -f halladministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s movieadministration -f movieadministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s showadministration -f showadministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s reservationadministration -f reservationadministration.dockerfile"
+                sh "docker-build-and-push -b ${BRANCH_NAME} -s useradministration -f useradministration.dockerfile"
             }
         }
     }
