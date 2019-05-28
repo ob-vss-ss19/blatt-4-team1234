@@ -4,6 +4,7 @@ GOPATH:=$(shell go env GOPATH)
 
 .PHONY: proto
 proto:
+	go install -v github.com/gogo/protobuf/protoc-gen-gogoslick
 	protoc --proto_path=${GOPATH}/src:. --micro_out=. --gogoslick_out=. proto/example/example.proto
 
 .PHONY: build
