@@ -1,16 +1,29 @@
 pipeline {
     agent none
     stages {
-        stage('Build && Protoc') {
+        stage('Protoc') {
+            agent{
+                docker { image 'obraun/vss-protoactor-jenkins' }
+            }
+            steps{
+                sh 'go install -v github.com/gogo/protobuf/protoc-gen-gogoslick'
+                sh 'cd hallservice && make proto'
+                sh 'cd movieservice && make proto'
+                sh 'cd reservationservice && make proto'
+                sh 'cd showservice && make proto'
+                sh 'cd userservice && make proto'
+            }
+        }
+        stage('Build') {
             agent {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'cd hallservice && make proto && make build'
-                sh 'cd movieservice && make proto && make build'
-                sh 'cd reservationservice && make proto && make build'
-                sh 'cd showservice && make proto && make build'
-                sh 'cd userservice && make proto && make build'
+                sh 'cd hallservice && make build'
+                sh 'cd movieservice && make build'
+                sh 'cd reservationservice && make build'
+                sh 'cd showservice && make build'
+                sh 'cd userservice && make build'
             }
         }
         stage('Test') {

@@ -4,8 +4,7 @@ GOPATH:=$(shell go env GOPATH)
 
 .PHONY: proto
 proto:
-	go install -v github.com/gogo/protobuf/protoc-gen-gogoslick
-	protoc --proto_path=${GOPATH}/src:. --micro_out=. --gogoslick_out=. proto/example/example.proto
+	protoc --proto_path=${GOPATH}/src:. --micro_out=. --gogoslick_out=. proto/show/show.proto
 
 .PHONY: build
 build: proto
@@ -15,7 +14,3 @@ build: proto
 .PHONY: test
 test:
 	go test -v ./... -cover
-
-.PHONY: docker
-docker:
-	docker build . -t showservice-srv:latest
