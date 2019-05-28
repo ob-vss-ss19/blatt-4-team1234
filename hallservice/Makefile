@@ -8,6 +8,7 @@ proto:
 
 .PHONY: build
 build: proto
+
 	go build -o hallservice-srv main.go plugin.go
 
 .PHONY: test
