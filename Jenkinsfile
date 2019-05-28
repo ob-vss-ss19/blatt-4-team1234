@@ -23,14 +23,6 @@ pipeline {
                 sh 'echo run tests...NO TESTS EXISTING'
             }
         }
-        stage('Lint') {
-            agent {
-                docker { image 'obraun/vss-protoactor-jenkins' }
-            }
-            steps {
-                sh 'skipping lint to test docker config'
-            }
-        }
         stage('Build Docker Image') {
             agent any
             steps {
