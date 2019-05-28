@@ -9,7 +9,7 @@ proto:
 .PHONY: build
 build: proto
 
-	go build -o reservationservice-srv main.go plugin.go
+	go build main.go plugin.go
 
 .PHONY: test
 test:

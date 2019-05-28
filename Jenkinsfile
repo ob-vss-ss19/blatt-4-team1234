@@ -20,12 +20,7 @@ pipeline {
                 docker { image 'obraun/vss-protoactor-jenkins' }
             }
             steps {
-                sh 'echo run tests...'
-                sh 'cd hallservice && make test'
-                sh 'cd movieservice && make test'
-                sh 'cd reservationservice && make test'
-                sh 'cd showservice && make test'
-                sh 'cd userservice && make test'
+                sh 'echo run tests...NO TESTS EXISTING'
             }
         }
         stage('Lint') {
