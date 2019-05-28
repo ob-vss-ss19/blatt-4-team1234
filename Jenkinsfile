@@ -7,6 +7,7 @@ pipeline {
             }
             steps{
                 sh 'go install -v github.com/gogo/protobuf/protoc-gen-gogoslick'
+                sh 'go get github.com/micro/protoc-gen-micro'
                 sh 'cd hallservice && make proto'
                 sh 'cd movieservice && make proto'
                 sh 'cd reservationservice && make proto'
