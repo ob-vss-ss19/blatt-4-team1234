@@ -2,36 +2,43 @@ syntax = "proto3";
 
 package show;
 
-service Example {
-	rpc Call(Request) returns (Response) {}
-	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
-	rpc PingPong(stream Ping) returns (stream Pong) {}
+service ShowService {
+	rpc GetAllShows(GetAllShowsRequest) returns (GetAllShowsResponse) {}
+	rpc GetShow(GetShowRequest) returns (GetShowResponse){}
+	rpc AddShow(AddShowRequest) returns (AddShowResponse){}
+	rpc RemoveShow(RemoveShowRequest) returns (RemoveShowResponse){}
 }
 
-message Message {
-	string say = 1;
+message Show{
+	int64 Id = 1;
+	int64 MovieId = 2;
+	int64 HallId = 3;
+	string DateTime = 4;
 }
 
-message Request {
-	string name = 1;
+
+message GetAllShowsRequest{}
+
+message GetAllShowsResponse{
+	repeated Show Shows = 1;
 }
 
-message Response {
-	string msg = 1;
+message GetShowRequest{
+	int64 Id = 1;
 }
 
-message StreamingRequest {
-	int64 count = 1;
+message GetShowResponse{
+	Show Show = 1;
 }
 
-message StreamingResponse {
-	int64 count = 1;
+message AddShowRequest{
+	Show show = 1;
 }
 
-message Ping {
-	int64 stroke = 1;
+message AddShowResponse{}
+
+message RemoveShowRequest{
+	int64 Id = 1;
 }
 
-message Pong {
-	int64 stroke = 1;
-}
+message RemoveShowResponse{}

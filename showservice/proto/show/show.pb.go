@@ -23,21 +23,24 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type Message struct {
-	Say string `protobuf:"bytes,1,opt,name=say,proto3" json:"say,omitempty"`
+type Show struct {
+	Id       int64  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	MovieId  int64  `protobuf:"varint,2,opt,name=MovieId,proto3" json:"MovieId,omitempty"`
+	HallId   int64  `protobuf:"varint,3,opt,name=HallId,proto3" json:"HallId,omitempty"`
+	DateTime string `protobuf:"bytes,4,opt,name=DateTime,proto3" json:"DateTime,omitempty"`
 }
 
-func (m *Message) Reset()      { *m = Message{} }
-func (*Message) ProtoMessage() {}
-func (*Message) Descriptor() ([]byte, []int) {
+func (m *Show) Reset()      { *m = Show{} }
+func (*Show) ProtoMessage() {}
+func (*Show) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{0}
 }
-func (m *Message) XXX_Unmarshal(b []byte) error {
+func (m *Show) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Show) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Message.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Show.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -47,40 +50,60 @@ func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(m, src)
+func (m *Show) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Show.Merge(m, src)
 }
-func (m *Message) XXX_Size() int {
+func (m *Show) XXX_Size() int {
 	return m.Size()
 }
-func (m *Message) XXX_DiscardUnknown() {
-	xxx_messageInfo_Message.DiscardUnknown(m)
+func (m *Show) XXX_DiscardUnknown() {
+	xxx_messageInfo_Show.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Message proto.InternalMessageInfo
+var xxx_messageInfo_Show proto.InternalMessageInfo
 
-func (m *Message) GetSay() string {
+func (m *Show) GetId() int64 {
 	if m != nil {
-		return m.Say
+		return m.Id
+	}
+	return 0
+}
+
+func (m *Show) GetMovieId() int64 {
+	if m != nil {
+		return m.MovieId
+	}
+	return 0
+}
+
+func (m *Show) GetHallId() int64 {
+	if m != nil {
+		return m.HallId
+	}
+	return 0
+}
+
+func (m *Show) GetDateTime() string {
+	if m != nil {
+		return m.DateTime
 	}
 	return ""
 }
 
-type Request struct {
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+type GetAllShowsRequest struct {
 }
 
-func (m *Request) Reset()      { *m = Request{} }
-func (*Request) ProtoMessage() {}
-func (*Request) Descriptor() ([]byte, []int) {
+func (m *GetAllShowsRequest) Reset()      { *m = GetAllShowsRequest{} }
+func (*GetAllShowsRequest) ProtoMessage() {}
+func (*GetAllShowsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{1}
 }
-func (m *Request) XXX_Unmarshal(b []byte) error {
+func (m *GetAllShowsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllShowsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Request.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllShowsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -90,40 +113,33 @@ func (m *Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Request.Merge(m, src)
+func (m *GetAllShowsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllShowsRequest.Merge(m, src)
 }
-func (m *Request) XXX_Size() int {
+func (m *GetAllShowsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *Request) XXX_DiscardUnknown() {
-	xxx_messageInfo_Request.DiscardUnknown(m)
+func (m *GetAllShowsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllShowsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Request proto.InternalMessageInfo
+var xxx_messageInfo_GetAllShowsRequest proto.InternalMessageInfo
 
-func (m *Request) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
+type GetAllShowsResponse struct {
+	Shows []*Show `protobuf:"bytes,1,rep,name=Shows,proto3" json:"Shows,omitempty"`
 }
 
-type Response struct {
-	Msg string `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
-}
-
-func (m *Response) Reset()      { *m = Response{} }
-func (*Response) ProtoMessage() {}
-func (*Response) Descriptor() ([]byte, []int) {
+func (m *GetAllShowsResponse) Reset()      { *m = GetAllShowsResponse{} }
+func (*GetAllShowsResponse) ProtoMessage() {}
+func (*GetAllShowsResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{2}
 }
-func (m *Response) XXX_Unmarshal(b []byte) error {
+func (m *GetAllShowsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllShowsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Response.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllShowsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -133,40 +149,40 @@ func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Response.Merge(m, src)
+func (m *GetAllShowsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllShowsResponse.Merge(m, src)
 }
-func (m *Response) XXX_Size() int {
+func (m *GetAllShowsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *Response) XXX_DiscardUnknown() {
-	xxx_messageInfo_Response.DiscardUnknown(m)
+func (m *GetAllShowsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllShowsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Response proto.InternalMessageInfo
+var xxx_messageInfo_GetAllShowsResponse proto.InternalMessageInfo
 
-func (m *Response) GetMsg() string {
+func (m *GetAllShowsResponse) GetShows() []*Show {
 	if m != nil {
-		return m.Msg
+		return m.Shows
 	}
-	return ""
+	return nil
 }
 
-type StreamingRequest struct {
-	Count int64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
+type GetShowRequest struct {
+	Id int64 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 }
 
-func (m *StreamingRequest) Reset()      { *m = StreamingRequest{} }
-func (*StreamingRequest) ProtoMessage() {}
-func (*StreamingRequest) Descriptor() ([]byte, []int) {
+func (m *GetShowRequest) Reset()      { *m = GetShowRequest{} }
+func (*GetShowRequest) ProtoMessage() {}
+func (*GetShowRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{3}
 }
-func (m *StreamingRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetShowRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *StreamingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetShowRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_StreamingRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetShowRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -176,40 +192,40 @@ func (m *StreamingRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-func (m *StreamingRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StreamingRequest.Merge(m, src)
+func (m *GetShowRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetShowRequest.Merge(m, src)
 }
-func (m *StreamingRequest) XXX_Size() int {
+func (m *GetShowRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *StreamingRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_StreamingRequest.DiscardUnknown(m)
+func (m *GetShowRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetShowRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StreamingRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetShowRequest proto.InternalMessageInfo
 
-func (m *StreamingRequest) GetCount() int64 {
+func (m *GetShowRequest) GetId() int64 {
 	if m != nil {
-		return m.Count
+		return m.Id
 	}
 	return 0
 }
 
-type StreamingResponse struct {
-	Count int64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
+type GetShowResponse struct {
+	Show *Show `protobuf:"bytes,1,opt,name=Show,proto3" json:"Show,omitempty"`
 }
 
-func (m *StreamingResponse) Reset()      { *m = StreamingResponse{} }
-func (*StreamingResponse) ProtoMessage() {}
-func (*StreamingResponse) Descriptor() ([]byte, []int) {
+func (m *GetShowResponse) Reset()      { *m = GetShowResponse{} }
+func (*GetShowResponse) ProtoMessage() {}
+func (*GetShowResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{4}
 }
-func (m *StreamingResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetShowResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *StreamingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetShowResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_StreamingResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetShowResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -219,40 +235,40 @@ func (m *StreamingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *StreamingResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StreamingResponse.Merge(m, src)
+func (m *GetShowResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetShowResponse.Merge(m, src)
 }
-func (m *StreamingResponse) XXX_Size() int {
+func (m *GetShowResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *StreamingResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_StreamingResponse.DiscardUnknown(m)
+func (m *GetShowResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetShowResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StreamingResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetShowResponse proto.InternalMessageInfo
 
-func (m *StreamingResponse) GetCount() int64 {
+func (m *GetShowResponse) GetShow() *Show {
 	if m != nil {
-		return m.Count
+		return m.Show
 	}
-	return 0
+	return nil
 }
 
-type Ping struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke,proto3" json:"stroke,omitempty"`
+type AddShowRequest struct {
+	Show *Show `protobuf:"bytes,1,opt,name=show,proto3" json:"show,omitempty"`
 }
 
-func (m *Ping) Reset()      { *m = Ping{} }
-func (*Ping) ProtoMessage() {}
-func (*Ping) Descriptor() ([]byte, []int) {
+func (m *AddShowRequest) Reset()      { *m = AddShowRequest{} }
+func (*AddShowRequest) ProtoMessage() {}
+func (*AddShowRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{5}
 }
-func (m *Ping) XXX_Unmarshal(b []byte) error {
+func (m *AddShowRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Ping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddShowRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Ping.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddShowRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -262,40 +278,39 @@ func (m *Ping) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Ping) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Ping.Merge(m, src)
+func (m *AddShowRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddShowRequest.Merge(m, src)
 }
-func (m *Ping) XXX_Size() int {
+func (m *AddShowRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *Ping) XXX_DiscardUnknown() {
-	xxx_messageInfo_Ping.DiscardUnknown(m)
+func (m *AddShowRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddShowRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Ping proto.InternalMessageInfo
+var xxx_messageInfo_AddShowRequest proto.InternalMessageInfo
 
-func (m *Ping) GetStroke() int64 {
+func (m *AddShowRequest) GetShow() *Show {
 	if m != nil {
-		return m.Stroke
+		return m.Show
 	}
-	return 0
+	return nil
 }
 
-type Pong struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke,proto3" json:"stroke,omitempty"`
+type AddShowResponse struct {
 }
 
-func (m *Pong) Reset()      { *m = Pong{} }
-func (*Pong) ProtoMessage() {}
-func (*Pong) Descriptor() ([]byte, []int) {
+func (m *AddShowResponse) Reset()      { *m = AddShowResponse{} }
+func (*AddShowResponse) ProtoMessage() {}
+func (*AddShowResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7e1314ceef7204f, []int{6}
 }
-func (m *Pong) XXX_Unmarshal(b []byte) error {
+func (m *AddShowResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Pong) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddShowResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Pong.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddShowResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -305,70 +320,147 @@ func (m *Pong) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Pong) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Pong.Merge(m, src)
+func (m *AddShowResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddShowResponse.Merge(m, src)
 }
-func (m *Pong) XXX_Size() int {
+func (m *AddShowResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *Pong) XXX_DiscardUnknown() {
-	xxx_messageInfo_Pong.DiscardUnknown(m)
+func (m *AddShowResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddShowResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Pong proto.InternalMessageInfo
+var xxx_messageInfo_AddShowResponse proto.InternalMessageInfo
 
-func (m *Pong) GetStroke() int64 {
+type RemoveShowRequest struct {
+	Id int64 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+}
+
+func (m *RemoveShowRequest) Reset()      { *m = RemoveShowRequest{} }
+func (*RemoveShowRequest) ProtoMessage() {}
+func (*RemoveShowRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7e1314ceef7204f, []int{7}
+}
+func (m *RemoveShowRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RemoveShowRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RemoveShowRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RemoveShowRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemoveShowRequest.Merge(m, src)
+}
+func (m *RemoveShowRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RemoveShowRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemoveShowRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RemoveShowRequest proto.InternalMessageInfo
+
+func (m *RemoveShowRequest) GetId() int64 {
 	if m != nil {
-		return m.Stroke
+		return m.Id
 	}
 	return 0
 }
 
+type RemoveShowResponse struct {
+}
+
+func (m *RemoveShowResponse) Reset()      { *m = RemoveShowResponse{} }
+func (*RemoveShowResponse) ProtoMessage() {}
+func (*RemoveShowResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7e1314ceef7204f, []int{8}
+}
+func (m *RemoveShowResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RemoveShowResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RemoveShowResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RemoveShowResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemoveShowResponse.Merge(m, src)
+}
+func (m *RemoveShowResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *RemoveShowResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemoveShowResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RemoveShowResponse proto.InternalMessageInfo
+
 func init() {
-	proto.RegisterType((*Message)(nil), "show.Message")
-	proto.RegisterType((*Request)(nil), "show.Request")
-	proto.RegisterType((*Response)(nil), "show.Response")
-	proto.RegisterType((*StreamingRequest)(nil), "show.StreamingRequest")
-	proto.RegisterType((*StreamingResponse)(nil), "show.StreamingResponse")
-	proto.RegisterType((*Ping)(nil), "show.Ping")
-	proto.RegisterType((*Pong)(nil), "show.Pong")
+	proto.RegisterType((*Show)(nil), "show.Show")
+	proto.RegisterType((*GetAllShowsRequest)(nil), "show.GetAllShowsRequest")
+	proto.RegisterType((*GetAllShowsResponse)(nil), "show.GetAllShowsResponse")
+	proto.RegisterType((*GetShowRequest)(nil), "show.GetShowRequest")
+	proto.RegisterType((*GetShowResponse)(nil), "show.GetShowResponse")
+	proto.RegisterType((*AddShowRequest)(nil), "show.AddShowRequest")
+	proto.RegisterType((*AddShowResponse)(nil), "show.AddShowResponse")
+	proto.RegisterType((*RemoveShowRequest)(nil), "show.RemoveShowRequest")
+	proto.RegisterType((*RemoveShowResponse)(nil), "show.RemoveShowResponse")
 }
 
 func init() { proto.RegisterFile("showservice/proto/show/show.proto", fileDescriptor_b7e1314ceef7204f) }
 
 var fileDescriptor_b7e1314ceef7204f = []byte{
-	// 324 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0xbb, 0x4e, 0xc3, 0x30,
-	0x14, 0xf5, 0x55, 0x43, 0x5b, 0xae, 0x04, 0x2a, 0x16, 0x2a, 0xa8, 0xc0, 0x15, 0x78, 0x21, 0x2c,
-	0x6d, 0x05, 0xac, 0x2c, 0x20, 0x46, 0x24, 0x14, 0xbe, 0x20, 0x54, 0x56, 0xa8, 0x68, 0xec, 0x12,
-	0xa7, 0x3c, 0x36, 0x3e, 0x81, 0x9d, 0x1f, 0xe0, 0x53, 0x18, 0x3b, 0x76, 0xa4, 0xce, 0xc2, 0xd8,
-	0x4f, 0x40, 0x71, 0x12, 0x09, 0xf1, 0x58, 0xac, 0x73, 0xee, 0x39, 0xe7, 0xea, 0xd8, 0xc6, 0x3d,
-	0x73, 0xa3, 0x1f, 0x8c, 0x4c, 0xee, 0x87, 0x03, 0xd9, 0x1b, 0x27, 0x3a, 0xd5, 0xbd, 0x7c, 0xe2,
-	0x8e, 0xae, 0xe3, 0xdc, 0xcb, 0xb1, 0xd8, 0xc2, 0xc6, 0x85, 0x34, 0x26, 0x8c, 0x24, 0x6f, 0x61,
-	0xcd, 0x84, 0x4f, 0x9b, 0xb0, 0x0b, 0xfe, 0x72, 0x90, 0x43, 0xb1, 0x83, 0x8d, 0x40, 0xde, 0x4d,
-	0xa4, 0x49, 0x39, 0x47, 0x4f, 0x85, 0xb1, 0x2c, 0x55, 0x87, 0xc5, 0x36, 0x36, 0x03, 0x69, 0xc6,
-	0x5a, 0x19, 0x17, 0x8e, 0x4d, 0x54, 0x85, 0x63, 0x13, 0x09, 0x1f, 0x5b, 0x57, 0x69, 0x22, 0xc3,
-	0x78, 0xa8, 0xa2, 0x6a, 0xcb, 0x3a, 0x2e, 0x0d, 0xf4, 0x44, 0xa5, 0xce, 0x57, 0x0b, 0x0a, 0x22,
-	0x0e, 0x70, 0xed, 0x9b, 0xb3, 0x5c, 0xf8, 0xb7, 0x95, 0xd0, 0xbb, 0x1c, 0xaa, 0x88, 0xb7, 0xb1,
-	0x6e, 0xd2, 0x44, 0xdf, 0xca, 0x52, 0x2e, 0x99, 0xd3, 0xf5, 0xff, 0xfa, 0xe1, 0x2b, 0x60, 0xe3,
-	0xfc, 0x31, 0x8c, 0xc7, 0x23, 0xc9, 0xf7, 0xd1, 0x3b, 0x0b, 0x47, 0x23, 0xbe, 0xd2, 0x75, 0xaf,
-	0x52, 0x76, 0xec, 0xac, 0x56, 0xb4, 0x28, 0x22, 0x18, 0x3f, 0xc1, 0x7a, 0xd1, 0x8f, 0xb7, 0x0b,
-	0xed, 0xe7, 0xbd, 0x3a, 0x1b, 0xbf, 0xe6, 0x55, 0xb8, 0x0f, 0xdc, 0xc7, 0x66, 0xde, 0xd9, 0xf5,
-	0xc2, 0xc2, 0x98, 0xf3, 0x4e, 0x85, 0xb5, 0x8a, 0x04, 0xf3, 0xa1, 0x0f, 0xa7, 0xc7, 0xd3, 0x39,
-	0xb1, 0xd9, 0x9c, 0xd8, 0x62, 0x4e, 0xf0, 0x6c, 0x09, 0xde, 0x2c, 0xc1, 0xbb, 0x25, 0x98, 0x5a,
-	0x82, 0x0f, 0x4b, 0xf0, 0x69, 0x89, 0x2d, 0x2c, 0xc1, 0x4b, 0x46, 0x6c, 0x9a, 0x11, 0x9b, 0x65,
-	0xc4, 0xae, 0xeb, 0xee, 0x3f, 0x8f, 0xbe, 0x02, 0x00, 0x00, 0xff, 0xff, 0x04, 0xb1, 0x6a, 0x5c,
-	0xf4, 0x01, 0x00, 0x00,
+	// 392 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x52, 0x4d, 0x4f, 0xea, 0x40,
+	0x14, 0x9d, 0x29, 0x3c, 0x78, 0xef, 0x92, 0x40, 0x98, 0xc7, 0x7b, 0x8e, 0x5d, 0xdc, 0xd4, 0xba,
+	0x61, 0x05, 0x8a, 0x26, 0xba, 0xc5, 0x90, 0x60, 0x17, 0x6e, 0x8a, 0x7f, 0x00, 0xed, 0x24, 0x90,
+	0x14, 0x8b, 0xb4, 0xc2, 0xd6, 0xb5, 0x2b, 0x7f, 0x86, 0x3f, 0xc5, 0x25, 0x4b, 0x96, 0x52, 0x36,
+	0x2e, 0xf9, 0x09, 0xa6, 0x33, 0x6d, 0x2d, 0x1f, 0x71, 0xd3, 0xf4, 0x9e, 0x7b, 0xcf, 0xb9, 0xe7,
+	0x9e, 0x16, 0x8e, 0xfc, 0x81, 0x37, 0xf3, 0xc5, 0x64, 0x3a, 0xbc, 0x17, 0xcd, 0xf1, 0xc4, 0x0b,
+	0xbc, 0x66, 0x84, 0xc8, 0x47, 0x43, 0xd6, 0x2c, 0x1f, 0xbd, 0x9b, 0x0e, 0xe4, 0x7b, 0x03, 0x6f,
+	0xc6, 0xca, 0xa0, 0x59, 0x0e, 0xa7, 0x06, 0xad, 0xe7, 0x6c, 0xcd, 0x72, 0x18, 0x87, 0xe2, 0x8d,
+	0x37, 0x1d, 0x0a, 0xcb, 0xe1, 0x9a, 0x04, 0x93, 0x92, 0xfd, 0x87, 0xc2, 0x75, 0xdf, 0x75, 0x2d,
+	0x87, 0xe7, 0x64, 0x23, 0xae, 0x98, 0x0e, 0xbf, 0x3b, 0xfd, 0x40, 0xdc, 0x0e, 0x47, 0x82, 0xe7,
+	0x0d, 0x5a, 0xff, 0x63, 0xa7, 0xb5, 0x59, 0x03, 0xd6, 0x15, 0x41, 0xdb, 0x75, 0xa3, 0x5d, 0xbe,
+	0x2d, 0x1e, 0x9f, 0x84, 0x1f, 0x98, 0x17, 0xf0, 0x77, 0x03, 0xf5, 0xc7, 0xde, 0x83, 0x2f, 0x98,
+	0x01, 0xbf, 0x24, 0xc0, 0xa9, 0x91, 0xab, 0x97, 0x5a, 0xd0, 0x90, 0xa6, 0x23, 0xc8, 0x56, 0x0d,
+	0xd3, 0x80, 0x72, 0x57, 0x04, 0x12, 0x51, 0x52, 0xdb, 0xf6, 0xcd, 0x53, 0xa8, 0xa4, 0x13, 0xb1,
+	0x2c, 0xaa, 0x4b, 0xe5, 0xd0, 0xa6, 0xaa, 0xc4, 0xcd, 0x13, 0x28, 0xb7, 0x1d, 0x27, 0x2b, 0x8a,
+	0x20, 0x33, 0xda, 0xc7, 0x90, 0xd9, 0x55, 0xa1, 0x92, 0x32, 0xd4, 0x12, 0xf3, 0x18, 0xaa, 0xb6,
+	0x18, 0x79, 0x53, 0xf1, 0x93, 0xb9, 0x1a, 0xb0, 0xec, 0x90, 0xa2, 0xb6, 0x5e, 0x34, 0x28, 0x45,
+	0x40, 0x4f, 0x7d, 0x35, 0xd6, 0x81, 0x52, 0x26, 0x1d, 0xc6, 0xd5, 0xfa, 0xdd, 0x18, 0xf5, 0xc3,
+	0x3d, 0x9d, 0xd8, 0x0e, 0x61, 0x97, 0x50, 0x8c, 0x83, 0x60, 0xb5, 0x74, 0x2e, 0x63, 0x4e, 0xff,
+	0xb7, 0x85, 0x66, 0x99, 0xf1, 0x75, 0x09, 0x73, 0x33, 0x9e, 0x84, 0xb9, 0x1d, 0x01, 0x61, 0x6d,
+	0x80, 0xef, 0xfb, 0xd8, 0x81, 0x1a, 0xdb, 0x89, 0x45, 0xe7, 0xbb, 0x8d, 0x44, 0xe2, 0xea, 0x7c,
+	0xbe, 0x44, 0xb2, 0x58, 0x22, 0x59, 0x2f, 0x91, 0x3e, 0x87, 0x48, 0xdf, 0x42, 0xa4, 0xef, 0x21,
+	0xd2, 0x79, 0x88, 0xf4, 0x23, 0x44, 0xfa, 0x19, 0x22, 0x59, 0x87, 0x48, 0x5f, 0x57, 0x48, 0xe6,
+	0x2b, 0x24, 0x8b, 0x15, 0x92, 0xbb, 0x82, 0xfc, 0xb3, 0xcf, 0xbe, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0x05, 0x10, 0x0f, 0x90, 0xfe, 0x02, 0x00, 0x00,
 }
 
-func (this *Message) Equal(that interface{}) bool {
+func (this *Show) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Message)
+	that1, ok := that.(*Show)
 	if !ok {
-		that2, ok := that.(Message)
+		that2, ok := that.(Show)
 		if ok {
 			that1 = &that2
 		} else {
@@ -380,19 +472,28 @@ func (this *Message) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Say != that1.Say {
+	if this.Id != that1.Id {
+		return false
+	}
+	if this.MovieId != that1.MovieId {
+		return false
+	}
+	if this.HallId != that1.HallId {
+		return false
+	}
+	if this.DateTime != that1.DateTime {
 		return false
 	}
 	return true
 }
-func (this *Request) Equal(that interface{}) bool {
+func (this *GetAllShowsRequest) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Request)
+	that1, ok := that.(*GetAllShowsRequest)
 	if !ok {
-		that2, ok := that.(Request)
+		that2, ok := that.(GetAllShowsRequest)
 		if ok {
 			that1 = &that2
 		} else {
@@ -404,19 +505,16 @@ func (this *Request) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Name != that1.Name {
-		return false
-	}
 	return true
 }
-func (this *Response) Equal(that interface{}) bool {
+func (this *GetAllShowsResponse) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Response)
+	that1, ok := that.(*GetAllShowsResponse)
 	if !ok {
-		that2, ok := that.(Response)
+		that2, ok := that.(GetAllShowsResponse)
 		if ok {
 			that1 = &that2
 		} else {
@@ -428,19 +526,24 @@ func (this *Response) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Msg != that1.Msg {
+	if len(this.Shows) != len(that1.Shows) {
 		return false
+	}
+	for i := range this.Shows {
+		if !this.Shows[i].Equal(that1.Shows[i]) {
+			return false
+		}
 	}
 	return true
 }
-func (this *StreamingRequest) Equal(that interface{}) bool {
+func (this *GetShowRequest) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*StreamingRequest)
+	that1, ok := that.(*GetShowRequest)
 	if !ok {
-		that2, ok := that.(StreamingRequest)
+		that2, ok := that.(GetShowRequest)
 		if ok {
 			that1 = &that2
 		} else {
@@ -452,19 +555,19 @@ func (this *StreamingRequest) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Count != that1.Count {
+	if this.Id != that1.Id {
 		return false
 	}
 	return true
 }
-func (this *StreamingResponse) Equal(that interface{}) bool {
+func (this *GetShowResponse) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*StreamingResponse)
+	that1, ok := that.(*GetShowResponse)
 	if !ok {
-		that2, ok := that.(StreamingResponse)
+		that2, ok := that.(GetShowResponse)
 		if ok {
 			that1 = &that2
 		} else {
@@ -476,19 +579,19 @@ func (this *StreamingResponse) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Count != that1.Count {
+	if !this.Show.Equal(that1.Show) {
 		return false
 	}
 	return true
 }
-func (this *Ping) Equal(that interface{}) bool {
+func (this *AddShowRequest) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Ping)
+	that1, ok := that.(*AddShowRequest)
 	if !ok {
-		that2, ok := that.(Ping)
+		that2, ok := that.(AddShowRequest)
 		if ok {
 			that1 = &that2
 		} else {
@@ -500,19 +603,19 @@ func (this *Ping) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Stroke != that1.Stroke {
+	if !this.Show.Equal(that1.Show) {
 		return false
 	}
 	return true
 }
-func (this *Pong) Equal(that interface{}) bool {
+func (this *AddShowResponse) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*Pong)
+	that1, ok := that.(*AddShowResponse)
 	if !ok {
-		that2, ok := that.(Pong)
+		that2, ok := that.(AddShowResponse)
 		if ok {
 			that1 = &that2
 		} else {
@@ -524,78 +627,146 @@ func (this *Pong) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Stroke != that1.Stroke {
+	return true
+}
+func (this *RemoveShowRequest) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*RemoveShowRequest)
+	if !ok {
+		that2, ok := that.(RemoveShowRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Id != that1.Id {
 		return false
 	}
 	return true
 }
-func (this *Message) GoString() string {
+func (this *RemoveShowResponse) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*RemoveShowResponse)
+	if !ok {
+		that2, ok := that.(RemoveShowResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	return true
+}
+func (this *Show) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 5)
-	s = append(s, "&show.Message{")
-	s = append(s, "Say: "+fmt.Sprintf("%#v", this.Say)+",\n")
+	s := make([]string, 0, 8)
+	s = append(s, "&show.Show{")
+	s = append(s, "Id: "+fmt.Sprintf("%#v", this.Id)+",\n")
+	s = append(s, "MovieId: "+fmt.Sprintf("%#v", this.MovieId)+",\n")
+	s = append(s, "HallId: "+fmt.Sprintf("%#v", this.HallId)+",\n")
+	s = append(s, "DateTime: "+fmt.Sprintf("%#v", this.DateTime)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *Request) GoString() string {
+func (this *GetAllShowsRequest) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 5)
-	s = append(s, "&show.Request{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
+	s := make([]string, 0, 4)
+	s = append(s, "&show.GetAllShowsRequest{")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *Response) GoString() string {
+func (this *GetAllShowsResponse) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&show.Response{")
-	s = append(s, "Msg: "+fmt.Sprintf("%#v", this.Msg)+",\n")
+	s = append(s, "&show.GetAllShowsResponse{")
+	if this.Shows != nil {
+		s = append(s, "Shows: "+fmt.Sprintf("%#v", this.Shows)+",\n")
+	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *StreamingRequest) GoString() string {
+func (this *GetShowRequest) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&show.StreamingRequest{")
-	s = append(s, "Count: "+fmt.Sprintf("%#v", this.Count)+",\n")
+	s = append(s, "&show.GetShowRequest{")
+	s = append(s, "Id: "+fmt.Sprintf("%#v", this.Id)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *StreamingResponse) GoString() string {
+func (this *GetShowResponse) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&show.StreamingResponse{")
-	s = append(s, "Count: "+fmt.Sprintf("%#v", this.Count)+",\n")
+	s = append(s, "&show.GetShowResponse{")
+	if this.Show != nil {
+		s = append(s, "Show: "+fmt.Sprintf("%#v", this.Show)+",\n")
+	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *Ping) GoString() string {
+func (this *AddShowRequest) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&show.Ping{")
-	s = append(s, "Stroke: "+fmt.Sprintf("%#v", this.Stroke)+",\n")
+	s = append(s, "&show.AddShowRequest{")
+	if this.Show != nil {
+		s = append(s, "Show: "+fmt.Sprintf("%#v", this.Show)+",\n")
+	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *Pong) GoString() string {
+func (this *AddShowResponse) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&show.AddShowResponse{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *RemoveShowRequest) GoString() string {
 	if this == nil {
 		return "nil"
 	}
 	s := make([]string, 0, 5)
-	s = append(s, "&show.Pong{")
-	s = append(s, "Stroke: "+fmt.Sprintf("%#v", this.Stroke)+",\n")
+	s = append(s, "&show.RemoveShowRequest{")
+	s = append(s, "Id: "+fmt.Sprintf("%#v", this.Id)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *RemoveShowResponse) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&show.RemoveShowResponse{")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -607,7 +778,7 @@ func valueToGoStringShow(v interface{}, typ string) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
 }
-func (m *Message) Marshal() (dAtA []byte, err error) {
+func (m *Show) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -617,21 +788,135 @@ func (m *Message) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Message) MarshalTo(dAtA []byte) (int, error) {
+func (m *Show) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Say) > 0 {
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintShow(dAtA, i, uint64(m.Id))
+	}
+	if m.MovieId != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintShow(dAtA, i, uint64(m.MovieId))
+	}
+	if m.HallId != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintShow(dAtA, i, uint64(m.HallId))
+	}
+	if len(m.DateTime) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintShow(dAtA, i, uint64(len(m.DateTime)))
+		i += copy(dAtA[i:], m.DateTime)
+	}
+	return i, nil
+}
+
+func (m *GetAllShowsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllShowsRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *GetAllShowsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllShowsResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Shows) > 0 {
+		for _, msg := range m.Shows {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintShow(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
+func (m *GetShowRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetShowRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintShow(dAtA, i, uint64(m.Id))
+	}
+	return i, nil
+}
+
+func (m *GetShowResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetShowResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Show != nil {
 		dAtA[i] = 0xa
 		i++
-		i = encodeVarintShow(dAtA, i, uint64(len(m.Say)))
-		i += copy(dAtA[i:], m.Say)
+		i = encodeVarintShow(dAtA, i, uint64(m.Show.Size()))
+		n1, err1 := m.Show.MarshalTo(dAtA[i:])
+		if err1 != nil {
+			return 0, err1
+		}
+		i += n1
 	}
 	return i, nil
 }
 
-func (m *Request) Marshal() (dAtA []byte, err error) {
+func (m *AddShowRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -641,21 +926,25 @@ func (m *Request) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Request) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddShowRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
+	if m.Show != nil {
 		dAtA[i] = 0xa
 		i++
-		i = encodeVarintShow(dAtA, i, uint64(len(m.Name)))
-		i += copy(dAtA[i:], m.Name)
+		i = encodeVarintShow(dAtA, i, uint64(m.Show.Size()))
+		n2, err2 := m.Show.MarshalTo(dAtA[i:])
+		if err2 != nil {
+			return 0, err2
+		}
+		i += n2
 	}
 	return i, nil
 }
 
-func (m *Response) Marshal() (dAtA []byte, err error) {
+func (m *AddShowResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -665,21 +954,15 @@ func (m *Response) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Response) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddShowResponse) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Msg) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintShow(dAtA, i, uint64(len(m.Msg)))
-		i += copy(dAtA[i:], m.Msg)
-	}
 	return i, nil
 }
 
-func (m *StreamingRequest) Marshal() (dAtA []byte, err error) {
+func (m *RemoveShowRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -689,20 +972,20 @@ func (m *StreamingRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *StreamingRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *RemoveShowRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Count != 0 {
+	if m.Id != 0 {
 		dAtA[i] = 0x8
 		i++
-		i = encodeVarintShow(dAtA, i, uint64(m.Count))
+		i = encodeVarintShow(dAtA, i, uint64(m.Id))
 	}
 	return i, nil
 }
 
-func (m *StreamingResponse) Marshal() (dAtA []byte, err error) {
+func (m *RemoveShowResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -712,62 +995,11 @@ func (m *StreamingResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *StreamingResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *RemoveShowResponse) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Count != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintShow(dAtA, i, uint64(m.Count))
-	}
-	return i, nil
-}
-
-func (m *Ping) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Ping) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Stroke != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintShow(dAtA, i, uint64(m.Stroke))
-	}
-	return i, nil
-}
-
-func (m *Pong) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Pong) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Stroke != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintShow(dAtA, i, uint64(m.Stroke))
-	}
 	return i, nil
 }
 
@@ -780,90 +1012,117 @@ func encodeVarintShow(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-func (m *Message) Size() (n int) {
+func (m *Show) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Say)
+	if m.Id != 0 {
+		n += 1 + sovShow(uint64(m.Id))
+	}
+	if m.MovieId != 0 {
+		n += 1 + sovShow(uint64(m.MovieId))
+	}
+	if m.HallId != 0 {
+		n += 1 + sovShow(uint64(m.HallId))
+	}
+	l = len(m.DateTime)
 	if l > 0 {
 		n += 1 + l + sovShow(uint64(l))
 	}
 	return n
 }
 
-func (m *Request) Size() (n int) {
+func (m *GetAllShowsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	if l > 0 {
+	return n
+}
+
+func (m *GetAllShowsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Shows) > 0 {
+		for _, e := range m.Shows {
+			l = e.Size()
+			n += 1 + l + sovShow(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *GetShowRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovShow(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *GetShowResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Show != nil {
+		l = m.Show.Size()
 		n += 1 + l + sovShow(uint64(l))
 	}
 	return n
 }
 
-func (m *Response) Size() (n int) {
+func (m *AddShowRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Msg)
-	if l > 0 {
+	if m.Show != nil {
+		l = m.Show.Size()
 		n += 1 + l + sovShow(uint64(l))
 	}
 	return n
 }
 
-func (m *StreamingRequest) Size() (n int) {
+func (m *AddShowResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Count != 0 {
-		n += 1 + sovShow(uint64(m.Count))
+	return n
+}
+
+func (m *RemoveShowRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovShow(uint64(m.Id))
 	}
 	return n
 }
 
-func (m *StreamingResponse) Size() (n int) {
+func (m *RemoveShowResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Count != 0 {
-		n += 1 + sovShow(uint64(m.Count))
-	}
-	return n
-}
-
-func (m *Ping) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Stroke != 0 {
-		n += 1 + sovShow(uint64(m.Stroke))
-	}
-	return n
-}
-
-func (m *Pong) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Stroke != 0 {
-		n += 1 + sovShow(uint64(m.Stroke))
-	}
 	return n
 }
 
@@ -880,72 +1139,97 @@ func sovShow(x uint64) (n int) {
 func sozShow(x uint64) (n int) {
 	return sovShow(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (this *Message) String() string {
+func (this *Show) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&Message{`,
-		`Say:` + fmt.Sprintf("%v", this.Say) + `,`,
+	s := strings.Join([]string{`&Show{`,
+		`Id:` + fmt.Sprintf("%v", this.Id) + `,`,
+		`MovieId:` + fmt.Sprintf("%v", this.MovieId) + `,`,
+		`HallId:` + fmt.Sprintf("%v", this.HallId) + `,`,
+		`DateTime:` + fmt.Sprintf("%v", this.DateTime) + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *Request) String() string {
+func (this *GetAllShowsRequest) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&Request{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
+	s := strings.Join([]string{`&GetAllShowsRequest{`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *Response) String() string {
+func (this *GetAllShowsResponse) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&Response{`,
-		`Msg:` + fmt.Sprintf("%v", this.Msg) + `,`,
+	repeatedStringForShows := "[]*Show{"
+	for _, f := range this.Shows {
+		repeatedStringForShows += strings.Replace(f.String(), "Show", "Show", 1) + ","
+	}
+	repeatedStringForShows += "}"
+	s := strings.Join([]string{`&GetAllShowsResponse{`,
+		`Shows:` + repeatedStringForShows + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *StreamingRequest) String() string {
+func (this *GetShowRequest) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&StreamingRequest{`,
-		`Count:` + fmt.Sprintf("%v", this.Count) + `,`,
+	s := strings.Join([]string{`&GetShowRequest{`,
+		`Id:` + fmt.Sprintf("%v", this.Id) + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *StreamingResponse) String() string {
+func (this *GetShowResponse) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&StreamingResponse{`,
-		`Count:` + fmt.Sprintf("%v", this.Count) + `,`,
+	s := strings.Join([]string{`&GetShowResponse{`,
+		`Show:` + strings.Replace(this.Show.String(), "Show", "Show", 1) + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *Ping) String() string {
+func (this *AddShowRequest) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&Ping{`,
-		`Stroke:` + fmt.Sprintf("%v", this.Stroke) + `,`,
+	s := strings.Join([]string{`&AddShowRequest{`,
+		`Show:` + strings.Replace(this.Show.String(), "Show", "Show", 1) + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *Pong) String() string {
+func (this *AddShowResponse) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&Pong{`,
-		`Stroke:` + fmt.Sprintf("%v", this.Stroke) + `,`,
+	s := strings.Join([]string{`&AddShowResponse{`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *RemoveShowRequest) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&RemoveShowRequest{`,
+		`Id:` + fmt.Sprintf("%v", this.Id) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *RemoveShowResponse) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&RemoveShowResponse{`,
 		`}`,
 	}, "")
 	return s
@@ -958,7 +1242,7 @@ func valueToStringShow(v interface{}) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("*%v", pv)
 }
-func (m *Message) Unmarshal(dAtA []byte) error {
+func (m *Show) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -981,15 +1265,72 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Message: wiretype end group for non-group")
+			return fmt.Errorf("proto: Show: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Show: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowShow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MovieId", wireType)
+			}
+			m.MovieId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowShow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MovieId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HallId", wireType)
+			}
+			m.HallId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowShow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.HallId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Say", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DateTime", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1017,7 +1358,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Say = string(dAtA[iNdEx:postIndex])
+			m.DateTime = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1043,7 +1384,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Request) Unmarshal(dAtA []byte) error {
+func (m *GetAllShowsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1066,17 +1407,70 @@ func (m *Request) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Request: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllShowsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Request: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllShowsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipShow(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetAllShowsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowShow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetAllShowsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetAllShowsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Shows", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowShow
@@ -1086,23 +1480,25 @@ func (m *Request) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthShow
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthShow
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			m.Shows = append(m.Shows, &Show{})
+			if err := m.Shows[len(m.Shows)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1128,7 +1524,7 @@ func (m *Request) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Response) Unmarshal(dAtA []byte) error {
+func (m *GetShowRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1151,17 +1547,17 @@ func (m *Response) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Response: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetShowRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Response: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetShowRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Msg", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
-			var stringLen uint64
+			m.Id = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowShow
@@ -1171,23 +1567,99 @@ func (m *Response) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.Id |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipShow(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
 				return ErrInvalidLengthShow
 			}
-			postIndex := iNdEx + intStringLen
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetShowResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowShow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetShowResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetShowResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Show", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowShow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthShow
+			}
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthShow
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Msg = string(dAtA[iNdEx:postIndex])
+			if m.Show == nil {
+				m.Show = &Show{}
+			}
+			if err := m.Show.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1213,7 +1685,7 @@ func (m *Response) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *StreamingRequest) Unmarshal(dAtA []byte) error {
+func (m *AddShowRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1236,17 +1708,17 @@ func (m *StreamingRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StreamingRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: AddShowRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StreamingRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: AddShowRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Show", wireType)
 			}
-			m.Count = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowShow
@@ -1256,7 +1728,149 @@ func (m *StreamingRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= int64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthShow
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthShow
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Show == nil {
+				m.Show = &Show{}
+			}
+			if err := m.Show.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipShow(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AddShowResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowShow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AddShowResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AddShowResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipShow(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthShow
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RemoveShowRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowShow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RemoveShowRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RemoveShowRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowShow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1285,7 +1899,7 @@ func (m *StreamingRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *StreamingResponse) Unmarshal(dAtA []byte) error {
+func (m *RemoveShowResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1308,175 +1922,12 @@ func (m *StreamingResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StreamingResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: RemoveShowResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StreamingResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: RemoveShowResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
-			}
-			m.Count = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowShow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Count |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipShow(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthShow
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthShow
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Ping) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowShow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Ping: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Ping: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Stroke", wireType)
-			}
-			m.Stroke = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowShow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Stroke |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipShow(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthShow
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthShow
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *Pong) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowShow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Pong: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Pong: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Stroke", wireType)
-			}
-			m.Stroke = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowShow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Stroke |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipShow(dAtA[iNdEx:])

@@ -31,35 +31,36 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for Example service
+// Client API for ShowService service
 
-type ExampleService interface {
-	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error)
-	PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error)
+type ShowService interface {
+	GetAllShows(ctx context.Context, in *GetAllShowsRequest, opts ...client.CallOption) (*GetAllShowsResponse, error)
+	GetShow(ctx context.Context, in *GetShowRequest, opts ...client.CallOption) (*GetShowResponse, error)
+	AddShow(ctx context.Context, in *AddShowRequest, opts ...client.CallOption) (*AddShowResponse, error)
+	RemoveShow(ctx context.Context, in *RemoveShowRequest, opts ...client.CallOption) (*RemoveShowResponse, error)
 }
 
-type exampleService struct {
+type showService struct {
 	c    client.Client
 	name string
 }
 
-func NewExampleService(name string, c client.Client) ExampleService {
+func NewShowService(name string, c client.Client) ShowService {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
 		name = "show"
 	}
-	return &exampleService{
+	return &showService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Example.Call", in)
-	out := new(Response)
+func (c *showService) GetAllShows(ctx context.Context, in *GetAllShowsRequest, opts ...client.CallOption) (*GetAllShowsResponse, error) {
+	req := c.c.NewRequest(c.name, "ShowService.GetAllShows", in)
+	out := new(GetAllShowsResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,196 +68,75 @@ func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.C
 	return out, nil
 }
 
-func (c *exampleService) Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error) {
-	req := c.c.NewRequest(c.name, "Example.Stream", &StreamingRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *showService) GetShow(ctx context.Context, in *GetShowRequest, opts ...client.CallOption) (*GetShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ShowService.GetShow", in)
+	out := new(GetShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	if err := stream.Send(in); err != nil {
-		return nil, err
-	}
-	return &exampleServiceStream{stream}, nil
+	return out, nil
 }
 
-type Example_StreamService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*StreamingResponse, error)
-}
-
-type exampleServiceStream struct {
-	stream client.Stream
-}
-
-func (x *exampleServiceStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServiceStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServiceStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServiceStream) Recv() (*StreamingResponse, error) {
-	m := new(StreamingResponse)
-	err := x.stream.Recv(m)
+func (c *showService) AddShow(ctx context.Context, in *AddShowRequest, opts ...client.CallOption) (*AddShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ShowService.AddShow", in)
+	out := new(AddShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return m, nil
+	return out, nil
 }
 
-func (c *exampleService) PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error) {
-	req := c.c.NewRequest(c.name, "Example.PingPong", &Ping{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *showService) RemoveShow(ctx context.Context, in *RemoveShowRequest, opts ...client.CallOption) (*RemoveShowResponse, error) {
+	req := c.c.NewRequest(c.name, "ShowService.RemoveShow", in)
+	out := new(RemoveShowResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return &exampleServicePingPong{stream}, nil
+	return out, nil
 }
 
-type Example_PingPongService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Ping) error
-	Recv() (*Pong, error)
+// Server API for ShowService service
+
+type ShowServiceHandler interface {
+	GetAllShows(context.Context, *GetAllShowsRequest, *GetAllShowsResponse) error
+	GetShow(context.Context, *GetShowRequest, *GetShowResponse) error
+	AddShow(context.Context, *AddShowRequest, *AddShowResponse) error
+	RemoveShow(context.Context, *RemoveShowRequest, *RemoveShowResponse) error
 }
 
-type exampleServicePingPong struct {
-	stream client.Stream
-}
-
-func (x *exampleServicePingPong) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServicePingPong) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServicePingPong) Send(m *Ping) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) Recv() (*Pong, error) {
-	m := new(Pong)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
+func RegisterShowServiceHandler(s server.Server, hdlr ShowServiceHandler, opts ...server.HandlerOption) error {
+	type showService interface {
+		GetAllShows(ctx context.Context, in *GetAllShowsRequest, out *GetAllShowsResponse) error
+		GetShow(ctx context.Context, in *GetShowRequest, out *GetShowResponse) error
+		AddShow(ctx context.Context, in *AddShowRequest, out *AddShowResponse) error
+		RemoveShow(ctx context.Context, in *RemoveShowRequest, out *RemoveShowResponse) error
 	}
-	return m, nil
-}
-
-// Server API for Example service
-
-type ExampleHandler interface {
-	Call(context.Context, *Request, *Response) error
-	Stream(context.Context, *StreamingRequest, Example_StreamStream) error
-	PingPong(context.Context, Example_PingPongStream) error
-}
-
-func RegisterExampleHandler(s server.Server, hdlr ExampleHandler, opts ...server.HandlerOption) error {
-	type example interface {
-		Call(ctx context.Context, in *Request, out *Response) error
-		Stream(ctx context.Context, stream server.Stream) error
-		PingPong(ctx context.Context, stream server.Stream) error
+	type ShowService struct {
+		showService
 	}
-	type Example struct {
-		example
-	}
-	h := &exampleHandler{hdlr}
-	return s.Handle(s.NewHandler(&Example{h}, opts...))
+	h := &showServiceHandler{hdlr}
+	return s.Handle(s.NewHandler(&ShowService{h}, opts...))
 }
 
-type exampleHandler struct {
-	ExampleHandler
+type showServiceHandler struct {
+	ShowServiceHandler
 }
 
-func (h *exampleHandler) Call(ctx context.Context, in *Request, out *Response) error {
-	return h.ExampleHandler.Call(ctx, in, out)
+func (h *showServiceHandler) GetAllShows(ctx context.Context, in *GetAllShowsRequest, out *GetAllShowsResponse) error {
+	return h.ShowServiceHandler.GetAllShows(ctx, in, out)
 }
 
-func (h *exampleHandler) Stream(ctx context.Context, stream server.Stream) error {
-	m := new(StreamingRequest)
-	if err := stream.Recv(m); err != nil {
-		return err
-	}
-	return h.ExampleHandler.Stream(ctx, m, &exampleStreamStream{stream})
+func (h *showServiceHandler) GetShow(ctx context.Context, in *GetShowRequest, out *GetShowResponse) error {
+	return h.ShowServiceHandler.GetShow(ctx, in, out)
 }
 
-type Example_StreamStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*StreamingResponse) error
+func (h *showServiceHandler) AddShow(ctx context.Context, in *AddShowRequest, out *AddShowResponse) error {
+	return h.ShowServiceHandler.AddShow(ctx, in, out)
 }
 
-type exampleStreamStream struct {
-	stream server.Stream
-}
-
-func (x *exampleStreamStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleStreamStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleStreamStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleStreamStream) Send(m *StreamingResponse) error {
-	return x.stream.Send(m)
-}
-
-func (h *exampleHandler) PingPong(ctx context.Context, stream server.Stream) error {
-	return h.ExampleHandler.PingPong(ctx, &examplePingPongStream{stream})
-}
-
-type Example_PingPongStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Pong) error
-	Recv() (*Ping, error)
-}
-
-type examplePingPongStream struct {
-	stream server.Stream
-}
-
-func (x *examplePingPongStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *examplePingPongStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *examplePingPongStream) Send(m *Pong) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) Recv() (*Ping, error) {
-	m := new(Ping)
-	if err := x.stream.Recv(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+func (h *showServiceHandler) RemoveShow(ctx context.Context, in *RemoveShowRequest, out *RemoveShowResponse) error {
+	return h.ShowServiceHandler.RemoveShow(ctx, in, out)
 }

@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+
+	showHandler := new(handler.ShowHandler)
+	showHandler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.showservice"),
@@ -19,7 +22,7 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	err := example.RegisterShowServiceHandler(service.Server(), showHandler)
 	if err != nil{
 		log.Fatal("An Error occurred while registering the ShowHandler for the Service: go.micro.src.showservice")
 	}
