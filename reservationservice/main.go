@@ -20,8 +20,9 @@ func main() {
 
 	// Register Handler
 	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
-	if err != nil{
-		log.Fatal("An Error occurred while registering the ReservationHandler for the Service: go.micro.src.reservationservice")
+	if err != nil {
+		log.Fatal("An Error occurred while registering the ReservationHandler" +
+			" for the Service: go.micro.src.reservationservice")
 	}
 
 	// Run service

@@ -18,7 +18,8 @@ func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.R
 }
 
 // Stream is a server side stream handler called via client.Stream or the generated client code
-func (e *Example) Stream(ctx context.Context, req *example.StreamingRequest, stream example.Example_StreamStream) error {
+func (e *Example) Stream(ctx context.Context, req *example.StreamingRequest,
+	stream example.Example_StreamStream) error {
 	log.Logf("Received Example.Stream request with count: %d", req.Count)
 
 	for i := 0; i < int(req.Count); i++ {
