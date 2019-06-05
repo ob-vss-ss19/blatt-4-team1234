@@ -10,6 +10,9 @@ import (
 )
 
 func main() {
+
+	movieHandler := new(handler.MovieHandler)
+	movieHandler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.movieservice"),
@@ -20,7 +23,7 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	example.RegisterMovieServiceHandler(service.Server(), movieHandler)
 
 	// Register Struct as Subscriber
 	micro.RegisterSubscriber("go.micro.srv.movieservice", service.Server(), new(subscriber.Example))
