@@ -31,35 +31,36 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for Example service
+// Client API for UserService service
 
-type ExampleService interface {
-	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error)
-	PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error)
+type UserService interface {
+	GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...client.CallOption) (*GetAllUsersResponse, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*GetUserResponse, error)
+	AddUser(ctx context.Context, in *AddUserRequest, opts ...client.CallOption) (*AddUserResponse, error)
+	RemoveUser(ctx context.Context, in *RemoveUserRequest, opts ...client.CallOption) (*RemoveUserResponse, error)
 }
 
-type exampleService struct {
+type userService struct {
 	c    client.Client
 	name string
 }
 
-func NewExampleService(name string, c client.Client) ExampleService {
+func NewUserService(name string, c client.Client) UserService {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
 		name = "user"
 	}
-	return &exampleService{
+	return &userService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Example.Call", in)
-	out := new(Response)
+func (c *userService) GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...client.CallOption) (*GetAllUsersResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.GetAllUsers", in)
+	out := new(GetAllUsersResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,196 +68,75 @@ func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.C
 	return out, nil
 }
 
-func (c *exampleService) Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error) {
-	req := c.c.NewRequest(c.name, "Example.Stream", &StreamingRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *userService) GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*GetUserResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.GetUser", in)
+	out := new(GetUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	if err := stream.Send(in); err != nil {
-		return nil, err
-	}
-	return &exampleServiceStream{stream}, nil
+	return out, nil
 }
 
-type Example_StreamService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*StreamingResponse, error)
-}
-
-type exampleServiceStream struct {
-	stream client.Stream
-}
-
-func (x *exampleServiceStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServiceStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServiceStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServiceStream) Recv() (*StreamingResponse, error) {
-	m := new(StreamingResponse)
-	err := x.stream.Recv(m)
+func (c *userService) AddUser(ctx context.Context, in *AddUserRequest, opts ...client.CallOption) (*AddUserResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.AddUser", in)
+	out := new(AddUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return m, nil
+	return out, nil
 }
 
-func (c *exampleService) PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error) {
-	req := c.c.NewRequest(c.name, "Example.PingPong", &Ping{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *userService) RemoveUser(ctx context.Context, in *RemoveUserRequest, opts ...client.CallOption) (*RemoveUserResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.RemoveUser", in)
+	out := new(RemoveUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return &exampleServicePingPong{stream}, nil
+	return out, nil
 }
 
-type Example_PingPongService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Ping) error
-	Recv() (*Pong, error)
+// Server API for UserService service
+
+type UserServiceHandler interface {
+	GetAllUsers(context.Context, *GetAllUsersRequest, *GetAllUsersResponse) error
+	GetUser(context.Context, *GetUserRequest, *GetUserResponse) error
+	AddUser(context.Context, *AddUserRequest, *AddUserResponse) error
+	RemoveUser(context.Context, *RemoveUserRequest, *RemoveUserResponse) error
 }
 
-type exampleServicePingPong struct {
-	stream client.Stream
-}
-
-func (x *exampleServicePingPong) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServicePingPong) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServicePingPong) Send(m *Ping) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) Recv() (*Pong, error) {
-	m := new(Pong)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
+func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
+	type userService interface {
+		GetAllUsers(ctx context.Context, in *GetAllUsersRequest, out *GetAllUsersResponse) error
+		GetUser(ctx context.Context, in *GetUserRequest, out *GetUserResponse) error
+		AddUser(ctx context.Context, in *AddUserRequest, out *AddUserResponse) error
+		RemoveUser(ctx context.Context, in *RemoveUserRequest, out *RemoveUserResponse) error
 	}
-	return m, nil
-}
-
-// Server API for Example service
-
-type ExampleHandler interface {
-	Call(context.Context, *Request, *Response) error
-	Stream(context.Context, *StreamingRequest, Example_StreamStream) error
-	PingPong(context.Context, Example_PingPongStream) error
-}
-
-func RegisterExampleHandler(s server.Server, hdlr ExampleHandler, opts ...server.HandlerOption) error {
-	type example interface {
-		Call(ctx context.Context, in *Request, out *Response) error
-		Stream(ctx context.Context, stream server.Stream) error
-		PingPong(ctx context.Context, stream server.Stream) error
+	type UserService struct {
+		userService
 	}
-	type Example struct {
-		example
-	}
-	h := &exampleHandler{hdlr}
-	return s.Handle(s.NewHandler(&Example{h}, opts...))
+	h := &userServiceHandler{hdlr}
+	return s.Handle(s.NewHandler(&UserService{h}, opts...))
 }
 
-type exampleHandler struct {
-	ExampleHandler
+type userServiceHandler struct {
+	UserServiceHandler
 }
 
-func (h *exampleHandler) Call(ctx context.Context, in *Request, out *Response) error {
-	return h.ExampleHandler.Call(ctx, in, out)
+func (h *userServiceHandler) GetAllUsers(ctx context.Context, in *GetAllUsersRequest, out *GetAllUsersResponse) error {
+	return h.UserServiceHandler.GetAllUsers(ctx, in, out)
 }
 
-func (h *exampleHandler) Stream(ctx context.Context, stream server.Stream) error {
-	m := new(StreamingRequest)
-	if err := stream.Recv(m); err != nil {
-		return err
-	}
-	return h.ExampleHandler.Stream(ctx, m, &exampleStreamStream{stream})
+func (h *userServiceHandler) GetUser(ctx context.Context, in *GetUserRequest, out *GetUserResponse) error {
+	return h.UserServiceHandler.GetUser(ctx, in, out)
 }
 
-type Example_StreamStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*StreamingResponse) error
+func (h *userServiceHandler) AddUser(ctx context.Context, in *AddUserRequest, out *AddUserResponse) error {
+	return h.UserServiceHandler.AddUser(ctx, in, out)
 }
 
-type exampleStreamStream struct {
-	stream server.Stream
-}
-
-func (x *exampleStreamStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleStreamStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleStreamStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleStreamStream) Send(m *StreamingResponse) error {
-	return x.stream.Send(m)
-}
-
-func (h *exampleHandler) PingPong(ctx context.Context, stream server.Stream) error {
-	return h.ExampleHandler.PingPong(ctx, &examplePingPongStream{stream})
-}
-
-type Example_PingPongStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Pong) error
-	Recv() (*Ping, error)
-}
-
-type examplePingPongStream struct {
-	stream server.Stream
-}
-
-func (x *examplePingPongStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *examplePingPongStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *examplePingPongStream) Send(m *Pong) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) Recv() (*Ping, error) {
-	m := new(Ping)
-	if err := x.stream.Recv(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+func (h *userServiceHandler) RemoveUser(ctx context.Context, in *RemoveUserRequest, out *RemoveUserResponse) error {
+	return h.UserServiceHandler.RemoveUser(ctx, in, out)
 }

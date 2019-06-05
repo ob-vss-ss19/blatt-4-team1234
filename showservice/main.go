@@ -4,7 +4,6 @@ import (
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/handler"
-	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/subscriber"
 
 	example "github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
 )
@@ -20,16 +19,12 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	example.RegisterExampleHandler(service.Server(), new(handler.Example))
-
-	// Register Struct as Subscriber
-	micro.RegisterSubscriber("go.micro.srv.showservice", service.Server(), new(subscriber.Example))
-
-	// Register Function as Subscriber
-	micro.RegisterSubscriber("go.micro.srv.showservice", service.Server(), subscriber.Handler)
-
+	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	if err != nil{
+		log.Fatal("An Error occurred while registering the ShowHandler for the Service: go.micro.src.showservice")
+	}
 	// Run service
-	if err := service.Run(); err != nil {
+	if err = service.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
