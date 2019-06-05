@@ -44,6 +44,7 @@ func (handle *MovieHandler) RemoveMovie(ctx context.Context,req *movie.RemoveMov
 }
 
 func (handle * MovieHandler) InitDB() {
+	handle.Movies = make(map[int64]Movie)
 	handle.Movies[0] = Movie{Title:"Der Schuh des Manitu", Fsk:6}
 	handle.Movies[1] = Movie{Title:"Traumschiff Surprise", Fsk:6}
 	handle.Movies[2] = Movie{Title:"Avengers: Endgame", Fsk:12}

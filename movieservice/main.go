@@ -4,8 +4,6 @@ import (
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/handler"
-	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/subscriber"
-
 	example "github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
 )
 
@@ -23,16 +21,13 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	example.RegisterMovieServiceHandler(service.Server(), movieHandler)
-
-	// Register Struct as Subscriber
-	micro.RegisterSubscriber("go.micro.srv.movieservice", service.Server(), new(subscriber.Example))
-
-	// Register Function as Subscriber
-	micro.RegisterSubscriber("go.micro.srv.movieservice", service.Server(), subscriber.Handler)
+	err := example.RegisterMovieServiceHandler(service.Server(), movieHandler)
+	if err != nil{
+		log.Fatal("An Error occurred while registering the MovieHandler for the Service: go.micro.src.movieservice")
+	}
 
 	// Run service
-	if err := service.Run(); err != nil {
+	if err = service.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
