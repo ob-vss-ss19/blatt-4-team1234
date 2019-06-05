@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/handler"
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/subscriber"
+	"log"
 
 	example "github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
 )

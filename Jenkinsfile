@@ -26,6 +26,7 @@ pipeline {
         stage('Build Docker Image') {
             agent any
             steps {
+                sh 'ls'
                 sh 'docker-build-and-push -b ${BRANCH_NAME} -s hallservice -f hallservice/Dockerfile'
                 sh 'docker-build-and-push -b ${BRANCH_NAME} -s treecli -f movieservice/Dockerfile'
                 sh 'docker-build-and-push -b ${BRANCH_NAME} -s reservationservice -f reservationservice/Dockerfile'
