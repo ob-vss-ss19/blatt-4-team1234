@@ -2,36 +2,43 @@ syntax = "proto3";
 
 package hall;
 
-service Example {
-	rpc Call(Request) returns (Response) {}
-	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
-	rpc PingPong(stream Ping) returns (stream Pong) {}
+service HallService {
+	rpc GetAllHalls(GetAllHallsRequest) returns (GetAllHallsResponse) {}
+	rpc GetHall(GetHallRequest) returns (GetHallResponse){}
+	rpc AddHall(AddHallRequest) returns (AddHallResponse){}
+	rpc RemoveHall(RemoveHallRequest) returns (RemoveHallResponse){}
 }
 
-message Message {
-	string say = 1;
+message Hall{
+	int64 Id = 1;
+	string Name = 2;
+	int64 Rows = 3;
+	int64 Columns = 4;
 }
 
-message Request {
-	string name = 1;
+
+message GetAllHallsRequest{}
+
+message GetAllHallsResponse{
+	repeated Hall Halls = 1;
 }
 
-message Response {
-	string msg = 1;
+message GetHallRequest{
+	int64 Id = 1;
 }
 
-message StreamingRequest {
-	int64 count = 1;
+message GetHallResponse{
+	Hall Hall = 1;
 }
 
-message StreamingResponse {
-	int64 count = 1;
+message AddHallRequest{
+	Hall hall = 1;
 }
 
-message Ping {
-	int64 stroke = 1;
+message AddHallResponse{}
+
+message RemoveHallRequest{
+	int64 Id = 1;
 }
 
-message Pong {
-	int64 stroke = 1;
-}
+message RemoveHallResponse{}

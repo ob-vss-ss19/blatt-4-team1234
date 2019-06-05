@@ -31,35 +31,36 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for Example service
+// Client API for HallService service
 
-type ExampleService interface {
-	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error)
-	PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error)
+type HallService interface {
+	GetAllHalls(ctx context.Context, in *GetAllHallsRequest, opts ...client.CallOption) (*GetAllHallsResponse, error)
+	GetHall(ctx context.Context, in *GetHallRequest, opts ...client.CallOption) (*GetHallResponse, error)
+	AddHall(ctx context.Context, in *AddHallRequest, opts ...client.CallOption) (*AddHallResponse, error)
+	RemoveHall(ctx context.Context, in *RemoveHallRequest, opts ...client.CallOption) (*RemoveHallResponse, error)
 }
 
-type exampleService struct {
+type hallService struct {
 	c    client.Client
 	name string
 }
 
-func NewExampleService(name string, c client.Client) ExampleService {
+func NewHallService(name string, c client.Client) HallService {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
 		name = "hall"
 	}
-	return &exampleService{
+	return &hallService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Example.Call", in)
-	out := new(Response)
+func (c *hallService) GetAllHalls(ctx context.Context, in *GetAllHallsRequest, opts ...client.CallOption) (*GetAllHallsResponse, error) {
+	req := c.c.NewRequest(c.name, "HallService.GetAllHalls", in)
+	out := new(GetAllHallsResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,196 +68,75 @@ func (c *exampleService) Call(ctx context.Context, in *Request, opts ...client.C
 	return out, nil
 }
 
-func (c *exampleService) Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Example_StreamService, error) {
-	req := c.c.NewRequest(c.name, "Example.Stream", &StreamingRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *hallService) GetHall(ctx context.Context, in *GetHallRequest, opts ...client.CallOption) (*GetHallResponse, error) {
+	req := c.c.NewRequest(c.name, "HallService.GetHall", in)
+	out := new(GetHallResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	if err := stream.Send(in); err != nil {
-		return nil, err
-	}
-	return &exampleServiceStream{stream}, nil
+	return out, nil
 }
 
-type Example_StreamService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*StreamingResponse, error)
-}
-
-type exampleServiceStream struct {
-	stream client.Stream
-}
-
-func (x *exampleServiceStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServiceStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServiceStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServiceStream) Recv() (*StreamingResponse, error) {
-	m := new(StreamingResponse)
-	err := x.stream.Recv(m)
+func (c *hallService) AddHall(ctx context.Context, in *AddHallRequest, opts ...client.CallOption) (*AddHallResponse, error) {
+	req := c.c.NewRequest(c.name, "HallService.AddHall", in)
+	out := new(AddHallResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return m, nil
+	return out, nil
 }
 
-func (c *exampleService) PingPong(ctx context.Context, opts ...client.CallOption) (Example_PingPongService, error) {
-	req := c.c.NewRequest(c.name, "Example.PingPong", &Ping{})
-	stream, err := c.c.Stream(ctx, req, opts...)
+func (c *hallService) RemoveHall(ctx context.Context, in *RemoveHallRequest, opts ...client.CallOption) (*RemoveHallResponse, error) {
+	req := c.c.NewRequest(c.name, "HallService.RemoveHall", in)
+	out := new(RemoveHallResponse)
+	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return &exampleServicePingPong{stream}, nil
+	return out, nil
 }
 
-type Example_PingPongService interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Ping) error
-	Recv() (*Pong, error)
+// Server API for HallService service
+
+type HallServiceHandler interface {
+	GetAllHalls(context.Context, *GetAllHallsRequest, *GetAllHallsResponse) error
+	GetHall(context.Context, *GetHallRequest, *GetHallResponse) error
+	AddHall(context.Context, *AddHallRequest, *AddHallResponse) error
+	RemoveHall(context.Context, *RemoveHallRequest, *RemoveHallResponse) error
 }
 
-type exampleServicePingPong struct {
-	stream client.Stream
-}
-
-func (x *exampleServicePingPong) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleServicePingPong) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleServicePingPong) Send(m *Ping) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleServicePingPong) Recv() (*Pong, error) {
-	m := new(Pong)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
+func RegisterHallServiceHandler(s server.Server, hdlr HallServiceHandler, opts ...server.HandlerOption) error {
+	type hallService interface {
+		GetAllHalls(ctx context.Context, in *GetAllHallsRequest, out *GetAllHallsResponse) error
+		GetHall(ctx context.Context, in *GetHallRequest, out *GetHallResponse) error
+		AddHall(ctx context.Context, in *AddHallRequest, out *AddHallResponse) error
+		RemoveHall(ctx context.Context, in *RemoveHallRequest, out *RemoveHallResponse) error
 	}
-	return m, nil
-}
-
-// Server API for Example service
-
-type ExampleHandler interface {
-	Call(context.Context, *Request, *Response) error
-	Stream(context.Context, *StreamingRequest, Example_StreamStream) error
-	PingPong(context.Context, Example_PingPongStream) error
-}
-
-func RegisterExampleHandler(s server.Server, hdlr ExampleHandler, opts ...server.HandlerOption) error {
-	type example interface {
-		Call(ctx context.Context, in *Request, out *Response) error
-		Stream(ctx context.Context, stream server.Stream) error
-		PingPong(ctx context.Context, stream server.Stream) error
+	type HallService struct {
+		hallService
 	}
-	type Example struct {
-		example
-	}
-	h := &exampleHandler{hdlr}
-	return s.Handle(s.NewHandler(&Example{h}, opts...))
+	h := &hallServiceHandler{hdlr}
+	return s.Handle(s.NewHandler(&HallService{h}, opts...))
 }
 
-type exampleHandler struct {
-	ExampleHandler
+type hallServiceHandler struct {
+	HallServiceHandler
 }
 
-func (h *exampleHandler) Call(ctx context.Context, in *Request, out *Response) error {
-	return h.ExampleHandler.Call(ctx, in, out)
+func (h *hallServiceHandler) GetAllHalls(ctx context.Context, in *GetAllHallsRequest, out *GetAllHallsResponse) error {
+	return h.HallServiceHandler.GetAllHalls(ctx, in, out)
 }
 
-func (h *exampleHandler) Stream(ctx context.Context, stream server.Stream) error {
-	m := new(StreamingRequest)
-	if err := stream.Recv(m); err != nil {
-		return err
-	}
-	return h.ExampleHandler.Stream(ctx, m, &exampleStreamStream{stream})
+func (h *hallServiceHandler) GetHall(ctx context.Context, in *GetHallRequest, out *GetHallResponse) error {
+	return h.HallServiceHandler.GetHall(ctx, in, out)
 }
 
-type Example_StreamStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*StreamingResponse) error
+func (h *hallServiceHandler) AddHall(ctx context.Context, in *AddHallRequest, out *AddHallResponse) error {
+	return h.HallServiceHandler.AddHall(ctx, in, out)
 }
 
-type exampleStreamStream struct {
-	stream server.Stream
-}
-
-func (x *exampleStreamStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *exampleStreamStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *exampleStreamStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *exampleStreamStream) Send(m *StreamingResponse) error {
-	return x.stream.Send(m)
-}
-
-func (h *exampleHandler) PingPong(ctx context.Context, stream server.Stream) error {
-	return h.ExampleHandler.PingPong(ctx, &examplePingPongStream{stream})
-}
-
-type Example_PingPongStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Pong) error
-	Recv() (*Ping, error)
-}
-
-type examplePingPongStream struct {
-	stream server.Stream
-}
-
-func (x *examplePingPongStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *examplePingPongStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *examplePingPongStream) Send(m *Pong) error {
-	return x.stream.Send(m)
-}
-
-func (x *examplePingPongStream) Recv() (*Ping, error) {
-	m := new(Ping)
-	if err := x.stream.Recv(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+func (h *hallServiceHandler) RemoveHall(ctx context.Context, in *RemoveHallRequest, out *RemoveHallResponse) error {
+	return h.HallServiceHandler.RemoveHall(ctx, in, out)
 }
