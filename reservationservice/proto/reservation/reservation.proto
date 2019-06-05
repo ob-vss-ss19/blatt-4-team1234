@@ -2,36 +2,48 @@ syntax = "proto3";
 
 package reservation;
 
-service Example {
-	rpc Call(Request) returns (Response) {}
-	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
-	rpc PingPong(stream Ping) returns (stream Pong) {}
+service ReservationService {
+	rpc GetAllReservations(GetAllReservationsRequest) returns (GetAllReservationsResponse) {}
+	rpc GetReservation(GetReservationRequest) returns (GetReservationResponse){}
+	rpc AddReservation(AddReservationRequest) returns (AddReservationResponse){}
+	rpc RemoveReservation(RemoveReservationRequest) returns (RemoveReservationResponse){}
 }
 
-message Message {
-	string say = 1;
+message Reservation{
+	int64 Id = 1;
+	int64 userId = 2;
+	int64 ShowId = 3;
+	repeated Seat Seats = 4;
 }
 
-message Request {
-	string name = 1;
+message Seat{
+	int64 Row = 1;
+	int64 Column = 2;
 }
 
-message Response {
-	string msg = 1;
+
+message GetAllReservationsRequest{}
+
+message GetAllReservationsResponse{
+	repeated Reservation Reservations = 1;
 }
 
-message StreamingRequest {
-	int64 count = 1;
+message GetReservationRequest{
+	int64 Id = 1;
 }
 
-message StreamingResponse {
-	int64 count = 1;
+message GetReservationResponse{
+	Reservation Reservation = 1;
 }
 
-message Ping {
-	int64 stroke = 1;
+message AddReservationRequest{
+	Reservation reservation = 1;
 }
 
-message Pong {
-	int64 stroke = 1;
+message AddReservationResponse{}
+
+message RemoveReservationRequest{
+	int64 Id = 1;
 }
+
+message RemoveReservationResponse{}

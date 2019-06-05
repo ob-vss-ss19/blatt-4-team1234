@@ -9,20 +9,14 @@ import (
 )
 
 type HallHandler struct {
-	Halls map[int64]Hall
-}
-
-type Hall struct {
-	Name    string
-	Rows    int64
-	Columns int64
+	Halls map[int64]hall.Hall
 }
 
 func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHallsRequest,
 	rsp *hall.GetAllHallsResponse) error {
 	protoHalls := make([]*hall.Hall, len(handle.Halls))
-	for i, h := range handle.Halls {
-		protoHalls = append(protoHalls, &hall.Hall{Id: i, Name: h.Name, Rows: h.Rows, Columns: h.Columns})
+	for _, h := range handle.Halls {
+		protoHalls = append(protoHalls, &h)
 	}
 	rsp.Halls = protoHalls
 	return nil
@@ -34,7 +28,7 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
 	}
-	rsp.Hall = &hall.Hall{Id: req.Id, Name: h.Name, Rows: h.Rows, Columns: h.Columns}
+	rsp.Hall = &h
 	return nil
 }
 
@@ -49,12 +43,12 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 }
 
 func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest, rsp *hall.AddHallResponse) error {
-	handle.Halls[int64(len(handle.Halls)+1)] = Hall{Name: req.Hall.Name, Rows: req.Hall.Rows, Columns: req.Hall.Rows}
+	handle.Halls[int64(len(handle.Halls)+1)] = *req.Hall
 	return nil
 }
 
 func (handle *HallHandler) InitDB() {
-	handle.Halls = make(map[int64]Hall)
-	handle.Halls[0] = Hall{Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
-	handle.Halls[1] = Hall{Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
+	handle.Halls = make(map[int64]hall.Hall)
+	handle.Halls[0] = hall.Hall{Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
+	handle.Halls[1] = hall.Hall{Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
 }

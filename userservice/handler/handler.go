@@ -9,20 +9,14 @@ import (
 )
 
 type UserHandler struct {
-	Users map[int64]User
-}
-
-type User struct {
-	FirstName string
-	LastName  string
-	Age       int64
+	Users map[int64]user.User
 }
 
 func (handle *UserHandler) GetAllUsers(ctx context.Context, req *user.GetAllUsersRequest,
 	rsp *user.GetAllUsersResponse) error {
 	protoUsers := make([]*user.User, len(handle.Users))
-	for i, u := range handle.Users {
-		protoUsers = append(protoUsers, &user.User{Id: i, FirstName: u.FirstName, LastName: u.LastName, Age: u.Age})
+	for _, u := range handle.Users {
+		protoUsers = append(protoUsers, &u)
 	}
 	rsp.Users = protoUsers
 	return nil
@@ -34,7 +28,7 @@ func (handle *UserHandler) GetUser(ctx context.Context, req *user.GetUserRequest
 	if !found {
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
 	}
-	rsp.User = &user.User{Id: req.Id, FirstName: u.FirstName, LastName: u.LastName, Age: u.Age}
+	rsp.User = &u
 	return nil
 }
 
@@ -49,15 +43,14 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 }
 
 func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest, rsp *user.AddUserResponse) error {
-	handle.Users[int64(len(handle.Users)+1)] = User{FirstName: req.User.FirstName, LastName: req.User.LastName,
-		Age: req.User.Age}
+	handle.Users[int64(len(handle.Users)+1)] = *req.User
 	return nil
 }
 
 func (handle *UserHandler) InitDB() {
-	handle.Users = make(map[int64]User)
-	handle.Users[0] = User{FirstName: "Bob", LastName: "Baumeister", Age: 6}
-	handle.Users[1] = User{FirstName: "John", LastName: "Wick", Age: 42}
-	handle.Users[2] = User{FirstName: "Mani", LastName: "Mammut", Age: 17}
-	handle.Users[3] = User{FirstName: "Jack", LastName: "Sparrow", Age: 31}
+	handle.Users = make(map[int64]user.User)
+	handle.Users[0] = user.User{FirstName: "Bob", LastName: "Baumeister", Age: 6}
+	handle.Users[1] = user.User{FirstName: "John", LastName: "Wick", Age: 42}
+	handle.Users[2] = user.User{FirstName: "Mani", LastName: "Mammut", Age: 17}
+	handle.Users[3] = user.User{FirstName: "Jack", LastName: "Sparrow", Age: 31}
 }
