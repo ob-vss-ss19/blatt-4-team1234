@@ -23,7 +23,7 @@ func main() {
 
 	// Register Handler
 	err := example.RegisterShowServiceHandler(service.Server(), showHandler)
-	if err != nil{
+	if err != nil {
 		log.Fatal("An Error occurred while registering the ShowHandler for the Service: go.micro.src.showservice")
 	}
 	// Run service

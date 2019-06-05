@@ -22,7 +22,7 @@ func main() {
 
 	// Register Handler
 	err := example.RegisterMovieServiceHandler(service.Server(), movieHandler)
-	if err != nil{
+	if err != nil {
 		log.Fatal("An Error occurred while registering the MovieHandler for the Service: go.micro.src.movieservice")
 	}
 

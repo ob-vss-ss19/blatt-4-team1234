@@ -23,7 +23,7 @@ func main() {
 
 	// Register Handler
 	err := example.RegisterUserServiceHandler(service.Server(), userHandler)
-	if err != nil{
+	if err != nil {
 		log.Fatal("An Error occurred while registering the UserHandler for the Service: go.micro.src.userservice")
 	}
 	// Run service
