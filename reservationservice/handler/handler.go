@@ -116,7 +116,7 @@ func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context,
 func (handle *ReservationHandler) GetAllReservations(ctx context.Context, req *reservation.GetAllReservationsRequest,
 	rsp *reservation.GetAllReservationsResponse) error {
 	protoReservations := make([]*reservation.Reservation, len(handle.Reservations))
-	i := 1
+	i := 0
 	for _, r := range handle.Reservations {
 		r := r
 		protoReservations[i] = &r

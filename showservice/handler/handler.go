@@ -65,7 +65,7 @@ func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.Re
 func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShowsRequest,
 	rsp *show.GetAllShowsResponse) error {
 	protoShows := make([]*show.Show, len(handle.Shows))
-	i := 1
+	i := 0
 	for _, s := range handle.Shows {
 		s := s
 		protoShows[i] = &s
