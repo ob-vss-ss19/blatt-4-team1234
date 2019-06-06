@@ -20,7 +20,8 @@ type ShowHandler struct {
 	Shows map[int64]show.Show
 }
 
-func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.RemoveShowsForHallRequest, rsp *show.RemoveShowsForHallResponse) error {
+func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.RemoveShowsForHallRequest,
+	rsp *show.RemoveShowsForHallResponse) error {
 	if err := commons.CheckId(req.HallId, "Hall"); err != nil {
 		return err
 	}
@@ -40,7 +41,8 @@ func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.Rem
 	return nil
 }
 
-func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.RemoveShowsForMovieRequest, rsp *show.RemoveShowsForMovieResponse) error {
+func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.RemoveShowsForMovieRequest,
+	rsp *show.RemoveShowsForMovieResponse) error {
 	if err := commons.CheckId(req.MovieId, "Movie"); err != nil {
 		return err
 	}
