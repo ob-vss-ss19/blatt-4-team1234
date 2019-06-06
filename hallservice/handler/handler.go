@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 
-	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
-
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
+	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
 	"google.golang.org/grpc/codes"
@@ -72,7 +72,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 
 func (handle *HallHandler) RemoveShows(ctx context.Context, hallID int64) error {
 	showRequest := show.RemoveShowsForHallRequest{HallId: hallID}
-	showService := show.NewShowService(commons.userservice, nil)
+	showService := show.NewShowService(commons.GetUserServiceName(), nil)
 	_, err := showService.RemoveShowsForHall(ctx, &showRequest)
 	if err != nil {
 		return err

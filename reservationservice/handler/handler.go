@@ -35,6 +35,7 @@ func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 
 func (handle *ReservationHandler) RequestReservation(ctx context.Context, req *reservation.RequestReservationRequest,
 	rsp *reservation.RequestReservationResponse) error {
+	//TODO add user to this request and check for id
 	if err := commons.CheckId(req.ShowId, "Show"); err != nil {
 		return err
 	}

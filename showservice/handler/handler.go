@@ -106,7 +106,7 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 
 func (handle *ShowHandler) RemoveReservations(ctx context.Context, showID int64) error {
 	reservationRequest := reservation.RemoveReservationForShowRequest{ShowId: showID}
-	reservationService := reservation.NewReservationService("go.micro.srv.reservationservice", nil)
+	reservationService := reservation.NewReservationService(commons.GetReservationServiceName(), nil)
 	_, err := reservationService.RemoveReservationsForShow(ctx, &reservationRequest)
 	if err != nil {
 		return err
@@ -128,13 +128,13 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 		return status.Errorf(codes.InvalidArgument, "No DateTime was Specified")
 	}
 	movieRequest := movie.GetMovieRequest{Id: req.Show.MovieId}
-	movieService := movie.NewMovieService("go.micro.srv.movieservice", nil)
+	movieService := movie.NewMovieService(commons.GetMovieServiceName(), nil)
 	_, err := movieService.GetMovie(ctx, &movieRequest)
 	if err != nil {
 		return status.Errorf(codes.FailedPrecondition, "No Movie with the Id (%d) exists", req.Show.MovieId)
 	}
 	hallRequest := hall.GetHallRequest{Id: req.Show.HallId}
-	hallService := hall.NewHallService("go.micro.srv.hallservice", nil)
+	hallService := hall.NewHallService(commons.GetHallServiceName(), nil)
 	_, err = hallService.GetHall(ctx, &hallRequest)
 	if err != nil {
 		return status.Errorf(codes.FailedPrecondition, "No Hall with the Id (%d) exists", req.Show.HallId)

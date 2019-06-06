@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
 	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/handler"
 	example "github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
 )
@@ -23,7 +24,8 @@ func main() {
 	// Register Handler
 	err := example.RegisterMovieServiceHandler(service.Server(), movieHandler)
 	if err != nil {
-		log.Fatal("An Error occurred while registering the MovieHandler for the Service: go.micro.src.movieservice")
+		log.Fatalf("An Error occurred while registering the MovieHandler for the Service: %s",
+			commons.GetMovieServiceName())
 	}
 
 	// Run service

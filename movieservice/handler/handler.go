@@ -73,7 +73,7 @@ func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMo
 
 func (handle *MovieHandler) RemoveShows(ctx context.Context, movieID int64) error {
 	showRequest := show.RemoveShowsForMovieRequest{MovieId: movieID}
-	showService := show.NewShowService("go.micro.srv.showService", nil)
+	showService := show.NewShowService(commons.GetShowServiceName(), nil)
 	_, err := showService.RemoveShowsForMovie(ctx, &showRequest)
 	if err != nil {
 		return err

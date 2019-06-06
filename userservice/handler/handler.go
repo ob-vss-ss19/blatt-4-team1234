@@ -51,7 +51,7 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
 	}
 	request := reservation.GetReservationsForUserRequest{UserId: req.Id}
-	reservationService := reservation.NewReservationService("go.micro.srv.reservationservice", nil)
+	reservationService := reservation.NewReservationService(commons.GetReservationServiceName(), nil)
 	response, err := reservationService.GetReservationsForUser(ctx, &request)
 	if err != nil {
 		return status.Errorf(codes.Internal, "An internal error occurred while getting the reservations for this"+
