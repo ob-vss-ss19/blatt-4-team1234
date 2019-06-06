@@ -40,6 +40,12 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 	if !found {
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
 	}
+	//TODO get user's reservations
+	// if (len(userReservatoins) == 0{
+	//     delete(handle.Users, req.Id)
+	// else {
+	// 		return status.Erroff(codes.FailedPrecondition, "The User still has open reservations")
+	// }
 	delete(handle.Users, req.Id)
 	return nil
 }
