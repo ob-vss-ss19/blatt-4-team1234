@@ -102,8 +102,8 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 	return nil
 }
 
-func (handle *ShowHandler) RemoveReservations(ctx context.Context, showId int64) error {
-	reservationRequest := reservation.RemoveReservationForShowRequest{}
+func (handle *ShowHandler) RemoveReservations(ctx context.Context, showID int64) error {
+	reservationRequest := reservation.RemoveReservationForShowRequest{ShowId: showID}
 	reservationService := reservation.NewReservationService("go.micro.srv.reservationservice", nil)
 	_, err := reservationService.RemoveReservationsForShow(ctx, &reservationRequest)
 	if err != nil {
