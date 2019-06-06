@@ -5,7 +5,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-var (
+const (
 	// nolint:gochecknoglobals
 	userService = "go.micro.srv.userservice"
 	// nolint:gochecknoglobals
