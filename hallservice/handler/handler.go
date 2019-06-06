@@ -72,7 +72,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 
 func (handle *HallHandler) RemoveShows(ctx context.Context, hallID int64) error {
 	showRequest := show.RemoveShowsForHallRequest{HallId: hallID}
-	showService := show.NewShowService("go.micro.srv.showService", nil)
+	showService := show.NewShowService("go.micro.srv.showservice", nil)
 	_, err := showService.RemoveShowsForHall(ctx, &showRequest)
 	if err != nil {
 		return err
