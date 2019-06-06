@@ -79,7 +79,7 @@ func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest
 	if req.User.Age < 1 {
 		return status.Errorf(codes.InvalidArgument, "No Age was Provided!")
 	}
-	req.User.Id = int64(len(handle.Users) + 2)
+	req.User.Id = int64(len(handle.Users)) + 1
 	handle.Users[req.User.Id] = *req.User
 	return nil
 }
