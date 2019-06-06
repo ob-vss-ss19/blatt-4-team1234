@@ -12,6 +12,56 @@ type ReservationHandler struct {
 	Reservations map[int64]reservation.Reservation
 }
 
+func (handle *ReservationHandler) RequestReservation(ctx context.Context,req *reservation.RequestReservationRequest,
+	rsp *reservation.RequestReservationResponse) error {
+	if err := handle.SeatsAreReserved(req); err != nil{
+		return err
+	}
+	newId := int64(len(handle.Reservations))
+	handle.Reservations[newId] = reservation.Reservation{Id:newId,ShowId:req.ShowId,Seats:req.Seats,UserId:-1}
+	rsp.ReservationId = newId
+	return nil
+}
+
+func (handle *ReservationHandler) SeatsAreReserved(req *reservation.RequestReservationRequest) error {
+	var reservationsForShow []*reservation.Reservation
+	for _,r := range handle.Reservations{
+		r := r
+		if r.ShowId == req.ShowId{
+			reservationsForShow = append(reservationsForShow,&r)
+		}
+	}
+	for _,r := range reservationsForShow{
+		r := r
+		for _,s := range r.Seats{
+			if ContainsSeat(r.Seats,s){
+				return status.Errorf(codes.AlreadyExists,"A Reservation for Seat (Row: %d, Column:%d)," +
+					" already Exists!",s.Row,s.Column)
+			}
+		}
+	}
+	return nil
+}
+
+func ContainsSeat(seats []*reservation.Seat,seat *reservation.Seat) bool{
+	for _,r := range seats{
+		if seat.Equal(r){
+			return false
+		}
+	}
+	return true
+}
+
+func (handle *ReservationHandler) ActivateReservation(ctx context.Context,req *reservation.ActivateReservationRequest,rsp *reservation.ActivateReservationResponse) error {
+	r, found := handle.Reservations[req.ReservationId]
+	if !found{
+		return status.Errorf(codes.NotFound,"The ReservationID (%d) was not found!",req.ReservationId)
+	}
+	r.UserId = req.UserId
+	handle.Reservations[req.ReservationId] = r
+	return nil
+}
+
 func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context,
 	req *reservation.GetReservationsForUserRequest, rsp *reservation.GetReservationsForUserResponse) error {
 	var userReservations []*reservation.Reservation
@@ -55,12 +105,6 @@ func (handle *ReservationHandler) RemoveReservation(ctx context.Context, req *re
 		return status.Errorf(codes.NotFound, "The Reservation with the ID:%d does not Exist", req.Id)
 	}
 	delete(handle.Reservations, req.Id)
-	return nil
-}
-
-func (handle *ReservationHandler) AddReservation(ctx context.Context, req *reservation.AddReservationRequest,
-	rsp *reservation.AddReservationResponse) error {
-	handle.Reservations[int64(len(handle.Reservations)+1)] = *req.Reservation
 	return nil
 }
 

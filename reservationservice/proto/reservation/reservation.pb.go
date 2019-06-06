@@ -5,12 +5,11 @@ package reservation
 
 import (
 	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
 	reflect "reflect"
 	strings "strings"
-
-	proto "github.com/gogo/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,6 +23,194 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
+type RequestReservationRequest struct {
+	ShowId int64   `protobuf:"varint,1,opt,name=ShowId,proto3" json:"ShowId,omitempty"`
+	Seats  []*Seat `protobuf:"bytes,2,rep,name=Seats,proto3" json:"Seats,omitempty"`
+}
+
+func (m *RequestReservationRequest) Reset()      { *m = RequestReservationRequest{} }
+func (*RequestReservationRequest) ProtoMessage() {}
+func (*RequestReservationRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f9340195c3dda32e, []int{0}
+}
+func (m *RequestReservationRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestReservationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestReservationRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestReservationRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestReservationRequest.Merge(m, src)
+}
+func (m *RequestReservationRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestReservationRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestReservationRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestReservationRequest proto.InternalMessageInfo
+
+func (m *RequestReservationRequest) GetShowId() int64 {
+	if m != nil {
+		return m.ShowId
+	}
+	return 0
+}
+
+func (m *RequestReservationRequest) GetSeats() []*Seat {
+	if m != nil {
+		return m.Seats
+	}
+	return nil
+}
+
+type RequestReservationResponse struct {
+	ReservationId int64 `protobuf:"varint,1,opt,name=ReservationId,proto3" json:"ReservationId,omitempty"`
+}
+
+func (m *RequestReservationResponse) Reset()      { *m = RequestReservationResponse{} }
+func (*RequestReservationResponse) ProtoMessage() {}
+func (*RequestReservationResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f9340195c3dda32e, []int{1}
+}
+func (m *RequestReservationResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestReservationResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestReservationResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestReservationResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestReservationResponse.Merge(m, src)
+}
+func (m *RequestReservationResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestReservationResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestReservationResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestReservationResponse proto.InternalMessageInfo
+
+func (m *RequestReservationResponse) GetReservationId() int64 {
+	if m != nil {
+		return m.ReservationId
+	}
+	return 0
+}
+
+type ActivateReservationRequest struct {
+	ReservationId int64 `protobuf:"varint,1,opt,name=ReservationId,proto3" json:"ReservationId,omitempty"`
+	UserId        int64 `protobuf:"varint,2,opt,name=UserId,proto3" json:"UserId,omitempty"`
+}
+
+func (m *ActivateReservationRequest) Reset()      { *m = ActivateReservationRequest{} }
+func (*ActivateReservationRequest) ProtoMessage() {}
+func (*ActivateReservationRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f9340195c3dda32e, []int{2}
+}
+func (m *ActivateReservationRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ActivateReservationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ActivateReservationRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ActivateReservationRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActivateReservationRequest.Merge(m, src)
+}
+func (m *ActivateReservationRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ActivateReservationRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActivateReservationRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ActivateReservationRequest proto.InternalMessageInfo
+
+func (m *ActivateReservationRequest) GetReservationId() int64 {
+	if m != nil {
+		return m.ReservationId
+	}
+	return 0
+}
+
+func (m *ActivateReservationRequest) GetUserId() int64 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+type ActivateReservationResponse struct {
+	Reservation *Reservation `protobuf:"bytes,1,opt,name=Reservation,proto3" json:"Reservation,omitempty"`
+}
+
+func (m *ActivateReservationResponse) Reset()      { *m = ActivateReservationResponse{} }
+func (*ActivateReservationResponse) ProtoMessage() {}
+func (*ActivateReservationResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f9340195c3dda32e, []int{3}
+}
+func (m *ActivateReservationResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ActivateReservationResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ActivateReservationResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ActivateReservationResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActivateReservationResponse.Merge(m, src)
+}
+func (m *ActivateReservationResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *ActivateReservationResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActivateReservationResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ActivateReservationResponse proto.InternalMessageInfo
+
+func (m *ActivateReservationResponse) GetReservation() *Reservation {
+	if m != nil {
+		return m.Reservation
+	}
+	return nil
+}
+
 type Reservation struct {
 	Id     int64   `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 	UserId int64   `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
@@ -34,7 +221,7 @@ type Reservation struct {
 func (m *Reservation) Reset()      { *m = Reservation{} }
 func (*Reservation) ProtoMessage() {}
 func (*Reservation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{0}
+	return fileDescriptor_f9340195c3dda32e, []int{4}
 }
 func (m *Reservation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -99,7 +286,7 @@ type Seat struct {
 func (m *Seat) Reset()      { *m = Seat{} }
 func (*Seat) ProtoMessage() {}
 func (*Seat) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{1}
+	return fileDescriptor_f9340195c3dda32e, []int{5}
 }
 func (m *Seat) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -148,7 +335,7 @@ type GetAllReservationsRequest struct {
 func (m *GetAllReservationsRequest) Reset()      { *m = GetAllReservationsRequest{} }
 func (*GetAllReservationsRequest) ProtoMessage() {}
 func (*GetAllReservationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{2}
+	return fileDescriptor_f9340195c3dda32e, []int{6}
 }
 func (m *GetAllReservationsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -184,7 +371,7 @@ type GetAllReservationsResponse struct {
 func (m *GetAllReservationsResponse) Reset()      { *m = GetAllReservationsResponse{} }
 func (*GetAllReservationsResponse) ProtoMessage() {}
 func (*GetAllReservationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{3}
+	return fileDescriptor_f9340195c3dda32e, []int{7}
 }
 func (m *GetAllReservationsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -227,7 +414,7 @@ type GetReservationRequest struct {
 func (m *GetReservationRequest) Reset()      { *m = GetReservationRequest{} }
 func (*GetReservationRequest) ProtoMessage() {}
 func (*GetReservationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{4}
+	return fileDescriptor_f9340195c3dda32e, []int{8}
 }
 func (m *GetReservationRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -270,7 +457,7 @@ type GetReservationResponse struct {
 func (m *GetReservationResponse) Reset()      { *m = GetReservationResponse{} }
 func (*GetReservationResponse) ProtoMessage() {}
 func (*GetReservationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{5}
+	return fileDescriptor_f9340195c3dda32e, []int{9}
 }
 func (m *GetReservationResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -306,84 +493,6 @@ func (m *GetReservationResponse) GetReservation() *Reservation {
 	return nil
 }
 
-type AddReservationRequest struct {
-	Reservation *Reservation `protobuf:"bytes,1,opt,name=reservation,proto3" json:"reservation,omitempty"`
-}
-
-func (m *AddReservationRequest) Reset()      { *m = AddReservationRequest{} }
-func (*AddReservationRequest) ProtoMessage() {}
-func (*AddReservationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{6}
-}
-func (m *AddReservationRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AddReservationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AddReservationRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AddReservationRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddReservationRequest.Merge(m, src)
-}
-func (m *AddReservationRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *AddReservationRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddReservationRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AddReservationRequest proto.InternalMessageInfo
-
-func (m *AddReservationRequest) GetReservation() *Reservation {
-	if m != nil {
-		return m.Reservation
-	}
-	return nil
-}
-
-type AddReservationResponse struct {
-}
-
-func (m *AddReservationResponse) Reset()      { *m = AddReservationResponse{} }
-func (*AddReservationResponse) ProtoMessage() {}
-func (*AddReservationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{7}
-}
-func (m *AddReservationResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AddReservationResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AddReservationResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AddReservationResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddReservationResponse.Merge(m, src)
-}
-func (m *AddReservationResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *AddReservationResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddReservationResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AddReservationResponse proto.InternalMessageInfo
-
 type RemoveReservationRequest struct {
 	Id int64 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 }
@@ -391,7 +500,7 @@ type RemoveReservationRequest struct {
 func (m *RemoveReservationRequest) Reset()      { *m = RemoveReservationRequest{} }
 func (*RemoveReservationRequest) ProtoMessage() {}
 func (*RemoveReservationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{8}
+	return fileDescriptor_f9340195c3dda32e, []int{10}
 }
 func (m *RemoveReservationRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -433,7 +542,7 @@ type RemoveReservationResponse struct {
 func (m *RemoveReservationResponse) Reset()      { *m = RemoveReservationResponse{} }
 func (*RemoveReservationResponse) ProtoMessage() {}
 func (*RemoveReservationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{9}
+	return fileDescriptor_f9340195c3dda32e, []int{11}
 }
 func (m *RemoveReservationResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -469,7 +578,7 @@ type GetReservationsForUserRequest struct {
 func (m *GetReservationsForUserRequest) Reset()      { *m = GetReservationsForUserRequest{} }
 func (*GetReservationsForUserRequest) ProtoMessage() {}
 func (*GetReservationsForUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{10}
+	return fileDescriptor_f9340195c3dda32e, []int{12}
 }
 func (m *GetReservationsForUserRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -512,7 +621,7 @@ type GetReservationsForUserResponse struct {
 func (m *GetReservationsForUserResponse) Reset()      { *m = GetReservationsForUserResponse{} }
 func (*GetReservationsForUserResponse) ProtoMessage() {}
 func (*GetReservationsForUserResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f9340195c3dda32e, []int{11}
+	return fileDescriptor_f9340195c3dda32e, []int{13}
 }
 func (m *GetReservationsForUserResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -549,14 +658,16 @@ func (m *GetReservationsForUserResponse) GetReservations() []*Reservation {
 }
 
 func init() {
+	proto.RegisterType((*RequestReservationRequest)(nil), "reservation.RequestReservationRequest")
+	proto.RegisterType((*RequestReservationResponse)(nil), "reservation.RequestReservationResponse")
+	proto.RegisterType((*ActivateReservationRequest)(nil), "reservation.ActivateReservationRequest")
+	proto.RegisterType((*ActivateReservationResponse)(nil), "reservation.ActivateReservationResponse")
 	proto.RegisterType((*Reservation)(nil), "reservation.Reservation")
 	proto.RegisterType((*Seat)(nil), "reservation.Seat")
 	proto.RegisterType((*GetAllReservationsRequest)(nil), "reservation.GetAllReservationsRequest")
 	proto.RegisterType((*GetAllReservationsResponse)(nil), "reservation.GetAllReservationsResponse")
 	proto.RegisterType((*GetReservationRequest)(nil), "reservation.GetReservationRequest")
 	proto.RegisterType((*GetReservationResponse)(nil), "reservation.GetReservationResponse")
-	proto.RegisterType((*AddReservationRequest)(nil), "reservation.AddReservationRequest")
-	proto.RegisterType((*AddReservationResponse)(nil), "reservation.AddReservationResponse")
 	proto.RegisterType((*RemoveReservationRequest)(nil), "reservation.RemoveReservationRequest")
 	proto.RegisterType((*RemoveReservationResponse)(nil), "reservation.RemoveReservationResponse")
 	proto.RegisterType((*GetReservationsForUserRequest)(nil), "reservation.GetReservationsForUserRequest")
@@ -568,40 +679,150 @@ func init() {
 }
 
 var fileDescriptor_f9340195c3dda32e = []byte{
-	// 485 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xde, 0x8d, 0x43, 0x0e, 0x13, 0x54, 0xd1, 0x95, 0x6a, 0x6d, 0x5d, 0xb1, 0xaa, 0x16, 0xd1,
-	0x54, 0x45, 0x6a, 0x51, 0x41, 0x20, 0x55, 0x5c, 0x0a, 0x12, 0x95, 0xaf, 0x36, 0xbd, 0x80, 0x84,
-	0x54, 0xf0, 0x0a, 0x2a, 0x25, 0xd9, 0xe0, 0x75, 0x92, 0x2b, 0x8f, 0x80, 0x78, 0x0a, 0x1e, 0x85,
-	0x63, 0x8e, 0x39, 0x12, 0xe7, 0xc2, 0x31, 0x8f, 0x80, 0xec, 0xb5, 0x61, 0xbd, 0x71, 0x7e, 0x0e,
-	0xdc, 0x76, 0x66, 0xbe, 0xfd, 0xbe, 0xf1, 0x37, 0xb3, 0x86, 0x67, 0xb1, 0x50, 0x22, 0x1e, 0xdd,
-	0x24, 0xb7, 0xb2, 0x9f, 0x1d, 0x6e, 0x3f, 0x8a, 0xb3, 0x41, 0x2c, 0x13, 0x79, 0x66, 0x14, 0xcc,
-	0xf3, 0x69, 0x5e, 0x25, 0x6d, 0x23, 0xc5, 0x47, 0xd0, 0x0e, 0xfe, 0x85, 0x64, 0x07, 0x1a, 0x7e,
-	0x44, 0xf1, 0x21, 0x3e, 0x76, 0x82, 0x86, 0x1f, 0x11, 0x17, 0x5a, 0x43, 0x25, 0x62, 0x3f, 0xa2,
-	0x8d, 0x3c, 0x57, 0x44, 0x59, 0x3e, 0xfc, 0x2c, 0xc7, 0x7e, 0x44, 0x1d, 0x9d, 0xd7, 0x11, 0xe9,
-	0xc0, 0x9d, 0x50, 0xdc, 0x24, 0x8a, 0x36, 0x0f, 0x9d, 0xe3, 0xf6, 0xf9, 0xee, 0xa9, 0x29, 0x9f,
-	0x55, 0x02, 0x5d, 0xe7, 0x8f, 0xa1, 0x99, 0x1d, 0xc8, 0x3d, 0x70, 0x02, 0x39, 0x2e, 0x14, 0xb3,
-	0x63, 0x46, 0xfd, 0x4a, 0x76, 0x87, 0xbd, 0x7e, 0x29, 0xa9, 0x23, 0x7e, 0x00, 0xfb, 0x57, 0x22,
-	0xb9, 0xec, 0x76, 0x8d, 0x7e, 0x55, 0x20, 0xbe, 0x0c, 0x85, 0x4a, 0xf8, 0x5b, 0xf0, 0xea, 0x8a,
-	0x6a, 0x90, 0x59, 0x43, 0x5e, 0xc0, 0x5d, 0x33, 0x4f, 0x71, 0xde, 0x1c, 0xad, 0x34, 0x67, 0x00,
-	0x82, 0x0a, 0x9a, 0x77, 0x60, 0xef, 0x4a, 0x24, 0x66, 0x5d, 0x8b, 0xda, 0x66, 0xf1, 0x37, 0xe0,
-	0xda, 0xc0, 0xa2, 0x81, 0x8b, 0x8a, 0xcb, 0xf9, 0x95, 0x75, 0xfa, 0x26, 0x98, 0x87, 0xb0, 0x77,
-	0x19, 0x45, 0x35, 0xf2, 0x17, 0x60, 0x4e, 0x72, 0x33, 0xa9, 0x39, 0x76, 0x0a, 0xae, 0x4d, 0xaa,
-	0x5b, 0xe5, 0x27, 0x40, 0x03, 0xd1, 0x93, 0x23, 0xb1, 0xc5, 0x07, 0x1f, 0xc0, 0x7e, 0x0d, 0xb6,
-	0x20, 0x7a, 0x0e, 0xf7, 0xab, 0x6e, 0xa8, 0xd7, 0x32, 0xbe, 0x56, 0x22, 0x2e, 0xd9, 0x5c, 0x68,
-	0x5d, 0xeb, 0xdd, 0xd2, 0x8c, 0x45, 0xc4, 0xdf, 0x03, 0x5b, 0x75, 0xf1, 0x7f, 0xcc, 0xf3, 0xfc,
-	0x7b, 0x13, 0x88, 0x91, 0x08, 0xf5, 0xd3, 0x21, 0x9f, 0x80, 0x2c, 0xaf, 0x10, 0x39, 0xaa, 0x90,
-	0xae, 0x5c, 0x40, 0xaf, 0xb3, 0x11, 0x57, 0xd8, 0x82, 0xc8, 0x3b, 0xd8, 0xa9, 0x7e, 0x1f, 0xe1,
-	0xf6, 0xe5, 0x65, 0xef, 0xbd, 0x07, 0x6b, 0x31, 0x26, 0x79, 0x75, 0xb0, 0x16, 0x79, 0xed, 0x2a,
-	0x59, 0xe4, 0x2b, 0x36, 0x03, 0x91, 0x08, 0x76, 0x97, 0xe6, 0x4d, 0x1e, 0x5a, 0xb6, 0xd7, 0xef,
-	0x8e, 0x77, 0xb4, 0x09, 0xf6, 0x57, 0x45, 0xd9, 0xcf, 0xa8, 0x9c, 0x3f, 0x39, 0x59, 0xe3, 0x81,
-	0xb5, 0x5d, 0xde, 0xa3, 0xad, 0xb0, 0xa5, 0xe8, 0xcb, 0xa7, 0x93, 0x19, 0x43, 0xd3, 0x19, 0x43,
-	0x8b, 0x19, 0xc3, 0x5f, 0x53, 0x86, 0x7f, 0xa4, 0x0c, 0xff, 0x4c, 0x19, 0x9e, 0xa4, 0x0c, 0xff,
-	0x4a, 0x19, 0xfe, 0x9d, 0x32, 0xb4, 0x48, 0x19, 0xfe, 0x36, 0x67, 0x68, 0x32, 0x67, 0x68, 0x3a,
-	0x67, 0xe8, 0x43, 0x2b, 0xff, 0xa3, 0x3e, 0xf9, 0x13, 0x00, 0x00, 0xff, 0xff, 0x44, 0x98, 0x58,
-	0x68, 0x8b, 0x05, 0x00, 0x00,
+	// 538 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xbd, 0x6e, 0x13, 0x41,
+	0x10, 0xbe, 0xb5, 0x93, 0x14, 0x63, 0x88, 0xc8, 0x20, 0xa2, 0xcb, 0x59, 0xac, 0xa2, 0x05, 0x62,
+	0x2b, 0x48, 0x09, 0x32, 0x08, 0x24, 0x44, 0x93, 0x20, 0x11, 0xa5, 0x3d, 0x43, 0xc1, 0x8f, 0x90,
+	0x4c, 0xbc, 0x0a, 0x46, 0x4e, 0x2e, 0xdc, 0x9d, 0x9d, 0x96, 0x9a, 0x8a, 0xc7, 0xe0, 0x51, 0x28,
+	0x5d, 0xa6, 0xc4, 0xe7, 0x86, 0x32, 0x8f, 0x80, 0xd6, 0xbb, 0xbe, 0xec, 0xae, 0xf7, 0x72, 0x2e,
+	0xd2, 0xed, 0xce, 0x7c, 0x3b, 0xf3, 0xcd, 0x37, 0x73, 0x73, 0xf0, 0x3c, 0xe6, 0x09, 0x8f, 0x87,
+	0x9d, 0xb4, 0x17, 0x9d, 0x8a, 0x43, 0xef, 0x88, 0xef, 0x9e, 0xc5, 0x51, 0x1a, 0xed, 0x6a, 0x0e,
+	0xfd, 0xbc, 0x33, 0xf5, 0x62, 0x4d, 0x33, 0xb1, 0x4f, 0xb0, 0x11, 0xf2, 0xef, 0x03, 0x9e, 0xa4,
+	0xe1, 0x95, 0x55, 0x59, 0x70, 0x1d, 0x56, 0xda, 0x5f, 0xa3, 0xf3, 0xc3, 0xae, 0x4f, 0x36, 0x49,
+	0xb3, 0x1a, 0xaa, 0x1b, 0x36, 0x60, 0xb9, 0xcd, 0x3b, 0x69, 0xe2, 0x57, 0x36, 0xab, 0xcd, 0x5a,
+	0x6b, 0x6d, 0x47, 0x4f, 0x22, 0x3c, 0xa1, 0xf4, 0xb3, 0x7d, 0x08, 0x5c, 0xd1, 0x93, 0x33, 0xc1,
+	0x18, 0x1f, 0xc2, 0x6d, 0xcd, 0x9c, 0x67, 0x31, 0x8d, 0xec, 0x03, 0x04, 0x7b, 0x47, 0x69, 0x6f,
+	0xd8, 0x49, 0xb9, 0x83, 0xe2, 0x42, 0x31, 0x44, 0x21, 0xef, 0x12, 0x1e, 0x1f, 0x76, 0xfd, 0x8a,
+	0x2c, 0x44, 0xde, 0xd8, 0x7b, 0xa8, 0x3b, 0x63, 0x2b, 0x82, 0x2f, 0xa1, 0xa6, 0x99, 0xa7, 0xa1,
+	0x6b, 0x2d, 0xdf, 0xa8, 0x56, 0x7f, 0xa6, 0x83, 0xd9, 0xd0, 0x78, 0x8b, 0xab, 0x50, 0xc9, 0xc9,
+	0x55, 0x24, 0xa3, 0x81, 0xc1, 0x48, 0xde, 0x34, 0xc9, 0xab, 0x6e, 0xc9, 0x97, 0x4a, 0x24, 0x7f,
+	0x02, 0x4b, 0xe2, 0x80, 0x77, 0xa0, 0x1a, 0x46, 0xe7, 0x2a, 0xa3, 0x38, 0x8a, 0xd0, 0xaf, 0xa3,
+	0xfe, 0xe0, 0xe4, 0x74, 0x96, 0x52, 0xde, 0x58, 0x1d, 0x36, 0x0e, 0x78, 0xba, 0xd7, 0xef, 0x6b,
+	0x7c, 0x13, 0xa5, 0xaf, 0x50, 0xdf, 0xe5, 0x54, 0x02, 0xbd, 0x82, 0x5b, 0xba, 0xdd, 0x27, 0x53,
+	0x72, 0xc5, 0x0a, 0x19, 0x68, 0xd6, 0x80, 0x7b, 0x07, 0xdc, 0x35, 0x77, 0x96, 0x58, 0xec, 0x2d,
+	0xac, 0xdb, 0xc0, 0x1b, 0xe8, 0xd0, 0x36, 0xf8, 0x21, 0x3f, 0x89, 0x86, 0x7c, 0x01, 0x06, 0x75,
+	0xf1, 0x99, 0xcc, 0x61, 0x25, 0x09, 0xf6, 0x02, 0xee, 0x9b, 0xf4, 0x92, 0x37, 0x51, 0x2c, 0x26,
+	0x4c, 0xfb, 0x8e, 0xd4, 0xf8, 0x11, 0x63, 0xfc, 0x3e, 0x03, 0x2d, 0x7a, 0x78, 0x13, 0x02, 0xb7,
+	0x7e, 0x2e, 0x03, 0x6a, 0x86, 0xb6, 0x5c, 0x12, 0x78, 0x0c, 0x38, 0xdf, 0x53, 0xdc, 0x32, 0x82,
+	0x16, 0x4e, 0x44, 0xd0, 0x28, 0xc5, 0x29, 0x59, 0x3c, 0xfc, 0x08, 0xab, 0x66, 0x7d, 0xc8, 0xec,
+	0xc7, 0xf3, 0xda, 0x07, 0x0f, 0xae, 0xc5, 0xe4, 0xc1, 0xbb, 0xb0, 0x36, 0xd7, 0x12, 0x7c, 0x64,
+	0x29, 0xe3, 0x6e, 0x6f, 0xb0, 0x55, 0x06, 0xcb, 0xb3, 0x24, 0xf6, 0xe8, 0xcd, 0x5a, 0x84, 0xdb,
+	0xd7, 0xd0, 0xb4, 0x06, 0x20, 0x78, 0xbc, 0x10, 0x36, 0x4f, 0x7a, 0x2c, 0xda, 0x66, 0xaf, 0x4d,
+	0xb4, 0x49, 0x17, 0x6c, 0x6d, 0xab, 0x41, 0xc5, 0xfb, 0x97, 0x79, 0xf8, 0x0d, 0xee, 0x3a, 0xf6,
+	0x1f, 0x9a, 0x11, 0x8a, 0xb7, 0x6f, 0xd0, 0x2c, 0x07, 0xce, 0x72, 0xed, 0x3f, 0x1b, 0x8d, 0xa9,
+	0x77, 0x31, 0xa6, 0xde, 0xe5, 0x98, 0x92, 0x1f, 0x19, 0x25, 0xbf, 0x33, 0x4a, 0xfe, 0x64, 0x94,
+	0x8c, 0x32, 0x4a, 0xfe, 0x66, 0x94, 0xfc, 0xcb, 0xa8, 0x77, 0x99, 0x51, 0xf2, 0x6b, 0x42, 0xbd,
+	0xd1, 0x84, 0x7a, 0x17, 0x13, 0xea, 0x7d, 0x59, 0x99, 0xfe, 0xb3, 0x9e, 0xfe, 0x0f, 0x00, 0x00,
+	0xff, 0xff, 0xd2, 0x77, 0xb3, 0xa1, 0xed, 0x06, 0x00, 0x00,
 }
 
+func (this *RequestReservationRequest) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*RequestReservationRequest)
+	if !ok {
+		that2, ok := that.(RequestReservationRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.ShowId != that1.ShowId {
+		return false
+	}
+	if len(this.Seats) != len(that1.Seats) {
+		return false
+	}
+	for i := range this.Seats {
+		if !this.Seats[i].Equal(that1.Seats[i]) {
+			return false
+		}
+	}
+	return true
+}
+func (this *RequestReservationResponse) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*RequestReservationResponse)
+	if !ok {
+		that2, ok := that.(RequestReservationResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.ReservationId != that1.ReservationId {
+		return false
+	}
+	return true
+}
+func (this *ActivateReservationRequest) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*ActivateReservationRequest)
+	if !ok {
+		that2, ok := that.(ActivateReservationRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.ReservationId != that1.ReservationId {
+		return false
+	}
+	if this.UserId != that1.UserId {
+		return false
+	}
+	return true
+}
+func (this *ActivateReservationResponse) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*ActivateReservationResponse)
+	if !ok {
+		that2, ok := that.(ActivateReservationResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.Reservation.Equal(that1.Reservation) {
+		return false
+	}
+	return true
+}
 func (this *Reservation) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -765,51 +986,6 @@ func (this *GetReservationResponse) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *AddReservationRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AddReservationRequest)
-	if !ok {
-		that2, ok := that.(AddReservationRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Reservation.Equal(that1.Reservation) {
-		return false
-	}
-	return true
-}
-func (this *AddReservationResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AddReservationResponse)
-	if !ok {
-		that2, ok := that.(AddReservationResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	return true
-}
 func (this *RemoveReservationRequest) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -908,6 +1084,52 @@ func (this *GetReservationsForUserResponse) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *RequestReservationRequest) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 6)
+	s = append(s, "&reservation.RequestReservationRequest{")
+	s = append(s, "ShowId: "+fmt.Sprintf("%#v", this.ShowId)+",\n")
+	if this.Seats != nil {
+		s = append(s, "Seats: "+fmt.Sprintf("%#v", this.Seats)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *RequestReservationResponse) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&reservation.RequestReservationResponse{")
+	s = append(s, "ReservationId: "+fmt.Sprintf("%#v", this.ReservationId)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *ActivateReservationRequest) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 6)
+	s = append(s, "&reservation.ActivateReservationRequest{")
+	s = append(s, "ReservationId: "+fmt.Sprintf("%#v", this.ReservationId)+",\n")
+	s = append(s, "UserId: "+fmt.Sprintf("%#v", this.UserId)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *ActivateReservationResponse) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&reservation.ActivateReservationResponse{")
+	if this.Reservation != nil {
+		s = append(s, "Reservation: "+fmt.Sprintf("%#v", this.Reservation)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
 func (this *Reservation) GoString() string {
 	if this == nil {
 		return "nil"
@@ -977,27 +1199,6 @@ func (this *GetReservationResponse) GoString() string {
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
-func (this *AddReservationRequest) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&reservation.AddReservationRequest{")
-	if this.Reservation != nil {
-		s = append(s, "Reservation: "+fmt.Sprintf("%#v", this.Reservation)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AddReservationResponse) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 4)
-	s = append(s, "&reservation.AddReservationResponse{")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
 func (this *RemoveReservationRequest) GoString() string {
 	if this == nil {
 		return "nil"
@@ -1047,6 +1248,120 @@ func valueToGoStringReservation(v interface{}, typ string) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
 }
+func (m *RequestReservationRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RequestReservationRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.ShowId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintReservation(dAtA, i, uint64(m.ShowId))
+	}
+	if len(m.Seats) > 0 {
+		for _, msg := range m.Seats {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintReservation(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
+func (m *RequestReservationResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RequestReservationResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.ReservationId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintReservation(dAtA, i, uint64(m.ReservationId))
+	}
+	return i, nil
+}
+
+func (m *ActivateReservationRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ActivateReservationRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.ReservationId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintReservation(dAtA, i, uint64(m.ReservationId))
+	}
+	if m.UserId != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintReservation(dAtA, i, uint64(m.UserId))
+	}
+	return i, nil
+}
+
+func (m *ActivateReservationResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ActivateReservationResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Reservation != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintReservation(dAtA, i, uint64(m.Reservation.Size()))
+		n1, err1 := m.Reservation.MarshalTo(dAtA[i:])
+		if err1 != nil {
+			return 0, err1
+		}
+		i += n1
+	}
+	return i, nil
+}
+
 func (m *Reservation) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1210,58 +1525,12 @@ func (m *GetReservationResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintReservation(dAtA, i, uint64(m.Reservation.Size()))
-		n1, err1 := m.Reservation.MarshalTo(dAtA[i:])
-		if err1 != nil {
-			return 0, err1
-		}
-		i += n1
-	}
-	return i, nil
-}
-
-func (m *AddReservationRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *AddReservationRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Reservation != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintReservation(dAtA, i, uint64(m.Reservation.Size()))
 		n2, err2 := m.Reservation.MarshalTo(dAtA[i:])
 		if err2 != nil {
 			return 0, err2
 		}
 		i += n2
 	}
-	return i, nil
-}
-
-func (m *AddReservationResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *AddReservationResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
 	return i, nil
 }
 
@@ -1368,6 +1637,64 @@ func encodeVarintReservation(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+func (m *RequestReservationRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ShowId != 0 {
+		n += 1 + sovReservation(uint64(m.ShowId))
+	}
+	if len(m.Seats) > 0 {
+		for _, e := range m.Seats {
+			l = e.Size()
+			n += 1 + l + sovReservation(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *RequestReservationResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ReservationId != 0 {
+		n += 1 + sovReservation(uint64(m.ReservationId))
+	}
+	return n
+}
+
+func (m *ActivateReservationRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ReservationId != 0 {
+		n += 1 + sovReservation(uint64(m.ReservationId))
+	}
+	if m.UserId != 0 {
+		n += 1 + sovReservation(uint64(m.UserId))
+	}
+	return n
+}
+
+func (m *ActivateReservationResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Reservation != nil {
+		l = m.Reservation.Size()
+		n += 1 + l + sovReservation(uint64(l))
+	}
+	return n
+}
+
 func (m *Reservation) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1456,28 +1783,6 @@ func (m *GetReservationResponse) Size() (n int) {
 	return n
 }
 
-func (m *AddReservationRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Reservation != nil {
-		l = m.Reservation.Size()
-		n += 1 + l + sovReservation(uint64(l))
-	}
-	return n
-}
-
-func (m *AddReservationResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	return n
-}
-
 func (m *RemoveReservationRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1538,6 +1843,53 @@ func sovReservation(x uint64) (n int) {
 }
 func sozReservation(x uint64) (n int) {
 	return sovReservation(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (this *RequestReservationRequest) String() string {
+	if this == nil {
+		return "nil"
+	}
+	repeatedStringForSeats := "[]*Seat{"
+	for _, f := range this.Seats {
+		repeatedStringForSeats += strings.Replace(f.String(), "Seat", "Seat", 1) + ","
+	}
+	repeatedStringForSeats += "}"
+	s := strings.Join([]string{`&RequestReservationRequest{`,
+		`ShowId:` + fmt.Sprintf("%v", this.ShowId) + `,`,
+		`Seats:` + repeatedStringForSeats + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *RequestReservationResponse) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&RequestReservationResponse{`,
+		`ReservationId:` + fmt.Sprintf("%v", this.ReservationId) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *ActivateReservationRequest) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&ActivateReservationRequest{`,
+		`ReservationId:` + fmt.Sprintf("%v", this.ReservationId) + `,`,
+		`UserId:` + fmt.Sprintf("%v", this.UserId) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *ActivateReservationResponse) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&ActivateReservationResponse{`,
+		`Reservation:` + strings.Replace(this.Reservation.String(), "Reservation", "Reservation", 1) + `,`,
+		`}`,
+	}, "")
+	return s
 }
 func (this *Reservation) String() string {
 	if this == nil {
@@ -1612,25 +1964,6 @@ func (this *GetReservationResponse) String() string {
 	}, "")
 	return s
 }
-func (this *AddReservationRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AddReservationRequest{`,
-		`Reservation:` + strings.Replace(this.Reservation.String(), "Reservation", "Reservation", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AddReservationResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AddReservationResponse{`,
-		`}`,
-	}, "")
-	return s
-}
 func (this *RemoveReservationRequest) String() string {
 	if this == nil {
 		return "nil"
@@ -1682,6 +2015,364 @@ func valueToStringReservation(v interface{}) string {
 	}
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("*%v", pv)
+}
+func (m *RequestReservationRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReservation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RequestReservationRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RequestReservationRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ShowId", wireType)
+			}
+			m.ShowId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ShowId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Seats", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReservation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Seats = append(m.Seats, &Seat{})
+			if err := m.Seats[len(m.Seats)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReservation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RequestReservationResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReservation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RequestReservationResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RequestReservationResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReservationId", wireType)
+			}
+			m.ReservationId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReservationId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReservation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ActivateReservationRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReservation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ActivateReservationRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ActivateReservationRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReservationId", wireType)
+			}
+			m.ReservationId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReservationId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			m.UserId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UserId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReservation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ActivateReservationResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReservation
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ActivateReservationResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ActivateReservationResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Reservation", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReservation
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReservation
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Reservation == nil {
+				m.Reservation = &Reservation{}
+			}
+			if err := m.Reservation.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReservation(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthReservation
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Reservation) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -2195,148 +2886,6 @@ func (m *GetReservationResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReservation(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReservation
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthReservation
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AddReservationRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReservation
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AddReservationRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddReservationRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Reservation", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReservation
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthReservation
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthReservation
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Reservation == nil {
-				m.Reservation = &Reservation{}
-			}
-			if err := m.Reservation.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReservation(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReservation
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthReservation
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *AddReservationResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReservation
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: AddReservationResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddReservationResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipReservation(dAtA[iNdEx:])

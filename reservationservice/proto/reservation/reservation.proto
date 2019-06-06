@@ -5,9 +5,28 @@ package reservation;
 service ReservationService {
 	rpc GetAllReservations(GetAllReservationsRequest) returns (GetAllReservationsResponse) {}
 	rpc GetReservation(GetReservationRequest) returns (GetReservationResponse){}
-	rpc AddReservation(AddReservationRequest) returns (AddReservationResponse){}
 	rpc RemoveReservation(RemoveReservationRequest) returns (RemoveReservationResponse){}
 	rpc GetReservationsForUser(GetReservationsForUserRequest) returns (GetReservationsForUserResponse){}
+	rpc RequestReservation(RequestReservationRequest) returns (RequestReservationResponse) {}
+	rpc ActivateReservation(ActivateReservationRequest) returns (ActivateReservationResponse){}
+}
+
+message RequestReservationRequest{
+    int64 ShowId = 1;
+    repeated Seat Seats = 2;
+}
+
+message RequestReservationResponse{
+    int64 ReservationId = 1;
+}
+
+message ActivateReservationRequest{
+    int64 ReservationId = 1;
+    int64 UserId = 2;
+}
+
+message ActivateReservationResponse{
+    Reservation Reservation = 1;
 }
 
 message Reservation{
@@ -36,12 +55,6 @@ message GetReservationRequest{
 message GetReservationResponse{
 	Reservation Reservation = 1;
 }
-
-message AddReservationRequest{
-	Reservation reservation = 1;
-}
-
-message AddReservationResponse{}
 
 message RemoveReservationRequest{
 	int64 Id = 1;

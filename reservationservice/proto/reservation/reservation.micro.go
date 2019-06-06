@@ -5,14 +5,12 @@ package reservation
 
 import (
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/golang/protobuf/proto"
+	math "math"
 )
 
 import (
 	context "context"
-
 	client "github.com/micro/go-micro/client"
 	server "github.com/micro/go-micro/server"
 )
@@ -38,9 +36,10 @@ var _ server.Option
 type ReservationService interface {
 	GetAllReservations(ctx context.Context, in *GetAllReservationsRequest, opts ...client.CallOption) (*GetAllReservationsResponse, error)
 	GetReservation(ctx context.Context, in *GetReservationRequest, opts ...client.CallOption) (*GetReservationResponse, error)
-	AddReservation(ctx context.Context, in *AddReservationRequest, opts ...client.CallOption) (*AddReservationResponse, error)
 	RemoveReservation(ctx context.Context, in *RemoveReservationRequest, opts ...client.CallOption) (*RemoveReservationResponse, error)
 	GetReservationsForUser(ctx context.Context, in *GetReservationsForUserRequest, opts ...client.CallOption) (*GetReservationsForUserResponse, error)
+	RequestReservation(ctx context.Context, in *RequestReservationRequest, opts ...client.CallOption) (*RequestReservationResponse, error)
+	ActivateReservation(ctx context.Context, in *ActivateReservationRequest, opts ...client.CallOption) (*ActivateReservationResponse, error)
 }
 
 type reservationService struct {
@@ -81,16 +80,6 @@ func (c *reservationService) GetReservation(ctx context.Context, in *GetReservat
 	return out, nil
 }
 
-func (c *reservationService) AddReservation(ctx context.Context, in *AddReservationRequest, opts ...client.CallOption) (*AddReservationResponse, error) {
-	req := c.c.NewRequest(c.name, "ReservationService.AddReservation", in)
-	out := new(AddReservationResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *reservationService) RemoveReservation(ctx context.Context, in *RemoveReservationRequest, opts ...client.CallOption) (*RemoveReservationResponse, error) {
 	req := c.c.NewRequest(c.name, "ReservationService.RemoveReservation", in)
 	out := new(RemoveReservationResponse)
@@ -111,23 +100,45 @@ func (c *reservationService) GetReservationsForUser(ctx context.Context, in *Get
 	return out, nil
 }
 
+func (c *reservationService) RequestReservation(ctx context.Context, in *RequestReservationRequest, opts ...client.CallOption) (*RequestReservationResponse, error) {
+	req := c.c.NewRequest(c.name, "ReservationService.RequestReservation", in)
+	out := new(RequestReservationResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *reservationService) ActivateReservation(ctx context.Context, in *ActivateReservationRequest, opts ...client.CallOption) (*ActivateReservationResponse, error) {
+	req := c.c.NewRequest(c.name, "ReservationService.ActivateReservation", in)
+	out := new(ActivateReservationResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ReservationService service
 
 type ReservationServiceHandler interface {
 	GetAllReservations(context.Context, *GetAllReservationsRequest, *GetAllReservationsResponse) error
 	GetReservation(context.Context, *GetReservationRequest, *GetReservationResponse) error
-	AddReservation(context.Context, *AddReservationRequest, *AddReservationResponse) error
 	RemoveReservation(context.Context, *RemoveReservationRequest, *RemoveReservationResponse) error
 	GetReservationsForUser(context.Context, *GetReservationsForUserRequest, *GetReservationsForUserResponse) error
+	RequestReservation(context.Context, *RequestReservationRequest, *RequestReservationResponse) error
+	ActivateReservation(context.Context, *ActivateReservationRequest, *ActivateReservationResponse) error
 }
 
 func RegisterReservationServiceHandler(s server.Server, hdlr ReservationServiceHandler, opts ...server.HandlerOption) error {
 	type reservationService interface {
 		GetAllReservations(ctx context.Context, in *GetAllReservationsRequest, out *GetAllReservationsResponse) error
 		GetReservation(ctx context.Context, in *GetReservationRequest, out *GetReservationResponse) error
-		AddReservation(ctx context.Context, in *AddReservationRequest, out *AddReservationResponse) error
 		RemoveReservation(ctx context.Context, in *RemoveReservationRequest, out *RemoveReservationResponse) error
 		GetReservationsForUser(ctx context.Context, in *GetReservationsForUserRequest, out *GetReservationsForUserResponse) error
+		RequestReservation(ctx context.Context, in *RequestReservationRequest, out *RequestReservationResponse) error
+		ActivateReservation(ctx context.Context, in *ActivateReservationRequest, out *ActivateReservationResponse) error
 	}
 	type ReservationService struct {
 		reservationService
@@ -148,14 +159,18 @@ func (h *reservationServiceHandler) GetReservation(ctx context.Context, in *GetR
 	return h.ReservationServiceHandler.GetReservation(ctx, in, out)
 }
 
-func (h *reservationServiceHandler) AddReservation(ctx context.Context, in *AddReservationRequest, out *AddReservationResponse) error {
-	return h.ReservationServiceHandler.AddReservation(ctx, in, out)
-}
-
 func (h *reservationServiceHandler) RemoveReservation(ctx context.Context, in *RemoveReservationRequest, out *RemoveReservationResponse) error {
 	return h.ReservationServiceHandler.RemoveReservation(ctx, in, out)
 }
 
 func (h *reservationServiceHandler) GetReservationsForUser(ctx context.Context, in *GetReservationsForUserRequest, out *GetReservationsForUserResponse) error {
 	return h.ReservationServiceHandler.GetReservationsForUser(ctx, in, out)
+}
+
+func (h *reservationServiceHandler) RequestReservation(ctx context.Context, in *RequestReservationRequest, out *RequestReservationResponse) error {
+	return h.ReservationServiceHandler.RequestReservation(ctx, in, out)
+}
+
+func (h *reservationServiceHandler) ActivateReservation(ctx context.Context, in *ActivateReservationRequest, out *ActivateReservationResponse) error {
+	return h.ReservationServiceHandler.ActivateReservation(ctx, in, out)
 }
