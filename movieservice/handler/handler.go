@@ -17,6 +17,7 @@ func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllM
 	protoMovies := make([]*movie.Movie, len(handle.Movies))
 	i := 0
 	for _, m := range handle.Movies {
+		m := m
 		protoMovies[i] = &m
 		i++
 	}

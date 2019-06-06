@@ -17,6 +17,7 @@ func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShow
 	protoShows := make([]*show.Show, len(handle.Shows))
 	i := 0
 	for _, s := range handle.Shows {
+		s := s
 		protoShows[i] = &s
 		i++
 	}

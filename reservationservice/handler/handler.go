@@ -15,6 +15,7 @@ type ReservationHandler struct {
 func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context, req *reservation.GetReservationsForUserRequest, rsp *reservation.GetReservationsForUserResponse) error {
 	var userReservations []*reservation.Reservation
 	for _, r := range handle.Reservations {
+		r :=  r
 		if req.UserId == r.Id {
 			userReservations = append(userReservations, &r)
 		}
