@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/reservationservice/proto/reservation"
 	"github.com/ob-vss-ss19/blatt-4-team1234/userservice/proto/user"
 	"google.golang.org/grpc/codes"
@@ -28,6 +30,9 @@ func (handle *UserHandler) GetAllUsers(ctx context.Context, req *user.GetAllUser
 
 func (handle *UserHandler) GetUser(ctx context.Context, req *user.GetUserRequest,
 	rsp *user.GetUserResponse) error {
+	if err := commons.CheckId(req.Id, "User"); err != nil {
+		return err
+	}
 	u, found := handle.Users[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
@@ -38,6 +43,9 @@ func (handle *UserHandler) GetUser(ctx context.Context, req *user.GetUserRequest
 
 func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserRequest,
 	rsp *user.RemoveUserResponse) error {
+	if err := commons.CheckId(req.Id, "User"); err != nil {
+		return err
+	}
 	_, found := handle.Users[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
@@ -59,6 +67,18 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 }
 
 func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest, rsp *user.AddUserResponse) error {
+	if req.User == nil {
+		return status.Errorf(codes.InvalidArgument, "No User was Provided!")
+	}
+	if len(req.User.LastName) < 1 {
+		return status.Errorf(codes.InvalidArgument, "No LastName was Provided!")
+	}
+	if len(req.User.FirstName) < 1 {
+		return status.Errorf(codes.InvalidArgument, "No FirstName was Provided!")
+	}
+	if req.User.Age < 1 {
+		return status.Errorf(codes.InvalidArgument, "No Age was Provided!")
+	}
 	handle.Users[int64(len(handle.Users)+2)] = *req.User
 	return nil
 }

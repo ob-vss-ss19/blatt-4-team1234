@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
@@ -31,6 +33,9 @@ func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShow
 
 func (handle *ShowHandler) GetShow(ctx context.Context, req *show.GetShowRequest,
 	rsp *show.GetShowResponse) error {
+	if err := commons.CheckId(req.Id, "RequestId"); err != nil {
+		return err
+	}
 	s, found := handle.Shows[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Show with the ID:%d does not Exist", req.Id)
@@ -41,6 +46,10 @@ func (handle *ShowHandler) GetShow(ctx context.Context, req *show.GetShowRequest
 
 func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowRequest,
 	rsp *show.RemoveShowResponse) error {
+	if err := commons.CheckId(req.Id, "Show"); err != nil {
+		return err
+	}
+	//TODO remove reservations
 	_, found := handle.Shows[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Show with the ID:%d does not Exist", req.Id)
@@ -50,6 +59,18 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 }
 
 func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest, rsp *show.AddShowResponse) error {
+	if req.Show == nil {
+		return status.Errorf(codes.InvalidArgument, "No Show was Provided!")
+	}
+	if err := commons.CheckId(req.Show.MovieId, "Movie"); err != nil {
+		return err
+	}
+	if err := commons.CheckId(req.Show.HallId, "Hall"); err != nil {
+		return err
+	}
+	if len(req.Show.DateTime) < 1 {
+		return status.Errorf(codes.InvalidArgument, "No DateTime was Specified")
+	}
 	movieRequest := movie.GetMovieRequest{Id: req.Show.MovieId}
 	movieService := movie.NewMovieService("go.micro.srv.movieservice", nil)
 	_, err := movieService.GetMovie(ctx, &movieRequest)

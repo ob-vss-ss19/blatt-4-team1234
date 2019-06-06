@@ -16,6 +16,9 @@ type ReservationHandler struct {
 
 func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 	req *reservation.RemoveReservationForShowRequest, rsp *reservation.RemoveReservationForShowResponse) error {
+	if err := commons.CheckId(req.ShowId, "Show"); err != nil {
+		return err
+	}
 	var deleteKeys []int64
 	if req.ShowId == -1 {
 		return status.Errorf(codes.InvalidArgument, "No ShowId was ")
@@ -35,6 +38,13 @@ func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 
 func (handle *ReservationHandler) RequestReservation(ctx context.Context, req *reservation.RequestReservationRequest,
 	rsp *reservation.RequestReservationResponse) error {
+	if err := commons.CheckId(req.ShowId, "Show"); err != nil {
+		return err
+	}
+	if len(req.Seats) < 1 {
+		return status.Errorf(codes.InvalidArgument, "At least One Seat needs to be provided ")
+	}
+	//TODO check Seat positions..... no negative numbers
 	if err := handle.SeatsAreFree(req); err != nil {
 		return err
 	}
@@ -55,7 +65,7 @@ func (handle *ReservationHandler) SeatsAreFree(req *reservation.RequestReservati
 	for _, r := range reservationsForShow {
 		r := r
 		for _, s := range r.Seats {
-			if ContainsSeat(r.Seats, s) {
+			if handle.ContainsSeat(r.Seats, s) {
 				return status.Errorf(codes.AlreadyExists, "A Reservation for Seat (Row: %d, Column:%d),"+
 					" already Exists!", s.Row, s.Column)
 			}
@@ -64,7 +74,7 @@ func (handle *ReservationHandler) SeatsAreFree(req *reservation.RequestReservati
 	return nil
 }
 
-func ContainsSeat(seats []*reservation.Seat, seat *reservation.Seat) bool {
+func (handle *ReservationHandler) ContainsSeat(seats []*reservation.Seat, seat *reservation.Seat) bool {
 	for _, r := range seats {
 		if seat.Equal(r) {
 			return false
@@ -75,13 +85,13 @@ func ContainsSeat(seats []*reservation.Seat, seat *reservation.Seat) bool {
 
 func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *reservation.ActivateReservationRequest,
 	rsp *reservation.ActivateReservationResponse) error {
-	r, found := handle.Reservations[req.ReservationId]
 	if err := commons.CheckId(req.ReservationId, "Reservation"); err != nil {
 		return err
 	}
 	if err := commons.CheckId(req.UserId, "User"); err != nil {
 		return err
 	}
+	r, found := handle.Reservations[req.ReservationId]
 	if !found {
 		return status.Errorf(codes.NotFound, "The ReservationID (%d) was not found!", req.ReservationId)
 	}
