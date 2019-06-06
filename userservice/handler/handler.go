@@ -15,8 +15,10 @@ type UserHandler struct {
 func (handle *UserHandler) GetAllUsers(ctx context.Context, req *user.GetAllUsersRequest,
 	rsp *user.GetAllUsersResponse) error {
 	protoUsers := make([]*user.User, len(handle.Users))
+	i := 0
 	for _, u := range handle.Users {
-		protoUsers = append(protoUsers, &u)
+		protoUsers[i] = &u
+		i++
 	}
 	rsp.Users = protoUsers
 	return nil

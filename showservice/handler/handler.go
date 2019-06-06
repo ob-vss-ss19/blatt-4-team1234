@@ -15,8 +15,10 @@ type ShowHandler struct {
 func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShowsRequest,
 	rsp *show.GetAllShowsResponse) error {
 	protoShows := make([]*show.Show, len(handle.Shows))
+	i := 0
 	for _, s := range handle.Shows {
-		protoShows = append(protoShows, &s)
+		protoShows[i] = &s
+		i++
 	}
 	rsp.Shows = protoShows
 	return nil

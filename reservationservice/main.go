@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+
+	reservationHandler := new(handler.ReservationHandler)
+	reservationHandler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.reservationservice"),
@@ -19,7 +22,7 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	err := example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	err := example.RegisterReservationServiceHandler(service.Server(), reservationHandler)
 	if err != nil {
 		log.Fatal("An Error occurred while registering the ReservationHandler" +
 			" for the Service: go.micro.src.reservationservice")

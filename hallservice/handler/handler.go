@@ -15,8 +15,10 @@ type HallHandler struct {
 func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHallsRequest,
 	rsp *hall.GetAllHallsResponse) error {
 	protoHalls := make([]*hall.Hall, len(handle.Halls))
+	i := 0
 	for _, h := range handle.Halls {
-		protoHalls = append(protoHalls, &h)
+		protoHalls[i] = &h
+		i++
 	}
 	rsp.Halls = protoHalls
 	return nil

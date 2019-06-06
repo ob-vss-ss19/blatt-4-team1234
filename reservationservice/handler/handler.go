@@ -12,11 +12,24 @@ type ReservationHandler struct {
 	Reservations map[int64]reservation.Reservation
 }
 
+func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context, req *reservation.GetReservationsForUserRequest, rsp *reservation.GetReservationsForUserResponse) error {
+	var userReservations []*reservation.Reservation
+	for _, r := range handle.Reservations {
+		if req.UserId == r.Id {
+			userReservations = append(userReservations, &r)
+		}
+	}
+	rsp.Reservations = userReservations
+	return nil
+}
+
 func (handle *ReservationHandler) GetAllReservations(ctx context.Context, req *reservation.GetAllReservationsRequest,
 	rsp *reservation.GetAllReservationsResponse) error {
 	protoReservations := make([]*reservation.Reservation, len(handle.Reservations))
+	i := 0
 	for _, r := range handle.Reservations {
-		protoReservations = append(protoReservations, &r)
+		protoReservations[i] = &r
+		i++
 	}
 	rsp.Reservations = protoReservations
 	return nil
