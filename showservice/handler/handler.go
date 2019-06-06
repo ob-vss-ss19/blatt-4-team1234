@@ -3,6 +3,10 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
+
+	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -46,14 +50,26 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 }
 
 func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest, rsp *show.AddShowResponse) error {
-	handle.Shows[int64(len(handle.Shows)+1)] = *req.Show
+	movieRequest := movie.GetMovieRequest{Id: req.Show.MovieId}
+	movieService := movie.NewMovieService("go.micro.srv.movieservice", nil)
+	_, err := movieService.GetMovie(ctx, &movieRequest)
+	if err != nil {
+		return status.Errorf(codes.FailedPrecondition, "No Movie with the Id (%d) exists", req.Show.MovieId)
+	}
+	hallRequest := hall.GetHallRequest{Id: req.Show.HallId}
+	hallService := hall.NewHallService("go.micro.srv.hallservice", nil)
+	_, err = hallService.GetHall(ctx, &hallRequest)
+	if err != nil {
+		return status.Errorf(codes.FailedPrecondition, "No Hall with the Id (%d) exists", req.Show.HallId)
+	}
+	handle.Shows[int64(len(handle.Shows)+2)] = *req.Show
 	return nil
 }
 
 func (handle *ShowHandler) InitDB() {
 	handle.Shows = make(map[int64]show.Show)
-	handle.Shows[0] = show.Show{MovieId: 0, HallId: 0, DateTime: "2019-06-05_20:15"}
-	handle.Shows[0] = show.Show{MovieId: 1, HallId: 1, DateTime: "2019-06-05_23:15"}
-	handle.Shows[0] = show.Show{MovieId: 2, HallId: 1, DateTime: "2019-06-06_14:00"}
-	handle.Shows[0] = show.Show{MovieId: 3, HallId: 0, DateTime: "2019-06-06_18:30"}
+	handle.Shows[1] = show.Show{MovieId: 1, HallId: 1, DateTime: "2019-06-05_20:15"}
+	handle.Shows[2] = show.Show{MovieId: 2, HallId: 2, DateTime: "2019-06-05_23:15"}
+	handle.Shows[3] = show.Show{MovieId: 3, HallId: 2, DateTime: "2019-06-06_14:00"}
+	handle.Shows[4] = show.Show{MovieId: 4, HallId: 1, DateTime: "2019-06-06_18:30"}
 }

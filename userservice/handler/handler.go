@@ -59,14 +59,14 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 }
 
 func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest, rsp *user.AddUserResponse) error {
-	handle.Users[int64(len(handle.Users)+1)] = *req.User
+	handle.Users[int64(len(handle.Users)+2)] = *req.User
 	return nil
 }
 
 func (handle *UserHandler) InitDB() {
 	handle.Users = make(map[int64]user.User)
-	handle.Users[0] = user.User{Id: 0, FirstName: "Bob", LastName: "Baumeister", Age: 6}
-	handle.Users[1] = user.User{Id: 1, FirstName: "John", LastName: "Wick", Age: 42}
-	handle.Users[2] = user.User{Id: 2, FirstName: "Mani", LastName: "Mammut", Age: 17}
-	handle.Users[3] = user.User{Id: 3, FirstName: "Jack", LastName: "Sparrow", Age: 31}
+	handle.Users[1] = user.User{Id: 1, FirstName: "Bob", LastName: "Baumeister", Age: 6}
+	handle.Users[2] = user.User{Id: 2, FirstName: "John", LastName: "Wick", Age: 42}
+	handle.Users[3] = user.User{Id: 3, FirstName: "Mani", LastName: "Mammut", Age: 17}
+	handle.Users[4] = user.User{Id: 4, FirstName: "Jack", LastName: "Sparrow", Age: 31}
 }

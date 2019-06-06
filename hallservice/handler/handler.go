@@ -37,6 +37,7 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 
 func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallRequest,
 	rsp *hall.RemoveHallResponse) error {
+	//TODO remove shows and reservations for this hall
 	_, found := handle.Halls[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
@@ -46,12 +47,12 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 }
 
 func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest, rsp *hall.AddHallResponse) error {
-	handle.Halls[int64(len(handle.Halls)+1)] = *req.Hall
+	handle.Halls[int64(len(handle.Halls)+2)] = *req.Hall
 	return nil
 }
 
 func (handle *HallHandler) InitDB() {
 	handle.Halls = make(map[int64]hall.Hall)
-	handle.Halls[0] = hall.Hall{Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
-	handle.Halls[1] = hall.Hall{Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
+	handle.Halls[1] = hall.Hall{Id: 1, Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
+	handle.Halls[2] = hall.Hall{Id: 2, Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
 }

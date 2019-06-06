@@ -9,6 +9,7 @@ service ReservationService {
 	rpc GetReservationsForUser(GetReservationsForUserRequest) returns (GetReservationsForUserResponse){}
 	rpc RequestReservation(RequestReservationRequest) returns (RequestReservationResponse) {}
 	rpc ActivateReservation(ActivateReservationRequest) returns (ActivateReservationResponse){}
+	rpc RemoveReservationsForShow(RemoveReservationForShowRequest) returns (RemoveReservationForShowResponse){}
 }
 
 message RequestReservationRequest{
@@ -69,3 +70,9 @@ message GetReservationsForUserRequest{
 message GetReservationsForUserResponse{
 	repeated Reservation Reservations = 1;
 }
+
+message RemoveReservationForShowRequest{
+	int64 ShowId = 1;
+}
+
+message RemoveReservationForShowResponse{}

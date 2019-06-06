@@ -37,12 +37,13 @@ func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieReq
 
 func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieRequest,
 	rsp *movie.AddMovieResponse) error {
-	handle.Movies[int64(len(handle.Movies)+1)] = *req.Movie
+	handle.Movies[int64(len(handle.Movies)+2)] = *req.Movie
 	return nil
 }
 
 func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMovieRequest,
 	rsp *movie.RemoveMovieResponse) error {
+	//TODO remove shows and reservations for this movie
 	_, found := handle.Movies[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
@@ -53,8 +54,8 @@ func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMo
 
 func (handle *MovieHandler) InitDB() {
 	handle.Movies = make(map[int64]movie.Movie)
-	handle.Movies[0] = movie.Movie{Title: "Der Schuh des Manitu", Fsk: 6}
-	handle.Movies[1] = movie.Movie{Title: "Traumschiff Surprise", Fsk: 6}
-	handle.Movies[2] = movie.Movie{Title: "Avengers: Endgame", Fsk: 12}
-	handle.Movies[3] = movie.Movie{Title: "Avengers: Infinity War", Fsk: 12}
+	handle.Movies[1] = movie.Movie{Id: 1, Title: "Der Schuh des Manitu", Fsk: 6}
+	handle.Movies[2] = movie.Movie{Id: 2, Title: "Traumschiff Surprise", Fsk: 6}
+	handle.Movies[3] = movie.Movie{Id: 3, Title: "Avengers: Endgame", Fsk: 12}
+	handle.Movies[4] = movie.Movie{Id: 4, Title: "Avengers: Infinity War", Fsk: 12}
 }
