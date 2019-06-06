@@ -65,6 +65,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 	if req.Hall.Rows <= 0 || req.Hall.Columns <= 0 || len(req.Hall.Name) < 1 {
 		return status.Errorf(codes.InvalidArgument, "Please submit a name, the columns and rows of the hall!")
 	}
+	req.Hall.Id = int64(len(handle.Halls)) + 2
 	handle.Halls[int64(len(handle.Halls)+2)] = *req.Hall
 	return nil
 }
