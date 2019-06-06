@@ -27,6 +27,9 @@ func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllM
 
 func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieRequest,
 	rsp *movie.GetMovieResponse) error {
+	if err := CheckId(req.Id); err != nil {
+		return err
+	}
 	m, found := handle.Movies[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Movie with the ID:%d does not Exist", req.Id)
@@ -37,12 +40,18 @@ func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieReq
 
 func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieRequest,
 	rsp *movie.AddMovieResponse) error {
+	if len(req.Movie.Title) < 1 || req.Movie.Fsk < 1 {
+		return status.Errorf(codes.InvalidArgument, "Please Submit a Title and a FSK-Rating!")
+	}
 	handle.Movies[int64(len(handle.Movies)+2)] = *req.Movie
 	return nil
 }
 
 func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMovieRequest,
 	rsp *movie.RemoveMovieResponse) error {
+	if err := CheckId(req.Id); err != nil {
+		return err
+	}
 	//TODO remove shows and reservations for this movie
 	_, found := handle.Movies[req.Id]
 	if !found {
@@ -58,4 +67,11 @@ func (handle *MovieHandler) InitDB() {
 	handle.Movies[2] = movie.Movie{Id: 2, Title: "Traumschiff Surprise", Fsk: 6}
 	handle.Movies[3] = movie.Movie{Id: 3, Title: "Avengers: Endgame", Fsk: 12}
 	handle.Movies[4] = movie.Movie{Id: 4, Title: "Avengers: Infinity War", Fsk: 12}
+}
+
+func CheckId(id int64) error {
+	if id <= 0 {
+		return status.Errorf(codes.InvalidArgument, "No Valid Movie Id was Submitted! ID <= 0")
+	}
+	return nil
 }
