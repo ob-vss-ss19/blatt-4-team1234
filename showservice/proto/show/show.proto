@@ -7,6 +7,8 @@ service ShowService {
 	rpc GetShow(GetShowRequest) returns (GetShowResponse){}
 	rpc AddShow(AddShowRequest) returns (AddShowResponse){}
 	rpc RemoveShow(RemoveShowRequest) returns (RemoveShowResponse){}
+	rpc RemoveShowsForHall(RemoveShowsForHallRequest) returns (RemoveShowsForHallResponse){}
+	rpc RemoveShowsForMovie(RemoveShowsForMovieRequest) returns (RemoveShowsForMovieResponse){}
 }
 
 message Show{
@@ -42,3 +44,15 @@ message RemoveShowRequest{
 }
 
 message RemoveShowResponse{}
+
+message RemoveShowsForHallRequest{
+	int64 HallId = 1;
+}
+
+message RemoveShowsForHallResponse{}
+
+message RemoveShowsForMovieRequest{
+	int64 MovieId = 1;
+}
+
+message RemoveShowsForMovieResponse{}
