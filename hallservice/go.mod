@@ -64,6 +64,7 @@ require (
 	github.com/michaelklishin/rabbit-hole v1.5.0 // indirect
 	github.com/micro/go-micro v1.0.0
 	github.com/mitchellh/reflectwalk v1.0.1 // indirect
+	github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190606182049-789dadde5c4a
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/opencontainers/image-spec v1.0.1 // indirect
 	github.com/opencontainers/runc v0.1.1 // indirect
@@ -76,7 +77,7 @@ require (
 	github.com/shirou/gopsutil v2.18.12+incompatible // indirect
 	github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4 // indirect
 	github.com/streadway/amqp v0.0.0-20190404075320-75d898a42a94 // indirect
-	google.golang.org/grpc v1.20.0
+	google.golang.org/grpc v1.21.1
 	gopkg.in/gorethink/gorethink.v4 v4.1.0 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/ory-am/dockertest.v2 v2.2.3 // indirect

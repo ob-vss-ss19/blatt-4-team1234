@@ -29,7 +29,7 @@ func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHall
 
 func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest,
 	rsp *hall.GetHallResponse) error {
-	if err := commons.CheckHallId(req.Id, "Hall"); err != nil {
+	if err := commons.CheckId(req.Id, "Hall"); err != nil {
 		return err
 	}
 	h, found := handle.Halls[req.Id]
@@ -42,7 +42,7 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 
 func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallRequest,
 	rsp *hall.RemoveHallResponse) error {
-	if err := commons.CheckHallId(req.Id, "Hall"); err != nil {
+	if err := commons.CheckId(req.Id, "Hall"); err != nil {
 		return err
 	}
 	//TODO remove shows and reservations for this hall
