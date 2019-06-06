@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/reservationservice/proto/reservation"
 	"github.com/ob-vss-ss19/blatt-4-team1234/userservice/proto/user"
 	"google.golang.org/grpc/codes"
@@ -41,17 +42,17 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 	if !found {
 		return status.Errorf(codes.NotFound, "The User with the ID:%d does not Exist", req.Id)
 	}
-	request := reservation.GetReservationsForUserRequest{UserId:req.Id}
-	reservationService := reservation.NewReservationService("User-ReservationClient",nil)
-	response,err := reservationService.GetReservationsForUser(ctx, &request)
-	if err != nil{
-		return status.Errorf(codes.Internal,"An internal error occurred while getting the reservations for this user")
+	request := reservation.GetReservationsForUserRequest{UserId: req.Id}
+	reservationService := reservation.NewReservationService("User-ReservationClient", nil)
+	response, err := reservationService.GetReservationsForUser(ctx, &request)
+	if err != nil {
+		return status.Errorf(codes.Internal, "An internal error occurred while getting the reservations for this user")
 	}
-	 if len(response.Reservations) == 0 {
-		 delete(handle.Users, req.Id)
-	 }else {
-	 		return status.Errorf(codes.FailedPrecondition, "The User still has open reservations")
-	 }
+	if len(response.Reservations) == 0 {
+		delete(handle.Users, req.Id)
+	} else {
+		return status.Errorf(codes.FailedPrecondition, "The User still has open reservations")
+	}
 	delete(handle.Users, req.Id)
 	return nil
 }
@@ -63,8 +64,8 @@ func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest
 
 func (handle *UserHandler) InitDB() {
 	handle.Users = make(map[int64]user.User)
-	handle.Users[0] = user.User{Id:0,FirstName: "Bob", LastName: "Baumeister", Age: 6}
-	handle.Users[1] = user.User{Id:1,FirstName: "John", LastName: "Wick", Age: 42}
-	handle.Users[2] = user.User{Id:2,FirstName: "Mani", LastName: "Mammut", Age: 17}
-	handle.Users[3] = user.User{Id:3,FirstName: "Jack", LastName: "Sparrow", Age: 31}
+	handle.Users[0] = user.User{Id: 0, FirstName: "Bob", LastName: "Baumeister", Age: 6}
+	handle.Users[1] = user.User{Id: 1, FirstName: "John", LastName: "Wick", Age: 42}
+	handle.Users[2] = user.User{Id: 2, FirstName: "Mani", LastName: "Mammut", Age: 17}
+	handle.Users[3] = user.User{Id: 3, FirstName: "Jack", LastName: "Sparrow", Age: 31}
 }
