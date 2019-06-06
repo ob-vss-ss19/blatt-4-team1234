@@ -45,9 +45,9 @@ func (handle *ReservationHandler) RequestReservation(ctx context.Context, req *r
 	if err := handle.SeatsAreFree(req); err != nil {
 		return err
 	}
-	newId := int64(len(handle.Reservations) + 2) //+1 since map starts at 1, +1 since next item
-	handle.Reservations[newId] = reservation.Reservation{Id: newId, ShowId: req.ShowId, Seats: req.Seats, UserId: -1}
-	rsp.ReservationId = newId
+	newID := int64(len(handle.Reservations) + 2) //+1 since map starts at 1, +1 since next item
+	handle.Reservations[newID] = reservation.Reservation{Id: newID, ShowId: req.ShowId, Seats: req.Seats, UserId: -1}
+	rsp.ReservationId = newID
 	return nil
 }
 

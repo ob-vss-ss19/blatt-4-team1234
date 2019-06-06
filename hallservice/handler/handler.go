@@ -59,6 +59,9 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 }
 
 func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest, rsp *hall.AddHallResponse) error {
+	if req.Hall == nil {
+		return status.Errorf(codes.InvalidArgument, "No Hall Submitted!")
+	}
 	if req.Hall.Rows <= 0 || req.Hall.Columns <= 0 || len(req.Hall.Name) < 1 {
 		return status.Errorf(codes.InvalidArgument, "Please submit a name, the columns and rows of the hall!")
 	}

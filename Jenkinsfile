@@ -15,14 +15,6 @@ pipeline {
                 sh 'cd userservice && make build'
             }
         }
-        stage('Test') {
-            agent {
-                docker { image 'obraun/vss-protoactor-jenkins' }
-            }
-            steps {
-                sh 'echo run tests...NO TESTS EXISTING'
-            }
-        }
         stage('Lint') {
             agent {
                 docker { image 'obraun/vss-protoactor-jenkins' }

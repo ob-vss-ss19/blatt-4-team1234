@@ -44,6 +44,9 @@ func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieReq
 
 func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieRequest,
 	rsp *movie.AddMovieResponse) error {
+	if req.Movie == nil {
+		return status.Errorf(codes.InvalidArgument, "No Movie Submitted!")
+	}
 	if len(req.Movie.Title) < 1 || req.Movie.Fsk < 1 {
 		return status.Errorf(codes.InvalidArgument, "Please Submit a Title and a FSK-Rating!")
 	}
