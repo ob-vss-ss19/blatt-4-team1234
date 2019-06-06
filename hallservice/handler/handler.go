@@ -27,6 +27,9 @@ func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHall
 
 func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest,
 	rsp *hall.GetHallResponse) error {
+	if err := CheckHallId(req.Id); err != nil {
+		return err
+	}
 	h, found := handle.Halls[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
@@ -37,6 +40,9 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 
 func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallRequest,
 	rsp *hall.RemoveHallResponse) error {
+	if err := CheckHallId(req.Id); err != nil {
+		return err
+	}
 	//TODO remove shows and reservations for this hall
 	_, found := handle.Halls[req.Id]
 	if !found {
@@ -47,6 +53,9 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 }
 
 func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest, rsp *hall.AddHallResponse) error {
+	if req.Hall.Rows <= 0 || req.Hall.Columns <= 0 || len(req.Hall.Name) < 1 {
+		return status.Errorf(codes.InvalidArgument, "Please submit a name, the columns and rows of the hall!")
+	}
 	handle.Halls[int64(len(handle.Halls)+2)] = *req.Hall
 	return nil
 }
@@ -55,4 +64,11 @@ func (handle *HallHandler) InitDB() {
 	handle.Halls = make(map[int64]hall.Hall)
 	handle.Halls[1] = hall.Hall{Id: 1, Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
 	handle.Halls[2] = hall.Hall{Id: 2, Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
+}
+
+func CheckHallId(id int64) error {
+	if id <= 0 {
+		return status.Errorf(codes.InvalidArgument, "No Valid Hall Id was Submitted! ID <= 0")
+	}
+	return nil
 }
