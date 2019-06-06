@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -27,7 +29,7 @@ func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllM
 
 func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieRequest,
 	rsp *movie.GetMovieResponse) error {
-	if err := CheckId(req.Id); err != nil {
+	if err := commons.CheckId(req.Id, "Movie"); err != nil {
 		return err
 	}
 	m, found := handle.Movies[req.Id]
@@ -49,7 +51,7 @@ func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieReq
 
 func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMovieRequest,
 	rsp *movie.RemoveMovieResponse) error {
-	if err := CheckId(req.Id); err != nil {
+	if err := commons.CheckId(req.Id, "Movie"); err != nil {
 		return err
 	}
 	//TODO remove shows and reservations for this movie
@@ -67,11 +69,4 @@ func (handle *MovieHandler) InitDB() {
 	handle.Movies[2] = movie.Movie{Id: 2, Title: "Traumschiff Surprise", Fsk: 6}
 	handle.Movies[3] = movie.Movie{Id: 3, Title: "Avengers: Endgame", Fsk: 12}
 	handle.Movies[4] = movie.Movie{Id: 4, Title: "Avengers: Infinity War", Fsk: 12}
-}
-
-func CheckId(id int64) error {
-	if id <= 0 {
-		return status.Errorf(codes.InvalidArgument, "No Valid Movie Id was Submitted! ID <= 0")
-	}
-	return nil
 }

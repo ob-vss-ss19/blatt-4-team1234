@@ -62,7 +62,6 @@ require (
 	github.com/lib/pq v1.1.1 // indirect
 	github.com/mattbaird/elastigo v0.0.0-20170123220020-2fe47fd29e4b // indirect
 	github.com/michaelklishin/rabbit-hole v1.5.0 // indirect
-	github.com/micro/go-log v0.1.0
 	github.com/micro/go-micro v1.0.0
 	github.com/mitchellh/reflectwalk v1.0.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect

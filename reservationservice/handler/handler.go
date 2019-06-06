@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/reservationservice/proto/reservation"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -71,8 +73,15 @@ func ContainsSeat(seats []*reservation.Seat, seat *reservation.Seat) bool {
 	return true
 }
 
-func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *reservation.ActivateReservationRequest, rsp *reservation.ActivateReservationResponse) error {
+func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *reservation.ActivateReservationRequest,
+	rsp *reservation.ActivateReservationResponse) error {
 	r, found := handle.Reservations[req.ReservationId]
+	if err := commons.CheckId(req.ReservationId, "Reservation"); err != nil {
+		return err
+	}
+	if err := commons.CheckId(req.UserId, "User"); err != nil {
+		return err
+	}
 	if !found {
 		return status.Errorf(codes.NotFound, "The ReservationID (%d) was not found!", req.ReservationId)
 	}
@@ -83,6 +92,9 @@ func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *
 
 func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context,
 	req *reservation.GetReservationsForUserRequest, rsp *reservation.GetReservationsForUserResponse) error {
+	if err := commons.CheckId(req.UserId, "User"); err != nil {
+		return err
+	}
 	var userReservations []*reservation.Reservation
 	for _, r := range handle.Reservations {
 		r := r
@@ -109,6 +121,9 @@ func (handle *ReservationHandler) GetAllReservations(ctx context.Context, req *r
 
 func (handle *ReservationHandler) GetReservation(ctx context.Context, req *reservation.GetReservationRequest,
 	rsp *reservation.GetReservationResponse) error {
+	if err := commons.CheckId(req.Id, "Reservation"); err != nil {
+		return err
+	}
 	r, found := handle.Reservations[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Reservation with the ID:%d does not Exist", req.Id)
@@ -119,6 +134,9 @@ func (handle *ReservationHandler) GetReservation(ctx context.Context, req *reser
 
 func (handle *ReservationHandler) RemoveReservation(ctx context.Context, req *reservation.RemoveReservationRequest,
 	rsp *reservation.RemoveReservationResponse) error {
+	if err := commons.CheckId(req.Id, "Reservation"); err != nil {
+		return err
+	}
 	_, found := handle.Reservations[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Reservation with the ID:%d does not Exist", req.Id)

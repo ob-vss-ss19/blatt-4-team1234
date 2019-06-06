@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -27,7 +29,7 @@ func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHall
 
 func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest,
 	rsp *hall.GetHallResponse) error {
-	if err := CheckHallId(req.Id); err != nil {
+	if err := commons.CheckHallId(req.Id, "Hall"); err != nil {
 		return err
 	}
 	h, found := handle.Halls[req.Id]
@@ -40,7 +42,7 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 
 func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallRequest,
 	rsp *hall.RemoveHallResponse) error {
-	if err := CheckHallId(req.Id); err != nil {
+	if err := commons.CheckHallId(req.Id, "Hall"); err != nil {
 		return err
 	}
 	//TODO remove shows and reservations for this hall
@@ -64,11 +66,4 @@ func (handle *HallHandler) InitDB() {
 	handle.Halls = make(map[int64]hall.Hall)
 	handle.Halls[1] = hall.Hall{Id: 1, Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
 	handle.Halls[2] = hall.Hall{Id: 2, Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
-}
-
-func CheckHallId(id int64) error {
-	if id <= 0 {
-		return status.Errorf(codes.InvalidArgument, "No Valid Hall Id was Submitted! ID <= 0")
-	}
-	return nil
 }
