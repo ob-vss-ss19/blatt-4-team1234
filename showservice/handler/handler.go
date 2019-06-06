@@ -18,6 +18,42 @@ type ShowHandler struct {
 	Shows map[int64]show.Show
 }
 
+func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.RemoveShowsForHallRequest, rsp *show.RemoveShowsForHallResponse) error {
+	if err := commons.CheckId(req.HallId, "Hall"); err != nil {
+		return err
+	}
+	var deleteKeys []int64
+	for i, r := range handle.Shows {
+		r := r
+		i := i
+		if r.HallId == req.HallId {
+			deleteKeys = append(deleteKeys, i)
+		}
+	}
+	for _, i := range deleteKeys {
+		delete(handle.Shows, i)
+	}
+	return nil
+}
+
+func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.RemoveShowsForMovieRequest, rsp *show.RemoveShowsForMovieResponse) error {
+	if err := commons.CheckId(req.MovieId, "Movie"); err != nil {
+		return err
+	}
+	var deleteKeys []int64
+	for i, r := range handle.Shows {
+		r := r
+		i := i
+		if r.MovieId == req.MovieId {
+			deleteKeys = append(deleteKeys, i)
+		}
+	}
+	for _, i := range deleteKeys {
+		delete(handle.Shows, i)
+	}
+	return nil
+}
+
 func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShowsRequest,
 	rsp *show.GetAllShowsResponse) error {
 	protoShows := make([]*show.Show, len(handle.Shows))
