@@ -19,7 +19,7 @@ type ShowHandler struct {
 func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShowsRequest,
 	rsp *show.GetAllShowsResponse) error {
 	protoShows := make([]*show.Show, len(handle.Shows))
-	i := 0
+	i := 1
 	for _, s := range handle.Shows {
 		s := s
 		protoShows[i] = &s

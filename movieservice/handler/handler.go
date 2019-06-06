@@ -15,7 +15,7 @@ type MovieHandler struct {
 func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllMoviesRequest,
 	rsp *movie.GetAllMoviesResponse) error {
 	protoMovies := make([]*movie.Movie, len(handle.Movies))
-	i := 0
+	i := 1
 	for _, m := range handle.Movies {
 		m := m
 		protoMovies[i] = &m
