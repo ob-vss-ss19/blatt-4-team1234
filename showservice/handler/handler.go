@@ -140,7 +140,7 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 		return status.Errorf(codes.FailedPrecondition, "No Hall with the Id (%d) exists", req.Show.HallId)
 	}
 	req.Show.Id = int64(len(handle.Shows) + 2)
-	handle.Shows[int64(len(handle.Shows)+2)] = *req.Show
+	handle.Shows[req.Show.Id] = *req.Show
 	return nil
 }
 

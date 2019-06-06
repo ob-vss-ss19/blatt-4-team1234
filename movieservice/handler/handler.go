@@ -51,7 +51,7 @@ func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieReq
 		return status.Errorf(codes.InvalidArgument, "Please Submit a Title and a FSK-Rating!")
 	}
 	req.Movie.Id = int64(len(handle.Movies) + 2)
-	handle.Movies[int64(len(handle.Movies)+2)] = *req.Movie
+	handle.Movies[req.Movie.Id] = *req.Movie
 	return nil
 }
 
