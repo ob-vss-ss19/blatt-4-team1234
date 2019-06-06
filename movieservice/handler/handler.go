@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/movieservice/proto/movie"
@@ -54,12 +56,24 @@ func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMo
 	if err := commons.CheckId(req.Id, "Movie"); err != nil {
 		return err
 	}
-	//TODO remove shows and reservations for this movie
 	_, found := handle.Movies[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
 	}
+	if err := handle.RemoveShows(ctx, req.Id); err != nil {
+		return err
+	}
 	delete(handle.Movies, req.Id)
+	return nil
+}
+
+func (handle *MovieHandler) RemoveShows(ctx context.Context, movieId int64) error {
+	showRequest := show.RemoveShowsForMovieRequest{MovieId: movieId}
+	showService := show.NewShowService("go.micro.srv.showService", nil)
+	_, err := showService.RemoveShowsForMovie(ctx, &showRequest)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

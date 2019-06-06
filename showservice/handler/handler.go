@@ -95,14 +95,14 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 	if !found {
 		return status.Errorf(codes.NotFound, "The Show with the ID:%d does not Exist", req.Id)
 	}
-	if err := handle.RemoveReservation(ctx, req.Id); err != nil {
+	if err := handle.RemoveReservations(ctx, req.Id); err != nil {
 		return err
 	}
 	delete(handle.Shows, req.Id)
 	return nil
 }
 
-func (handle *ShowHandler) RemoveReservation(ctx context.Context, showId int64) error {
+func (handle *ShowHandler) RemoveReservations(ctx context.Context, showId int64) error {
 	reservationRequest := reservation.RemoveReservationForShowRequest{}
 	reservationService := reservation.NewReservationService("go.micro.srv.reservationservice", nil)
 	_, err := reservationService.RemoveReservationsForShow(ctx, &reservationRequest)

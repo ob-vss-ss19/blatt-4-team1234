@@ -51,7 +51,7 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 	if !found {
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
 	}
-	if err := handle.RemoveReservations(ctx, req.Id); err != nil {
+	if err := handle.RemoveShows(ctx, req.Id); err != nil {
 		return err
 	}
 	delete(handle.Halls, req.Id)
@@ -66,7 +66,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 	return nil
 }
 
-func (handle *HallHandler) RemoveReservations(ctx context.Context, hallId int64) error {
+func (handle *HallHandler) RemoveShows(ctx context.Context, hallId int64) error {
 	showRequest := show.RemoveShowsForHallRequest{HallId: hallId}
 	showService := show.NewShowService("go.micro.srv.showService", nil)
 	_, err := showService.RemoveShowsForHall(ctx, &showRequest)
