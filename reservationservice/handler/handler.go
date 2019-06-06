@@ -20,9 +20,6 @@ func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 		return err
 	}
 	var deleteKeys []int64
-	if req.ShowId == -1 {
-		return status.Errorf(codes.InvalidArgument, "No ShowId was ")
-	}
 	for i, r := range handle.Reservations {
 		r := r
 		i := i
