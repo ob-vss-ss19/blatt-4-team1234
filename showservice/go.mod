@@ -10,5 +10,6 @@ require (
 	github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190606182049-789dadde5c4a
 	github.com/ob-vss-ss19/blatt-4-team1234/hallservice v0.0.0-20190606164509-fbae633af83c
 	github.com/ob-vss-ss19/blatt-4-team1234/movieservice v0.0.0-20190606164509-fbae633af83c
+	github.com/ob-vss-ss19/blatt-4-team1234/reservationservice v0.0.0-20190606184740-deeeb328f7ea
 	google.golang.org/grpc v1.21.1
 )

@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/ob-vss-ss19/blatt-4-team1234/reservationservice/proto/reservation"
+
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
@@ -31,7 +33,9 @@ func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.Rem
 		}
 	}
 	for _, i := range deleteKeys {
-		delete(handle.Shows, i)
+		if err := handle.RemoveShow(ctx, &show.RemoveShowRequest{Id: i}, &show.RemoveShowResponse{}); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -49,7 +53,9 @@ func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.Re
 		}
 	}
 	for _, i := range deleteKeys {
-		delete(handle.Shows, i)
+		if err := handle.RemoveShow(ctx, &show.RemoveShowRequest{Id: i}, &show.RemoveShowResponse{}); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -85,12 +91,24 @@ func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowR
 	if err := commons.CheckId(req.Id, "Show"); err != nil {
 		return err
 	}
-	//TODO remove reservations
 	_, found := handle.Shows[req.Id]
 	if !found {
 		return status.Errorf(codes.NotFound, "The Show with the ID:%d does not Exist", req.Id)
 	}
+	if err := handle.RemoveReservation(ctx, req.Id); err != nil {
+		return err
+	}
 	delete(handle.Shows, req.Id)
+	return nil
+}
+
+func (handle *ShowHandler) RemoveReservation(ctx context.Context, showId int64) error {
+	reservationRequest := reservation.RemoveReservationForShowRequest{}
+	reservationService := reservation.NewReservationService("go.micro.srv.reservationservice", nil)
+	_, err := reservationService.RemoveReservationsForShow(ctx, &reservationRequest)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
