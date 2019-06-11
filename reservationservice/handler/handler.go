@@ -54,7 +54,8 @@ func (handle *ReservationHandler) RequestReservation(ctx context.Context, req *r
 	if err := handle.SeatsAreFree(req); err != nil {
 		return err
 	} //+1 since map starts at 1, +1 since next item
-	handle.Reservations[handle.NewID] = reservation.Reservation{Id: handle.NewID, ShowId: req.ShowId, Seats: req.Seats, UserId: req.UserId, Active: false}
+	handle.Reservations[handle.NewID] = reservation.Reservation{Id: handle.NewID, ShowId: req.ShowId,
+		Seats: req.Seats, UserId: req.UserId, Active: false}
 	rsp.ReservationId = handle.NewID
 	handle.NewID++
 	return nil
@@ -76,9 +77,8 @@ func (handle *ReservationHandler) SeatsAreFree(req *reservation.RequestReservati
 				if r.Active {
 					return status.Errorf(codes.AlreadyExists, "A Reservation for Seat (Row: %d, Column:%d),"+
 						" already Exists!", s.Row, s.Column)
-				} else {
-					conflicts = append(conflicts, r.Id)
 				}
+				conflicts = append(conflicts, r.Id)
 			}
 		}
 	}
@@ -179,7 +179,7 @@ func (handle *ReservationHandler) RemoveReservation(ctx context.Context, req *re
 
 func InitDB() *ReservationHandler {
 	handler := ReservationHandler{
-		ReservationConflicts: make(map[int64]ReservationConflict, 0),
+		ReservationConflicts: make(map[int64]ReservationConflict),
 		Reservations:         make(map[int64]reservation.Reservation),
 		NewID:                5,
 	}
