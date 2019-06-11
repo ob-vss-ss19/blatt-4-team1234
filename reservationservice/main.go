@@ -11,8 +11,7 @@ import (
 
 func main() {
 
-	reservationHandler := new(handler.ReservationHandler)
-	reservationHandler.InitDB()
+	reservationHandler := handler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name(commons.GetReservationServiceName()),

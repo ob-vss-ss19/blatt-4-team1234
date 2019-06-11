@@ -11,8 +11,7 @@ import (
 
 func main() {
 
-	showHandler := new(handler.ShowHandler)
-	showHandler.InitDB()
+	showHandler := handler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name(commons.GetShowServiceName()),

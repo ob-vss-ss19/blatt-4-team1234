@@ -14,6 +14,7 @@ import (
 
 type HallHandler struct {
 	Halls map[int64]hall.Hall
+	NewID int64
 }
 
 func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHallsRequest,
@@ -65,8 +66,9 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 	if req.Hall.Rows <= 0 || req.Hall.Columns <= 0 || len(req.Hall.Name) < 1 {
 		return status.Errorf(codes.InvalidArgument, "Please submit a name, the columns and rows of the hall!")
 	}
-	req.Hall.Id = int64(len(handle.Halls)) + 1
+	req.Hall.Id = handle.NewID
 	handle.Halls[req.Hall.Id] = *req.Hall
+	handle.NewID++
 	return nil
 }
 
@@ -80,8 +82,10 @@ func (handle *HallHandler) RemoveShows(ctx context.Context, hallID int64) error 
 	return nil
 }
 
-func (handle *HallHandler) InitDB() {
-	handle.Halls = make(map[int64]hall.Hall)
-	handle.Halls[1] = hall.Hall{Id: 1, Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
-	handle.Halls[2] = hall.Hall{Id: 2, Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
+func InitDB() *HallHandler {
+	handler := HallHandler{Halls: make(map[int64]hall.Hall)}
+	handler.Halls[1] = hall.Hall{Id: 1, Name: "Grosser-KinoSaal", Rows: 15, Columns: 15}
+	handler.Halls[2] = hall.Hall{Id: 2, Name: "Kleiner-KinoSaal", Rows: 8, Columns: 10}
+	handler.NewID = 3
+	return &handler
 }

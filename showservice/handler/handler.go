@@ -18,6 +18,7 @@ import (
 
 type ShowHandler struct {
 	Shows map[int64]show.Show
+	NewID int64
 }
 
 func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.RemoveShowsForHallRequest,
@@ -139,15 +140,18 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 	if err != nil {
 		return status.Errorf(codes.FailedPrecondition, "No Hall with the Id (%d) exists", req.Show.HallId)
 	}
-	req.Show.Id = int64(len(handle.Shows)) + 1
+	req.Show.Id = handle.NewID
 	handle.Shows[req.Show.Id] = *req.Show
+	handle.NewID++
 	return nil
 }
 
-func (handle *ShowHandler) InitDB() {
-	handle.Shows = make(map[int64]show.Show)
-	handle.Shows[1] = show.Show{MovieId: 1, HallId: 1, DateTime: "2019-06-05_20:15"}
-	handle.Shows[2] = show.Show{MovieId: 2, HallId: 2, DateTime: "2019-06-05_23:15"}
-	handle.Shows[3] = show.Show{MovieId: 3, HallId: 2, DateTime: "2019-06-06_14:00"}
-	handle.Shows[4] = show.Show{MovieId: 4, HallId: 1, DateTime: "2019-06-06_18:30"}
+func InitDB() *ShowHandler {
+	handler := ShowHandler{Shows: make(map[int64]show.Show)}
+	handler.Shows[1] = show.Show{MovieId: 1, HallId: 1, DateTime: "2019-06-05_20:15"}
+	handler.Shows[2] = show.Show{MovieId: 2, HallId: 2, DateTime: "2019-06-05_23:15"}
+	handler.Shows[3] = show.Show{MovieId: 3, HallId: 2, DateTime: "2019-06-06_14:00"}
+	handler.Shows[4] = show.Show{MovieId: 4, HallId: 1, DateTime: "2019-06-06_18:30"}
+	handler.NewID = 5
+	return &handler
 }

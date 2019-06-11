@@ -12,8 +12,7 @@ import (
 
 func main() {
 
-	hallHandler := new(handler.HallHandler)
-	hallHandler.InitDB()
+	hallHandler := handler.InitDB()
 
 	// New Service
 	service := micro.NewService(

@@ -14,6 +14,7 @@ import (
 
 type MovieHandler struct {
 	Movies map[int64]movie.Movie
+	NewID  int64
 }
 
 func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllMoviesRequest,
@@ -50,8 +51,9 @@ func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieReq
 	if len(req.Movie.Title) < 1 || req.Movie.Fsk < 1 {
 		return status.Errorf(codes.InvalidArgument, "Please Submit a Title and a FSK-Rating!")
 	}
-	req.Movie.Id = int64(len(handle.Movies)) + 1
+	req.Movie.Id = handle.NewID
 	handle.Movies[req.Movie.Id] = *req.Movie
+	handle.NewID++
 	return nil
 }
 
@@ -81,10 +83,12 @@ func (handle *MovieHandler) RemoveShows(ctx context.Context, movieID int64) erro
 	return nil
 }
 
-func (handle *MovieHandler) InitDB() {
-	handle.Movies = make(map[int64]movie.Movie)
-	handle.Movies[1] = movie.Movie{Id: 1, Title: "Der Schuh des Manitu", Fsk: 6}
-	handle.Movies[2] = movie.Movie{Id: 2, Title: "Traumschiff Surprise", Fsk: 6}
-	handle.Movies[3] = movie.Movie{Id: 3, Title: "Avengers: Endgame", Fsk: 12}
-	handle.Movies[4] = movie.Movie{Id: 4, Title: "Avengers: Infinity War", Fsk: 12}
+func InitDB() *MovieHandler {
+	handler := MovieHandler{Movies: make(map[int64]movie.Movie)}
+	handler.Movies[1] = movie.Movie{Id: 1, Title: "Der Schuh des Manitu", Fsk: 6}
+	handler.Movies[2] = movie.Movie{Id: 2, Title: "Traumschiff Surprise", Fsk: 6}
+	handler.Movies[3] = movie.Movie{Id: 3, Title: "Avengers: Endgame", Fsk: 12}
+	handler.Movies[4] = movie.Movie{Id: 4, Title: "Avengers: Infinity War", Fsk: 12}
+	handler.NewID = 5
+	return &handler
 }

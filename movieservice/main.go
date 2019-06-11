@@ -10,8 +10,7 @@ import (
 
 func main() {
 
-	movieHandler := new(handler.MovieHandler)
-	movieHandler.InitDB()
+	movieHandler := handler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.movieservice"),

@@ -15,6 +15,7 @@ service ReservationService {
 message RequestReservationRequest{
     int64 ShowId = 1;
     repeated Seat Seats = 2;
+	int64 UserId = 3;
 }
 
 message RequestReservationResponse{
@@ -35,6 +36,7 @@ message Reservation{
 	int64 userId = 2;
 	int64 ShowId = 3;
 	repeated Seat Seats = 4;
+	bool active = 5;
 }
 
 message Seat{

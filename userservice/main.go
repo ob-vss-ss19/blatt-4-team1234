@@ -11,8 +11,7 @@ import (
 
 func main() {
 
-	userHandler := new(handler.UserHandler)
-	userHandler.InitDB()
+	userHandler := handler.InitDB()
 	// New Service
 	service := micro.NewService(
 		micro.Name(commons.GetUserServiceName()),
