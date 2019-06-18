@@ -14,37 +14,58 @@ User {
 	
 ### Endpoints
 
-A. GetAllUsers
-	* GetAllUsersRequest{}
-	* GetAllUsersResponse{[]User}
-	* Errors: 'ADD POSSIBLE ERROR CODES'
+1. GetAllUsers
+	- GetAllUsersRequest{}
+	- GetAllUsersResponse{users []User}
 
-B. GetUser
-	*GetUserRequest{int64 UserID}
-	*GetUserResponse: {}
-	*Errors: 'ADD POSSIBLE ERROR CODES'
+2. GetUser
+	- GetUserRequest{int64 Id}
+	- GetUserResponse: {}
+	- Errors: NotFound
 
-C. AddUser
-	- AddUserRequest{
-		int64 UserID
-		string FirstName
-		string LastName
-		int64 Age
-	}
+3. AddUser
+	- AddUserRequest{User User} **(UserID will be ignored)**
 	- AddUserResponse: AddUserResponse{}
-	- Errors
+	- Errors: InvalidArgument
 	
-D. RemoveUser
+4. RemoveUser
 	- RemoveUserRequest{int64 UserID}
 	- RemoveUserResponse{}
-	- Errors:
-	- Cross-Calls: ReservationService.GetReservationsForUser{})	
+	- Micro-Calls: ReservationService.GetReservationsForUser{int64 UserID})	
+	- Errors: NotFound, Internal, FailedPrecondition
+
 
 ## MovieService
 
 ### DataStructure
 
+Movie{
+	int64 Id = 1;
+	string Title = 2;
+	int64 Fsk = 3;
+}
+
 ### Endpoints
+
+1. GetAllMovies
+	- GetAllMoviesRequest{}
+	- GetAllMoviesResponse{Movies []Movie}
+	
+2. GetMovie
+	- GetMovieRequest{int64 Id}
+	- GetMovieResponse{Movie Movie}
+	- Errors: NotFound
+	
+3. AddMovie
+	- AddMovieRequest{Movie Movie} **(UserID will be ignored)**
+	- AddMovieResponse{}
+	- Errors: InvalidArgument
+	
+4. RemoveMovie
+	- RemoveMovieRequest{int64 Id}
+	- RemoveMovieResponse{}
+	- Micro-Calls: ShowService.RemoveShowsForMovie{int64 MovieId}
+	- Errors: NotFound, Internal
 
 
 ## HallService
