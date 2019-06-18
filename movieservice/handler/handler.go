@@ -79,7 +79,7 @@ func (handle *MovieHandler) RemoveShows(ctx context.Context, movieID int64) erro
 	showService := show.NewShowService(commons.GetShowServiceName(), nil)
 	_, err := showService.RemoveShowsForMovie(ctx, &showRequest)
 	if err != nil {
-		return status.Errorf(codes.Internal, "Error while calling ShowService, Error: " +err.Error())
+		return status.Errorf(codes.Internal, "Error while calling ShowService, Error: "+err.Error())
 	}
 	return nil
 }
