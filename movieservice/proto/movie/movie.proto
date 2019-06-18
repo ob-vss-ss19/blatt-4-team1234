@@ -34,7 +34,9 @@ message AddMovieRequest{
 	Movie Movie = 1;
 }
 
-message AddMovieResponse{}
+message AddMovieResponse{
+	int64 Id = 1;
+}
 
 message RemoveMovieRequest{
 	int64 Id = 1;

@@ -68,6 +68,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 	}
 	req.Hall.Id = handle.NewID
 	handle.Halls[req.Hall.Id] = *req.Hall
+	rsp.Id = handle.NewID
 	handle.NewID++
 	return nil
 }

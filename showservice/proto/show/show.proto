@@ -37,7 +37,9 @@ message AddShowRequest{
 	Show show = 1;
 }
 
-message AddShowResponse{}
+message AddShowResponse{
+	int64 Id = 1;
+}
 
 message RemoveShowRequest{
 	int64 Id = 1;

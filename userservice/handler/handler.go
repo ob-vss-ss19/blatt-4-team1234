@@ -82,6 +82,7 @@ func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest
 	}
 	req.User.Id = handle.NewID
 	handle.Users[req.User.Id] = *req.User
+	rsp.Id = handle.NewID
 	handle.NewID++
 	return nil
 }

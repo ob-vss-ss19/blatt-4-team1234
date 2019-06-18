@@ -35,7 +35,9 @@ message AddHallRequest{
 	Hall hall = 1;
 }
 
-message AddHallResponse{}
+message AddHallResponse{
+	int64 Id = 1;
+}
 
 message RemoveHallRequest{
 	int64 Id = 1;

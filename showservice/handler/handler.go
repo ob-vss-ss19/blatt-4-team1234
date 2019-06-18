@@ -142,6 +142,7 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 	}
 	req.Show.Id = handle.NewID
 	handle.Shows[req.Show.Id] = *req.Show
+	rsp.Id = handle.NewID
 	handle.NewID++
 	return nil
 }

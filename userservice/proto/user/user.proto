@@ -35,7 +35,9 @@ message AddUserRequest{
 	User user = 1;
 }
 
-message AddUserResponse{}
+message AddUserResponse{
+	int64 Id = 1;
+}
 
 message RemoveUserRequest{
 	int64 Id = 1;

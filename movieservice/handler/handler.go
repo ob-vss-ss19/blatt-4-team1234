@@ -53,6 +53,7 @@ func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieReq
 	}
 	req.Movie.Id = handle.NewID
 	handle.Movies[req.Movie.Id] = *req.Movie
+	rsp.Id = handle.NewID
 	handle.NewID++
 	return nil
 }
@@ -78,7 +79,7 @@ func (handle *MovieHandler) RemoveShows(ctx context.Context, movieID int64) erro
 	showService := show.NewShowService(commons.GetShowServiceName(), nil)
 	_, err := showService.RemoveShowsForMovie(ctx, &showRequest)
 	if err != nil {
-		return err
+		return status.Errorf(codes.Internal, "Error while calling ShowService, Error: " +err.Error())
 	}
 	return nil
 }
