@@ -53,7 +53,7 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 		return status.Errorf(codes.NotFound, "The Hall with the ID:%d does not Exist", req.Id)
 	}
 	if err := handle.RemoveShows(ctx, req.Id); err != nil {
-		return err
+		return status.Errorf(codes.Internal, "Error while calling ShowService, Error: " + err.Error())
 	}
 	delete(handle.Halls, req.Id)
 	return nil
