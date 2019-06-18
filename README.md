@@ -40,7 +40,6 @@ User {
 
 ### DataStructure
 
-<<<<<<< HEAD
 Movie{
 	int64 Id = 1;
 	string Title = 2;
@@ -73,7 +72,6 @@ Movie{
 
 ### DataStructure
 
-<<<<<<< HEAD
 Hall{
 	int64 Id = 1;
 	string Name = 2;
@@ -107,7 +105,6 @@ Hall{
 
 ### DataStructure
 
-<<<<<<< HEAD
 Show{
 	int64 Id = 1;
 	int64 MovieId = 2;
@@ -159,7 +156,7 @@ Show{
 
 ### DataStructure
 
-<<<<<<< HEAD
+
 Reservation{
 	int64 Id = 1;
 	int64 userId = 2;
@@ -169,6 +166,7 @@ Reservation{
 }
 
 ### Endpoints
+
 
 1. GetAllReservations
 	- GetAllReservationsRequest{}
@@ -204,3 +202,4 @@ Reservation{
 7. RemoveReservationsForSohw
 	- RemoveReservationsForShowRequest{}
 	- RemoveReservationsForShowResponse{}
+f
