@@ -13,7 +13,7 @@ func main() {
 	movieHandler := handler.InitDB()
 	// New Service
 	service := micro.NewService(
-		micro.Name("go.micro.srv.movieservice"),
+		micro.Name(commons.GetMovieServiceName()),
 		micro.Version("latest"),
 	)
 
