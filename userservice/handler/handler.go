@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
 
@@ -18,6 +19,7 @@ type UserHandler struct {
 
 func (handle *UserHandler) GetAllUsers(ctx context.Context, req *user.GetAllUsersRequest,
 	rsp *user.GetAllUsersResponse) error {
+	log.Printf("Received GetAllUsersRequest")
 	protoUsers := make([]*user.User, len(handle.Users))
 	i := 0
 	for _, u := range handle.Users {
@@ -31,6 +33,7 @@ func (handle *UserHandler) GetAllUsers(ctx context.Context, req *user.GetAllUser
 
 func (handle *UserHandler) GetUser(ctx context.Context, req *user.GetUserRequest,
 	rsp *user.GetUserResponse) error {
+	log.Printf("Received GetUserRequest")
 	if err := commons.CheckId(req.Id, "User"); err != nil {
 		return err
 	}
@@ -44,6 +47,7 @@ func (handle *UserHandler) GetUser(ctx context.Context, req *user.GetUserRequest
 
 func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserRequest,
 	rsp *user.RemoveUserResponse) error {
+	log.Printf("Received RemoveUserRequest")
 	if err := commons.CheckId(req.Id, "User"); err != nil {
 		return err
 	}
@@ -68,6 +72,7 @@ func (handle *UserHandler) RemoveUser(ctx context.Context, req *user.RemoveUserR
 }
 
 func (handle *UserHandler) AddUser(ctx context.Context, req *user.AddUserRequest, rsp *user.AddUserResponse) error {
+	log.Printf("Received AddUserRequest")
 	if req.User == nil {
 		return status.Errorf(codes.InvalidArgument, "No User was Provided!")
 	}

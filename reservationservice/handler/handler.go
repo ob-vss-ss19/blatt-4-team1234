@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
@@ -23,6 +24,7 @@ type ReservationHandler struct {
 
 func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 	req *reservation.RemoveReservationForShowRequest, rsp *reservation.RemoveReservationForShowResponse) error {
+	log.Printf("Received RemoveReservationsForShowRequest")
 	if err := commons.CheckId(req.ShowId, "Show"); err != nil {
 		return err
 	}
@@ -42,6 +44,7 @@ func (handle *ReservationHandler) RemoveReservationsForShow(ctx context.Context,
 
 func (handle *ReservationHandler) RequestReservation(ctx context.Context, req *reservation.RequestReservationRequest,
 	rsp *reservation.RequestReservationResponse) error {
+	log.Printf("Received RequestReservationRequest")
 	if err := commons.CheckId(req.ShowId, "Show"); err != nil {
 		return err
 	}
@@ -99,6 +102,7 @@ func (handle *ReservationHandler) ContainsSeat(seats []*reservation.Seat, seat *
 
 func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *reservation.ActivateReservationRequest,
 	rsp *reservation.ActivateReservationResponse) error {
+	log.Printf("ReceivedActivateReservationRequest")
 	if err := commons.CheckId(req.ReservationId, "Reservation"); err != nil {
 		return err
 	}
@@ -124,6 +128,7 @@ func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *
 
 func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context,
 	req *reservation.GetReservationsForUserRequest, rsp *reservation.GetReservationsForUserResponse) error {
+	log.Printf("Received GetReservationsForUserRequest")
 	if err := commons.CheckId(req.UserId, "User"); err != nil {
 		return err
 	}
@@ -140,6 +145,7 @@ func (handle *ReservationHandler) GetReservationsForUser(ctx context.Context,
 
 func (handle *ReservationHandler) GetAllReservations(ctx context.Context, req *reservation.GetAllReservationsRequest,
 	rsp *reservation.GetAllReservationsResponse) error {
+	log.Printf("Received GetAllReservationsRequest")
 	protoReservations := make([]*reservation.Reservation, len(handle.Reservations))
 	i := 0
 	for _, r := range handle.Reservations {
@@ -153,6 +159,7 @@ func (handle *ReservationHandler) GetAllReservations(ctx context.Context, req *r
 
 func (handle *ReservationHandler) GetReservation(ctx context.Context, req *reservation.GetReservationRequest,
 	rsp *reservation.GetReservationResponse) error {
+	log.Printf("Received GetReservationRequest")
 	if err := commons.CheckId(req.Id, "Reservation"); err != nil {
 		return err
 	}
@@ -166,6 +173,7 @@ func (handle *ReservationHandler) GetReservation(ctx context.Context, req *reser
 
 func (handle *ReservationHandler) RemoveReservation(ctx context.Context, req *reservation.RemoveReservationRequest,
 	rsp *reservation.RemoveReservationResponse) error {
+	log.Printf("Received RemoveReservationRequest")
 	if err := commons.CheckId(req.Id, "Reservation"); err != nil {
 		return err
 	}

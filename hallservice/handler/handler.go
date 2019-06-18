@@ -2,9 +2,9 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/commons"
-
 	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/hallservice/proto/hall"
@@ -19,6 +19,7 @@ type HallHandler struct {
 
 func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHallsRequest,
 	rsp *hall.GetAllHallsResponse) error {
+	log.Printf("Received GetAllHallsRequest")
 	protoHalls := make([]*hall.Hall, len(handle.Halls))
 	i := 0
 	for _, h := range handle.Halls {
@@ -32,6 +33,7 @@ func (handle *HallHandler) GetAllHalls(ctx context.Context, req *hall.GetAllHall
 
 func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest,
 	rsp *hall.GetHallResponse) error {
+	log.Printf("Received GetHallRequest")
 	if err := commons.CheckId(req.Id, "Hall"); err != nil {
 		return err
 	}
@@ -45,6 +47,7 @@ func (handle *HallHandler) GetHall(ctx context.Context, req *hall.GetHallRequest
 
 func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallRequest,
 	rsp *hall.RemoveHallResponse) error {
+	log.Printf("Received RemoveHallRequest")
 	if err := commons.CheckId(req.Id, "Hall"); err != nil {
 		return err
 	}
@@ -60,6 +63,7 @@ func (handle *HallHandler) RemoveHall(ctx context.Context, req *hall.RemoveHallR
 }
 
 func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest, rsp *hall.AddHallResponse) error {
+	log.Printf("Received AddHallRequest")
 	if req.Hall == nil {
 		return status.Errorf(codes.InvalidArgument, "No Hall Submitted!")
 	}
@@ -75,7 +79,7 @@ func (handle *HallHandler) AddHall(ctx context.Context, req *hall.AddHallRequest
 
 func (handle *HallHandler) RemoveShows(ctx context.Context, hallID int64) error {
 	showRequest := show.RemoveShowsForHallRequest{HallId: hallID}
-	showService := show.NewShowService(commons.GetUserServiceName(), nil)
+	showService := show.NewShowService(commons.GetShowServiceName(), nil)
 	_, err := showService.RemoveShowsForHall(ctx, &showRequest)
 	if err != nil {
 		return err

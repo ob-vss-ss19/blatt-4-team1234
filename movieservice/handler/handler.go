@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/showservice/proto/show"
 
@@ -19,6 +20,7 @@ type MovieHandler struct {
 
 func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllMoviesRequest,
 	rsp *movie.GetAllMoviesResponse) error {
+	log.Printf("Received GetAllMoviesRequest")
 	protoMovies := make([]*movie.Movie, len(handle.Movies))
 	i := 0
 	for _, m := range handle.Movies {
@@ -32,6 +34,7 @@ func (handle *MovieHandler) GetAllMovies(ctx context.Context, req *movie.GetAllM
 
 func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieRequest,
 	rsp *movie.GetMovieResponse) error {
+	log.Printf("Received GetMovieRequest")
 	if err := commons.CheckId(req.Id, "Movie"); err != nil {
 		return err
 	}
@@ -45,6 +48,7 @@ func (handle *MovieHandler) GetMovie(ctx context.Context, req *movie.GetMovieReq
 
 func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieRequest,
 	rsp *movie.AddMovieResponse) error {
+	log.Printf("Received AddMovieRequest")
 	if req.Movie == nil {
 		return status.Errorf(codes.InvalidArgument, "No Movie Submitted!")
 	}
@@ -60,6 +64,7 @@ func (handle *MovieHandler) AddMovie(ctx context.Context, req *movie.AddMovieReq
 
 func (handle *MovieHandler) RemoveMovie(ctx context.Context, req *movie.RemoveMovieRequest,
 	rsp *movie.RemoveMovieResponse) error {
+	log.Printf("Received RemoveMovieRequest")
 	if err := commons.CheckId(req.Id, "Movie"); err != nil {
 		return err
 	}

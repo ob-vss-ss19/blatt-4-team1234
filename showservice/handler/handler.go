@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/ob-vss-ss19/blatt-4-team1234/reservationservice/proto/reservation"
 
@@ -23,6 +24,7 @@ type ShowHandler struct {
 
 func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.RemoveShowsForHallRequest,
 	rsp *show.RemoveShowsForHallResponse) error {
+	log.Printf("Received RemoveShowsForHallRequest")
 	if err := commons.CheckId(req.HallId, "Hall"); err != nil {
 		return err
 	}
@@ -44,6 +46,7 @@ func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.Rem
 
 func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.RemoveShowsForMovieRequest,
 	rsp *show.RemoveShowsForMovieResponse) error {
+	log.Printf("Received RemoveShowsForMovieRequest")
 	if err := commons.CheckId(req.MovieId, "Movie"); err != nil {
 		return err
 	}
@@ -65,6 +68,7 @@ func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.Re
 
 func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShowsRequest,
 	rsp *show.GetAllShowsResponse) error {
+	log.Printf("Received GetAllShowsRequest")
 	protoShows := make([]*show.Show, len(handle.Shows))
 	i := 0
 	for _, s := range handle.Shows {
@@ -78,6 +82,7 @@ func (handle *ShowHandler) GetAllShows(ctx context.Context, req *show.GetAllShow
 
 func (handle *ShowHandler) GetShow(ctx context.Context, req *show.GetShowRequest,
 	rsp *show.GetShowResponse) error {
+	log.Printf("Received GetShowRequest")
 	if err := commons.CheckId(req.Id, "RequestId"); err != nil {
 		return err
 	}
@@ -91,6 +96,7 @@ func (handle *ShowHandler) GetShow(ctx context.Context, req *show.GetShowRequest
 
 func (handle *ShowHandler) RemoveShow(ctx context.Context, req *show.RemoveShowRequest,
 	rsp *show.RemoveShowResponse) error {
+	log.Printf("Received RemoveShowRequest")
 	if err := commons.CheckId(req.Id, "Show"); err != nil {
 		return err
 	}
@@ -119,6 +125,7 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 	if req.Show == nil {
 		return status.Errorf(codes.InvalidArgument, "No Show was Provided!")
 	}
+	log.Printf("Received AddShowRequest")
 	if err := commons.CheckId(req.Show.MovieId, "Movie"); err != nil {
 		return err
 	}
