@@ -25,7 +25,7 @@ User {
 
 3. AddUser
 	- AddUserRequest{User User} **(UserID will be ignored)**
-	- AddUserResponse: AddUserResponse{}
+	- AddUserResponse: AddUserResponse{int64 Id}
 	- Errors: InvalidArgument
 	
 4. RemoveUser
@@ -57,8 +57,8 @@ Movie{
 	- Errors: NotFound
 	
 3. AddMovie
-	- AddMovieRequest{Movie Movie} **(UserID will be ignored)**
-	- AddMovieResponse{}
+	- AddMovieRequest{Movie Movie} **(Id will be ignored)**
+	- AddMovieResponse{int64 Id}
 	- Errors: InvalidArgument
 	
 4. RemoveMovie
@@ -72,16 +72,71 @@ Movie{
 
 ### DataStructure
 
+Hall{
+	int64 Id = 1;
+	string Name = 2;
+	int64 Rows = 3;
+	int64 Columns = 4;
+}
+
 ### Endpoints
 
+1. GetAllHalls
+	- GetAllHallsRequest{}
+	- GetAllHallsResponse{Halls []Hall}
 
+2. GetHall
+	- GetHallRequest{int64 Id}
+	- GetHallResponse{Hall Hall}
+	- Errors: NotFound
+
+3. AddHall
+	- AddHallRequest{Hall Hall} **Id will be ignored**
+	- AddHallResponse{int64 Id}
+	- Errors: InvalidArgument
+	
+4. RemoveHall
+	- RemoveHallRequest{int64 Id}
+	- RemoveHallResponse{}
+	- Micro-Calls: ShowService.RemoveShowsForHalls{int64 Id}
+	- Errors: NotFound, Internal
 
 ## ShowService
 
 ### DataStructure
 
+Show{
+	int64 Id = 1;
+	int64 MovieId = 2;
+	int64 HallId = 3;
+	string DateTime = 4;
+}
+
 ### Endpoints
 
+1. GetAllShows{}
+	- GetAllShowsRequest{}
+	- GetAllShowsResponse{Shows []Show}
+	
+2. GetShow
+	- GetShowRequest{int64 Id}
+	- GetShowResponse{Show Show}
+	- Errors: NotFound
+
+3. AddShow
+	- AddShowRequest{Show Show} **Id will be ignored**
+	- AddShowResponse{int64 Id}
+	- Errors: InvalidArgument
+	
+4. RemoveShow
+	- RemoveShowRequest{int64 Id}
+	- RemoveShowResponse{}
+	- Micro-Calls: ShowService.RemoveShowsForShows{int64 Id}
+	- Errors: NotFound, Internal
+	
+5. RemoveShowsForMovie
+
+6. RemoveShowsForHall
 
 ## ReservationService
 
