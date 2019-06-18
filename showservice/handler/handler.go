@@ -36,7 +36,7 @@ func (handle *ShowHandler) RemoveShowsForHall(ctx context.Context, req *show.Rem
 	}
 	for _, i := range deleteKeys {
 		if err := handle.RemoveShow(ctx, &show.RemoveShowRequest{Id: i}, &show.RemoveShowResponse{}); err != nil {
-			return err
+			return status.Errorf(codes.Internal,"Error calling ReservationService, Error: " + err.Error())
 		}
 	}
 	return nil
@@ -57,7 +57,7 @@ func (handle *ShowHandler) RemoveShowsForMovie(ctx context.Context, req *show.Re
 	}
 	for _, i := range deleteKeys {
 		if err := handle.RemoveShow(ctx, &show.RemoveShowRequest{Id: i}, &show.RemoveShowResponse{}); err != nil {
-			return err
+			return status.Errorf(codes.Internal,"Error calling ReservationService, Error: " + err.Error())
 		}
 	}
 	return nil
