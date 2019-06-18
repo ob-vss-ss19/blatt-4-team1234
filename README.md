@@ -67,4 +67,3 @@ D. RemoveUser
 ### DataStructure
 
 ### Endpoints
->>>>>>> started readme with endpoints
