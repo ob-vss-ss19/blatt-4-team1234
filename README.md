@@ -1,5 +1,6 @@
 # Microservice Interface Contracts
 
+All Endpoints that recieve a Id return InvalidArgument if the ID is negative.
 
 ## UserService
 
@@ -114,6 +115,12 @@ Show{
 
 ### Endpoints
 
+
+
+### DataStructure
+
+### Endpoints
+
 1. GetAllShows{}
 	- GetAllShowsRequest{}
 	- GetAllShowsResponse{Shows []Show}
@@ -131,15 +138,67 @@ Show{
 4. RemoveShow
 	- RemoveShowRequest{int64 Id}
 	- RemoveShowResponse{}
-	- Micro-Calls: ShowService.RemoveShowsForShows{int64 Id}
+	- Micro-Calls: ReservationService.RemoveReservationsForShow{int64 Id}
 	- Errors: NotFound, Internal
 	
 5. RemoveShowsForMovie
+	- RemoveShowForMovieRequest{int64 Id}
+	- RemoveShowForMovieResponse{}
+	- Mirco-Calls: ReservationService.RemoveReservationsForShow{int64 Id}
+	- Errors: Internal
 
 6. RemoveShowsForHall
-
+	- RemoveShowForHallRequest{int64 Id}
+	- RemoveShowForHallResponse{}
+	- Mirco-Calls: ReservationService.RemoveReservationsForShow{int64 Id}
+	- Errors: Internal
+	
+	
 ## ReservationService
 
 ### DataStructure
 
+Reservation{
+	int64 Id = 1;
+	int64 userId = 2;
+	int64 ShowId = 3;
+	repeated Seat Seats = 4;
+	bool active = 5;
+}
+
 ### Endpoints
+
+1. GetAllReservations
+	- GetAllReservationsRequest{}
+	- GetAllReservationsResponse{Reservations []Reservation}
+	
+2. GetReservation
+	- GetReservationRequest{int64 Id}
+	- GetReservationResponse{Reservation Reservation}
+	- Errors: NotFound
+
+3. RemoveReservation
+	- RemoveReservationRequest{int64 Id}
+	- RemoveReservationResponse{}
+	- Errors: NotFound
+	
+4 GetReservationsForUser
+	- GetReservationsForUserRequest{int64 Id}
+	- GetReservationsForUserResponse{Reservations []Reservation}
+	
+5. RequestReservation
+	- RequestReservationRequest{	int64 ShowId = 1;
+    					repeated Seat Seats = 2;
+					int64 UserId = 3;}
+	- RequestReservationResponse{}
+	- Micro-Calls: ShowService.GetShow{int64 Id}, HallService.GetHall{int64 Id}
+	- Errors: Internal, InvalidArgument
+	
+6. ActivateReservation
+	- ActivateReservationRequest{int64 ReservationId, int64 UserId}
+	- ActivareReservationResponse{}
+	- Errors: FailedPrecondition, NotFound
+
+7. RemoveReservationsForSohw
+	- RemoveReservationsForShowRequest{}
+	- RemoveReservationsForShowResponse{}
