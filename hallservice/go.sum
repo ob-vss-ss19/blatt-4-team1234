@@ -164,6 +164,7 @@ github.com/gomodule/redigo v2.0.0+incompatible/go.mod h1:B4C85qUVwatsJoIUNIfCRsp
 github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
 github.com/google/btree v1.0.0/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
+github.com/google/go-cmp v0.3.0 h1:crn/baboCvb5fXaQ0IJ1SGTsTVrWpDsCWC8EGETZijY=
 github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/google/go-github v17.0.0+incompatible/go.mod h1:zLgOLi98H3fifZn+44m+umXrS52loVEgC2AApnigrVQ=
 github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=
@@ -388,6 +389,7 @@ github.com/ob-vss-ss19/blatt-4-team1234/movieservice v0.0.0-20190606201711-7cd4a
 github.com/ob-vss-ss19/blatt-4-team1234/movieservice v0.0.0-20190618102334-9230380a6c8c/go.mod h1:GzRukE4EnN3NXc6RuBOJK8x7ta1WY9B+iwBLgJb/3eQ=
 github.com/ob-vss-ss19/blatt-4-team1234/reservationservice v0.0.0-20190606184740-deeeb328f7ea/go.mod h1:SSUCmwmJWjJSuz9u2DMKsBWX19VThcPicJhVX8XMRc4=
 github.com/ob-vss-ss19/blatt-4-team1234/reservationservice v0.0.0-20190606201711-7cd4a84d367c/go.mod h1:SSUCmwmJWjJSuz9u2DMKsBWX19VThcPicJhVX8XMRc4=
+github.com/ob-vss-ss19/blatt-4-team1234/reservationservice v0.0.0-20190618102334-9230380a6c8c h1:CalnqI7C4kXITPo7bnBI4DDLAg+1mvTcdLU1kmyePtw=
 github.com/ob-vss-ss19/blatt-4-team1234/reservationservice v0.0.0-20190618102334-9230380a6c8c/go.mod h1:bsd9u0OIToscSNq+YR8mH+fXwA4X7qgXDrMunQ+Rt5A=
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190606184740-deeeb328f7ea/go.mod h1:F2cuVQH+3kijV8Q75gg7cWQLK4IK04uOgCY9IQerrk8=
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190606201711-7cd4a84d367c/go.mod h1:P+dXJM1PQTinsyJrbwgeejYcUnFhnWarizQZ6dnOlnM=

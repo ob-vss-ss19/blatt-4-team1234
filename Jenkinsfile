@@ -15,6 +15,18 @@ pipeline {
                 sh 'cd userservice && make build'
             }
         }
+        stage('Test') {
+            agent{
+                docker { image 'obraun/vss-protoactor-jenkins' }
+            }
+            steps {
+                sh 'cd hallservice && make test'
+                sh 'cd movieservice && make test'
+                sh 'cd reservationservice && make test'
+                sh 'cd showservice && make test'
+                sh 'cd userservice && make test'
+            }
+        }
         stage('Build Docker Image') {
             agent any
             steps {

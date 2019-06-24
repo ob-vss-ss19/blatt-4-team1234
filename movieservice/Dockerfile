@@ -5,5 +5,5 @@ RUN go build -o movieservice/main movieservice/main.go
 
 FROM iron/go
 COPY --from=builder /app/movieservice/main /app/movieservice
-EXPOSE 8091
+EXPOSE 52000-53000
 ENTRYPOINT [ "/app/movieservice" ]
