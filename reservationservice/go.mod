@@ -7,8 +7,9 @@ require (
 	github.com/golang/protobuf v1.3.1
 	github.com/micro/go-log v0.1.0
 	github.com/micro/go-micro v1.7.0
-	github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190618104646-0b834a954834
-	github.com/ob-vss-ss19/blatt-4-team1234/hallservice v0.0.0-20190618104646-0b834a954834
-	github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190618104646-0b834a954834
+	github.com/nats-io/nats-server/v2 v2.0.0 // indirect
+	github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624201515-428f969ee718
+	github.com/ob-vss-ss19/blatt-4-team1234/hallservice v0.0.0-20190624201515-428f969ee718
+	github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624201515-428f969ee718
 	google.golang.org/grpc v1.21.1
 )
