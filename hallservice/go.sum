@@ -384,6 +384,7 @@ github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624201515-428f969ee7
 github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624202146-27a0b81673e5 h1:f9Vh00Pscb/kkyd7tSWU4EMP5Anw8ExEmeL0Fbon8e4=
 github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624202146-27a0b81673e5/go.mod h1:pDQd9k7TbpA4PQnUeFLj+FoIpzCqOig9yG8qHzepXjM=
 github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624203202-b10d4906787d/go.mod h1:pDQd9k7TbpA4PQnUeFLj+FoIpzCqOig9yG8qHzepXjM=
+github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624204035-52d5428c4b78 h1:z3jO7uBnhnFuOWMfk1mZY21vX/usYA0lj2wxAnHYb7A=
 github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190624204035-52d5428c4b78/go.mod h1:pDQd9k7TbpA4PQnUeFLj+FoIpzCqOig9yG8qHzepXjM=
 github.com/ob-vss-ss19/blatt-4-team1234/hallservice v0.0.0-20190606164509-fbae633af83c/go.mod h1:lOWPpmEFRNaWG3PhRoGYXn3RzNxPh7p6uFfFtlQodOQ=
 github.com/ob-vss-ss19/blatt-4-team1234/hallservice v0.0.0-20190606201711-7cd4a84d367c/go.mod h1:xxJNvemRoEBpJTsL00bj+Sxi+CDQYQ+9wvx1Evr5AKQ=
@@ -411,6 +412,7 @@ github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190618104646-0b834a
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624201515-428f969ee718/go.mod h1:kEAgd346LCl6SQkQQfU1Pn8l41GlRBbB5fICMIEa5k8=
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624202146-27a0b81673e5 h1:JJ3VJUEkyvMgQ/Y6rQgL8aQmXPk9GALZLaZtobpFeTw=
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624202146-27a0b81673e5/go.mod h1:AZPzLZAExG4fflg5xWShlxbQmNt0pJv9zAkZOh+F+AE=
+github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624204035-52d5428c4b78 h1:+B7YLx80rnBuiCmEflJOd/cAnQdCzac51lBljtHdvzA=
 github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190624204035-52d5428c4b78/go.mod h1:S86k1fwFBeFkGvUXK4at5EtR4sarg5RO7PCEsNc4VJA=
 github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=
