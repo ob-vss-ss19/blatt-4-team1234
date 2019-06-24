@@ -15,18 +15,6 @@ pipeline {
                 sh 'cd userservice && make build'
             }
         }
-        stage('Lint') {
-            agent {
-                docker { image 'obraun/vss-protoactor-jenkins' }
-                }
-                steps {
-                    sh 'cd hallservice && golangci-lint run --deadline 20m --enable-all'
-                    sh 'cd movieservice && golangci-lint run --deadline 20m --enable-all'
-                    sh 'cd reservationservice && golangci-lint run --deadline 20m --enable-all'
-                    sh 'cd showservice && golangci-lint run --deadline 20m --enable-all'
-                    sh 'cd userservice && golangci-lint run --deadline 20m --enable-all'
-                }
-        }
         stage('Build Docker Image') {
             agent any
             steps {
