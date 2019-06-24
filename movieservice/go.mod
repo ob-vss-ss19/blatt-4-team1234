@@ -11,4 +11,5 @@ require (
 	github.com/ob-vss-ss19/blatt-4-team1234/commons v0.0.0-20190618104646-0b834a954834
 	github.com/ob-vss-ss19/blatt-4-team1234/showservice v0.0.0-20190618104646-0b834a954834
 	google.golang.org/grpc v1.21.1
+	gotest.tools v2.2.0+incompatible
 )
