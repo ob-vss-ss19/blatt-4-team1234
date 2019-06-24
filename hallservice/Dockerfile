@@ -1,7 +1,6 @@
 FROM obraun/vss-protoactor-jenkins as builder
 COPY . /app
 WORKDIR /app
-RUN go get github.com/micro/go-micro
 RUN go build -o hallservice/main hallservice/main.go
 
 FROM iron/go
