@@ -41,12 +41,12 @@ func TestReservationHandler_RequestReservation(t *testing.T) {
 	reservationHandler := InitDB()
 	ctx := context.Background()
 	seats := []*reservation.Seat{{Row: 1, Column: 1}}
-	req := reservation.RequestReservationRequest{ShowId:1,UserId:1,Seats:seats}
+	req := reservation.RequestReservationRequest{ShowId: 1, UserId: 1, Seats: seats}
 	resp := reservation.RequestReservationResponse{}
 	err := reservationHandler.RequestReservation(ctx, &req, &resp)
 	if err != nil {
-		assert.Assert(t,strings.Contains(err.Error(),"code = Internal"))
-	}else{
+		assert.Assert(t, strings.Contains(err.Error(), "code = Internal"))
+	} else {
 		t.Errorf("An Error was Expected here!")
 	}
 
@@ -62,12 +62,12 @@ func TestReservationHandler_RemoveReservation(t *testing.T) {
 	if err != nil {
 		t.Error("No Error was expected here!")
 	}
-	newReq := reservation.GetReservationRequest{Id:1}
+	newReq := reservation.GetReservationRequest{Id: 1}
 	newResp := reservation.GetReservationResponse{}
-	err = reservationHandler.GetReservation(ctx,&newReq,&newResp)
-	if err != nil{
-		assert.Assert(t,strings.Contains(err.Error(),"code = NotFound"))
-	}else{
+	err = reservationHandler.GetReservation(ctx, &newReq, &newResp)
+	if err != nil {
+		assert.Assert(t, strings.Contains(err.Error(), "code = NotFound"))
+	} else {
 		t.Error("An Error was expected here!")
 	}
 }
