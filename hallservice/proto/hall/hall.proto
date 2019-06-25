@@ -32,7 +32,7 @@ message GetHallResponse{
 }
 
 message AddHallRequest{
-	Hall hall = 1;
+	Hall Hall = 1;
 }
 
 message AddHallResponse{
