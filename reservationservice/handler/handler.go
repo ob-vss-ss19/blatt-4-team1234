@@ -167,6 +167,9 @@ func (handle *ReservationHandler) GetReservation(ctx context.Context, req *reser
 	if !found {
 		return status.Errorf(codes.NotFound, "The Reservation with the ID:%d does not Exist", req.Id)
 	}
+	if !r.Active {
+		return status.Errorf(codes.FailedPrecondition,"The Reservation is not yet Active!")
+	}
 	rsp.Reservation = &r
 	return nil
 }
@@ -192,13 +195,13 @@ func InitDB() *ReservationHandler {
 		NewID:                5,
 	}
 	handler.Reservations[1] = reservation.Reservation{Id: 1, UserId: 1, ShowId: 1,
-		Seats: []*reservation.Seat{{Row: 1, Column: 2}, {Row: 1, Column: 3}}}
+		Seats: []*reservation.Seat{{Row: 1, Column: 2}, {Row: 1, Column: 3}},Active:true}
 	handler.Reservations[2] = reservation.Reservation{Id: 2, UserId: 2, ShowId: 2,
-		Seats: []*reservation.Seat{{Row: 3, Column: 3}}}
+		Seats: []*reservation.Seat{{Row: 3, Column: 3}},Active:true}
 	handler.Reservations[3] = reservation.Reservation{Id: 3, UserId: 3, ShowId: 3,
-		Seats: []*reservation.Seat{{Row: 7, Column: 7}, {Row: 7, Column: 8}}}
+		Seats: []*reservation.Seat{{Row: 7, Column: 7}, {Row: 7, Column: 8}},Active:true}
 	handler.Reservations[4] = reservation.Reservation{Id: 4, UserId: 4, ShowId: 4,
-		Seats: []*reservation.Seat{{Row: 2, Column: 1}, {Row: 2, Column: 2}}}
+		Seats: []*reservation.Seat{{Row: 2, Column: 1}, {Row: 2, Column: 2}},Active:true}
 	return &handler
 }
 

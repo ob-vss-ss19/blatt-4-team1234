@@ -1,3 +1,11 @@
+# Docker-Images
+
+```docker run terraform.cs.hm.edu:5043/ob-vss-ss19-blatt-4-team1234:PR-1-hallservice```
+```docker run terraform.cs.hm.edu:5043/ob-vss-ss19-blatt-4-team1234:PR-1-movieservice```
+```docker run terraform.cs.hm.edu:5043/ob-vss-ss19-blatt-4-team1234:PR-1-reservationservice```
+```docker run terraform.cs.hm.edu:5043/ob-vss-ss19-blatt-4-team1234:PR-1-showservice```
+```docker run terraform.cs.hm.edu:5043/ob-vss-ss19-blatt-4-team1234:PR-1-userservice```
+
 # Microservice Interface Contracts
 
 All Endpoints that recieve a Id return InvalidArgument if the ID is negative.
