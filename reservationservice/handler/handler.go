@@ -120,8 +120,8 @@ func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *
 	for i, c := range handle.ReservationConflicts {
 		for _, conflict := range c.Conflicting {
 			if conflict == req.ReservationId {
-				delete(handle.Reservations,i)
-				log.Printf("Removed Conflicting Reservation with ID:%d",i)
+				delete(handle.Reservations, i)
+				log.Printf("Removed Conflicting Reservation with ID:%d", i)
 			}
 		}
 	}
