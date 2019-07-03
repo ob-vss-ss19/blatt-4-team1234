@@ -24,3 +24,7 @@ micro call go.micro.srv.movieservice MovieService.RemoveMovie "{\"Id\":1}"
 micro call go.micro.srv.reservationservice ReservationService.RemoveReservation "{\"Id\":1}"
 micro call go.micro.srv.userservice UserService.RemoveUser "{\"Id\":1}"
 micro call go.micro.srv.showservice ShowService.RemoveShow "{\"Id\":1}"
+
+RequestReservation:
+
+micro call go.micro.srv.reservationservice ReservationService.RequestReservation "{\"ShowId\":1,\"Seats"\:[{\"Row\":1,\"Column\":1}],\"UserId\":1}

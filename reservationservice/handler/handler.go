@@ -76,7 +76,7 @@ func (handle *ReservationHandler) SeatsAreFree(req *reservation.RequestReservati
 	for _, r := range reservationsForShow {
 		r := r
 		for _, s := range r.Seats {
-			if handle.ContainsSeat(r.Seats, s) {
+			if handle.ContainsSeat(req.Seats, s) {
 				if r.Active {
 					return status.Errorf(codes.AlreadyExists, "A Reservation for Seat (Row: %d, Column:%d),"+
 						" already Exists!", s.Row, s.Column)
@@ -94,10 +94,10 @@ func (handle *ReservationHandler) SeatsAreFree(req *reservation.RequestReservati
 func (handle *ReservationHandler) ContainsSeat(seats []*reservation.Seat, seat *reservation.Seat) bool {
 	for _, r := range seats {
 		if seat.Equal(r) {
-			return false
+			return true
 		}
 	}
-	return true
+	return false
 }
 
 func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *reservation.ActivateReservationRequest,
@@ -116,9 +116,13 @@ func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *
 	if r.UserId != req.UserId {
 		return status.Errorf(codes.FailedPrecondition, "The userid does not match the reservation's userid")
 	}
-	if _, found := handle.ReservationConflicts[r.Id]; found {
-		for conflict := range (handle.ReservationConflicts[r.Id]).Conflicting {
-			delete(handle.Reservations, int64(conflict))
+	_, found = handle.ReservationConflicts[r.Id]
+	for i, c := range handle.ReservationConflicts {
+		for _, conflict := range c.Conflicting {
+			if conflict == req.ReservationId {
+				delete(handle.Reservations,i)
+				log.Printf("Removed Conflicting Reservation with ID:%d",i)
+			}
 		}
 	}
 	r.UserId = req.UserId

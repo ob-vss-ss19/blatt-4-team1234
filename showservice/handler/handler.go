@@ -156,10 +156,10 @@ func (handle *ShowHandler) AddShow(ctx context.Context, req *show.AddShowRequest
 
 func InitDB() *ShowHandler {
 	handler := ShowHandler{Shows: make(map[int64]show.Show)}
-	handler.Shows[1] = show.Show{MovieId: 1, HallId: 1, DateTime: "2019-06-05_20:15"}
-	handler.Shows[2] = show.Show{MovieId: 2, HallId: 2, DateTime: "2019-06-05_23:15"}
-	handler.Shows[3] = show.Show{MovieId: 3, HallId: 2, DateTime: "2019-06-06_14:00"}
-	handler.Shows[4] = show.Show{MovieId: 4, HallId: 1, DateTime: "2019-06-06_18:30"}
+	handler.Shows[1] = show.Show{Id:1,MovieId: 1, HallId: 1, DateTime: "2019-06-05_20:15"}
+	handler.Shows[2] = show.Show{Id:2,MovieId: 2, HallId: 2, DateTime: "2019-06-05_23:15"}
+	handler.Shows[3] = show.Show{Id:3,MovieId: 3, HallId: 2, DateTime: "2019-06-06_14:00"}
+	handler.Shows[4] = show.Show{Id:4,MovieId: 4, HallId: 1, DateTime: "2019-06-06_18:30"}
 	handler.NewID = 5
 	return &handler
 }
