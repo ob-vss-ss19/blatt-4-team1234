@@ -116,7 +116,6 @@ func (handle *ReservationHandler) ActivateReservation(ctx context.Context, req *
 	if r.UserId != req.UserId {
 		return status.Errorf(codes.FailedPrecondition, "The userid does not match the reservation's userid")
 	}
-	_, found = handle.ReservationConflicts[r.Id]
 	for i, c := range handle.ReservationConflicts {
 		for _, conflict := range c.Conflicting {
 			if conflict == req.ReservationId {
