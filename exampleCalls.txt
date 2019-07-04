@@ -1,0 +1,30 @@
+GetAll:
+micro call go.micro.srv.hallservice HallService.GetAllHalls "{}"
+micro call go.micro.srv.movieservice MovieService.GetAllMovies "{}"
+micro call go.micro.srv.reservationservice ReservationService.GetAllReservations "{}"
+micro call go.micro.srv.userservice UserService.GetAllUsers "{}"
+micro call go.micro.srv.showservice ShowService.GetAllShows "{}"
+
+Add:
+micro call go.micro.srv.hallservice HallService.AddHall "{\"Hall\":{\"Name\":\"NewHall\",\"Columns\":4,\"Rows\":4}}"
+micro call go.micro.srv.userservice UserService.AddUser "{\"User\":{\"FirstName\":\"Der\",\"LastName\":\"Neue\",\"Age\":22}}"
+micro call go.micro.srv.movieservice MovieService.AddMovie "{\"Movie\":{\"Title\":\"StarTrek\",\"FSK\":12}}"
+micro call go.micro.srv.showservice ShowService.AddShow "{\"Show\":{\"MovieId\":2,\"HallId\":2,\"DateTime\":\"Spada\"}}"
+
+Get:
+micro call go.micro.srv.hallservice HallService.GetHall "{\"Id\":1}"
+micro call go.micro.srv.movieservice MovieService.GetMovie "{\"Id\":1}"
+micro call go.micro.srv.reservationservice ReservationService.GetReservation "{\"Id\":1}"
+micro call go.micro.srv.userservice UserService.GetUser "{\"Id\":1}"
+micro call go.micro.srv.showservice ShowService.GetShow "{\"Id\":1}"
+
+Remove:
+micro call go.micro.srv.hallservice HallService.RemoveHall "{\"Id\":1}"
+micro call go.micro.srv.movieservice MovieService.RemoveMovie "{\"Id\":1}"
+micro call go.micro.srv.reservationservice ReservationService.RemoveReservation "{\"Id\":1}"
+micro call go.micro.srv.userservice UserService.RemoveUser "{\"Id\":1}"
+micro call go.micro.srv.showservice ShowService.RemoveShow "{\"Id\":1}"
+
+RequestReservation:
+
+micro call go.micro.srv.reservationservice ReservationService.RequestReservation "{\"ShowId\":1,\"Seats"\:[{\"Row\":1,\"Column\":1}],\"UserId\":1}

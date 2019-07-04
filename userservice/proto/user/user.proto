@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+	rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse) {}
+	rpc GetUser(GetUserRequest) returns (GetUserResponse){}
+	rpc AddUser(AddUserRequest) returns (AddUserResponse){}
+	rpc RemoveUser(RemoveUserRequest) returns (RemoveUserResponse){}
+}
+
+message User{
+	int64 Id = 1;
+	string FirstName = 2;
+	string LastName = 3;
+	int64 Age = 4;
+}
+
+
+message GetAllUsersRequest{}
+
+message GetAllUsersResponse{
+	repeated User Users = 1;
+}
+
+message GetUserRequest{
+	int64 Id = 1;
+}
+
+message GetUserResponse{
+	User User = 1;
+}
+
+message AddUserRequest{
+	User user = 1;
+}
+
+message AddUserResponse{
+	int64 Id = 1;
+}
+
+message RemoveUserRequest{
+	int64 Id = 1;
+}
+
+message RemoveUserResponse{}

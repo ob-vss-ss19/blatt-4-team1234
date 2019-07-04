@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package movie;
+
+service MovieService {
+	rpc GetAllMovies(GetAllMoviesRequest) returns (GetAllMoviesResponse) {}
+	rpc GetMovie(GetMovieRequest) returns (GetMovieResponse){}
+	rpc AddMovie(AddMovieRequest) returns (AddMovieResponse){}
+	rpc RemoveMovie(RemoveMovieRequest) returns (RemoveMovieResponse){}
+}
+
+message Movie{
+	int64 Id = 1;
+	string Title = 2;
+	int64 Fsk = 3;
+}
+
+
+message GetAllMoviesRequest{}
+
+message GetAllMoviesResponse{
+	repeated Movie Movies = 1;
+}
+
+message GetMovieRequest{
+	int64 Id = 1;
+}
+
+message GetMovieResponse{
+	Movie Movie = 1;
+}
+
+message AddMovieRequest{
+	Movie Movie = 1;
+}
+
+message AddMovieResponse{
+	int64 Id = 1;
+}
+
+message RemoveMovieRequest{
+	int64 Id = 1;
+}
+
+message RemoveMovieResponse{}

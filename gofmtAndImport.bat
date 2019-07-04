@@ -1,0 +1,10 @@
+gofmt -w hallservice/
+goimports -w hallservice/
+gofmt -w movieservice/
+goimports -w movieservice/
+gofmt -w reservationservice/
+goimports -w reservationservice/
+gofmt -w showservice/
+goimports -w showservice/
+gofmt -w userservice/
+goimports -w userservice/

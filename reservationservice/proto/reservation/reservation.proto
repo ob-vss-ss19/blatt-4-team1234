@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package reservation;
+
+service ReservationService {
+	rpc GetAllReservations(GetAllReservationsRequest) returns (GetAllReservationsResponse) {}
+	rpc GetReservation(GetReservationRequest) returns (GetReservationResponse){}
+	rpc RemoveReservation(RemoveReservationRequest) returns (RemoveReservationResponse){}
+	rpc GetReservationsForUser(GetReservationsForUserRequest) returns (GetReservationsForUserResponse){}
+	rpc RequestReservation(RequestReservationRequest) returns (RequestReservationResponse) {}
+	rpc ActivateReservation(ActivateReservationRequest) returns (ActivateReservationResponse){}
+	rpc RemoveReservationsForShow(RemoveReservationForShowRequest) returns (RemoveReservationForShowResponse){}
+}
+
+message RequestReservationRequest{
+    int64 ShowId = 1;
+    repeated Seat Seats = 2;
+	int64 UserId = 3;
+}
+
+message RequestReservationResponse{
+    int64 ReservationId = 1;
+}
+
+message ActivateReservationRequest{
+    int64 ReservationId = 1;
+    int64 UserId = 2;
+}
+
+message ActivateReservationResponse{
+    Reservation Reservation = 1;
+}
+
+message Reservation{
+	int64 Id = 1;
+	int64 userId = 2;
+	int64 ShowId = 3;
+	repeated Seat Seats = 4;
+	bool active = 5;
+}
+
+message Seat{
+	int64 Row = 1;
+	int64 Column = 2;
+}
+
+
+message GetAllReservationsRequest{}
+
+message GetAllReservationsResponse{
+	repeated Reservation Reservations = 1;
+}
+
+message GetReservationRequest{
+	int64 Id = 1;
+}
+
+message GetReservationResponse{
+	Reservation Reservation = 1;
+}
+
+message RemoveReservationRequest{
+	int64 Id = 1;
+}
+
+message RemoveReservationResponse{}
+
+message GetReservationsForUserRequest{
+	int64 UserId = 1;
+}
+
+message GetReservationsForUserResponse{
+	repeated Reservation Reservations = 1;
+}
+
+message RemoveReservationForShowRequest{
+	int64 ShowId = 1;
+}
+
+message RemoveReservationForShowResponse{}

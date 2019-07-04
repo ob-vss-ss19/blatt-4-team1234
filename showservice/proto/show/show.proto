@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package show;
+
+service ShowService {
+	rpc GetAllShows(GetAllShowsRequest) returns (GetAllShowsResponse) {}
+	rpc GetShow(GetShowRequest) returns (GetShowResponse){}
+	rpc AddShow(AddShowRequest) returns (AddShowResponse){}
+	rpc RemoveShow(RemoveShowRequest) returns (RemoveShowResponse){}
+	rpc RemoveShowsForHall(RemoveShowsForHallRequest) returns (RemoveShowsForHallResponse){}
+	rpc RemoveShowsForMovie(RemoveShowsForMovieRequest) returns (RemoveShowsForMovieResponse){}
+}
+
+message Show{
+	int64 Id = 1;
+	int64 MovieId = 2;
+	int64 HallId = 3;
+	string DateTime = 4;
+}
+
+
+message GetAllShowsRequest{}
+
+message GetAllShowsResponse{
+	repeated Show Shows = 1;
+}
+
+message GetShowRequest{
+	int64 Id = 1;
+}
+
+message GetShowResponse{
+	Show Show = 1;
+}
+
+message AddShowRequest{
+	Show show = 1;
+}
+
+message AddShowResponse{
+	int64 Id = 1;
+}
+
+message RemoveShowRequest{
+	int64 Id = 1;
+}
+
+message RemoveShowResponse{}
+
+message RemoveShowsForHallRequest{
+	int64 HallId = 1;
+}
+
+message RemoveShowsForHallResponse{}
+
+message RemoveShowsForMovieRequest{
+	int64 MovieId = 1;
+}
+
+message RemoveShowsForMovieResponse{}
